@@ -50,6 +50,8 @@ MainMenu::MainMenu() {
     menuOptions.push_back(highScoresOption);
     menuOptions.push_back(controlsOption);
     menuOptions.push_back(optionsOption);
+
+    currentMenuOption = menuOptionsEnum::START;// Default to START OPTION
 }
 
 MainMenu::~MainMenu() {
@@ -92,7 +94,14 @@ void MainMenu::DrawPlayerImage(sf::RenderWindow &win) {
 }
 
 void MainMenu::DrawMenuOptions(sf::RenderWindow &win) {
-    for (sf::Text menuOption : menuOptions ) {
-        win.draw(menuOption);
+
+    // Iterate over list of options and draw them
+    for ( int i = 0; i < 4; i++ ) {
+
+        // If the option is currently being hovered over, render red
+        if ( i == currentMenuOption ) {
+            menuOptions[i].setFillColor(sf::Color::Red);
+        }
+        win.draw(menuOptions[i]);
     }
 }

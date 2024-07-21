@@ -15,6 +15,13 @@ class MainMenu {
         sf::Text controlsOption;
         sf::Text optionsOption;
         std::vector<sf::Text> menuOptions;
+        enum menuOptionsEnum {
+            START,
+            HIGHSCORES,
+            CONTROLS,
+            OPTIONS
+        };
+        int currentMenuOption;
         void ChangeTitleColor();
         void DrawPlayerImage(sf::RenderWindow &win);
         void DrawMenuOptions(sf::RenderWindow &win);
