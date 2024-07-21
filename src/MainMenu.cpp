@@ -1,0 +1,98 @@
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include "Globals.h"
+#include "MainMenu.h"
+
+MainMenu::MainMenu() {
+
+    // Load font with path relative to output directory of generated executable
+    if(!this->font.loadFromFile("./fonts/RetroComputer.ttf")) {
+        std::cout << "Error loading font" << std::endl;
+    }
+
+    // Create title text
+    titleText = sf::Text("[COIN GETTER]", font, 128);
+    titleText.setFillColor(sf::Color::White);
+
+    // Position title text
+    titleText.setPosition(
+        (sf::VideoMode::getDesktopMode().width / 2 - (titleText.getGlobalBounds().width / 2)),
+        (sf::VideoMode::getDesktopMode().height / 2 - (titleText.getGlobalBounds().height / 2))
+    );
+
+    timer = TIME_TO_DELAY_TITLE_COLOR_CHANGE;
+
+    if (!playerTexture.loadFromFile("sprites/player.png"))
+    {
+        std::cout << "DIDNT LOAD PLAYER IMAGE" << std::endl;
+    } else {
+        std::cout << "LOADED PLAYER IMAGE" << std::endl;
+    }
+
+    playerSprite.setTexture(playerTexture);
+    playerSprite.setScale(sf::Vector2f(2.5f, 2.5f));
+    playerSprite.setPosition(
+        sf::VideoMode::getDesktopMode().width - ((playerSprite.getGlobalBounds().width / 4) * 3),
+        sf::VideoMode::getDesktopMode().height - (playerSprite.getGlobalBounds().height / 2)
+    );
+
+    startGameOption = sf::Text("START", font, MENU_OPTIONS_FONT_SIZE);
+    highScoresOption = sf::Text("HIGHSCORES", font, MENU_OPTIONS_FONT_SIZE);
+    controlsOption = sf::Text("CONTROLS", font, MENU_OPTIONS_FONT_SIZE);
+    optionsOption = sf::Text("OPTIONS", font, MENU_OPTIONS_FONT_SIZE);
+
+    startGameOption.setPosition(0, 0);
+    highScoresOption.setPosition(0, startGameOption.getPosition().y + MENU_OPTIONS_FONT_SIZE);
+    controlsOption.setPosition(0, highScoresOption.getPosition().y + MENU_OPTIONS_FONT_SIZE);
+    optionsOption.setPosition(0, controlsOption.getPosition().y + MENU_OPTIONS_FONT_SIZE);
+
+    menuOptions.push_back(startGameOption);
+    menuOptions.push_back(highScoresOption);
+    menuOptions.push_back(controlsOption);
+    menuOptions.push_back(optionsOption);
+}
+
+MainMenu::~MainMenu() {
+
+}
+
+void MainMenu::Run() {
+
+}
+
+void MainMenu::Update() {
+
+    ChangeTitleColor();
+}
+
+void MainMenu::Draw(sf::RenderWindow &win) {
+    win.draw(titleText);
+    DrawPlayerImage(win);
+    DrawMenuOptions(win);
+}
+
+void MainMenu::ChangeTitleColor() {
+
+    if ( timer <= 0 ) {
+        // Update title color
+        titleText.setFillColor(
+            sf::Color(
+                getRandomNumber(0, 255),
+                getRandomNumber(0, 255),
+                getRandomNumber(0, 255)
+            )
+        );
+        timer = 100;
+    }
+    timer -= 1;
+}
+
+void MainMenu::DrawPlayerImage(sf::RenderWindow &win) {
+    win.draw(playerSprite);
+}
+
+void MainMenu::DrawMenuOptions(sf::RenderWindow &win) {
+    for (sf::Text menuOption : menuOptions ) {
+        win.draw(menuOption);
+    }
+}
