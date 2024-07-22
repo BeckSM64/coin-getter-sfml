@@ -10,6 +10,7 @@ class MainMenu {
         sf::Texture playerTexture;
         sf::Sprite playerSprite;
         int timer;
+        int navigationTimer;
         sf::Text startGameOption;
         sf::Text highScoresOption;
         sf::Text controlsOption;
@@ -25,6 +26,7 @@ class MainMenu {
         void ChangeTitleColor();
         void DrawPlayerImage(sf::RenderWindow &win);
         void DrawMenuOptions(sf::RenderWindow &win);
+        void GetUserInput();
 
     public:
         MainMenu();

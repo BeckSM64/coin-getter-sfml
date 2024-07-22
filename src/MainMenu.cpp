@@ -21,6 +21,7 @@ MainMenu::MainMenu() {
     );
 
     timer = TIME_TO_DELAY_TITLE_COLOR_CHANGE;
+    navigationTimer = TIME_TO_DELAY_MENU_NAVIGATION;
 
     if (!playerTexture.loadFromFile("sprites/player.png"))
     {
@@ -65,6 +66,7 @@ void MainMenu::Run() {
 void MainMenu::Update() {
 
     ChangeTitleColor();
+    GetUserInput();
 }
 
 void MainMenu::Draw(sf::RenderWindow &win) {
@@ -84,9 +86,9 @@ void MainMenu::ChangeTitleColor() {
                 getRandomNumber(0, 255)
             )
         );
-        timer = 100;
+        timer = TIME_TO_DELAY_TITLE_COLOR_CHANGE; // Reset timer
     }
-    timer -= 1;
+    timer -= 1; // Decrement timer
 }
 
 void MainMenu::DrawPlayerImage(sf::RenderWindow &win) {
@@ -101,7 +103,33 @@ void MainMenu::DrawMenuOptions(sf::RenderWindow &win) {
         // If the option is currently being hovered over, render red
         if ( i == currentMenuOption ) {
             menuOptions[i].setFillColor(sf::Color::Red);
+        } else {
+            menuOptions[i].setFillColor(sf::Color::White);
         }
         win.draw(menuOptions[i]);
     }
+}
+
+void MainMenu::GetUserInput() {
+
+    if ( navigationTimer <= 0 ) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+
+            if (currentMenuOption == 3) {
+                currentMenuOption = 0;
+            } else {
+                currentMenuOption += 1;
+            }
+
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+
+            if (currentMenuOption == 0) {
+                currentMenuOption = 3;
+            } else {
+                currentMenuOption -= 1;
+            }
+        }
+        navigationTimer = TIME_TO_DELAY_MENU_NAVIGATION; // Reset timer
+    }
+    navigationTimer -= 1; // Decrement timer
 }
