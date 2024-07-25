@@ -39,8 +39,8 @@ void Game::Update() {
     }
 
     // Update everything on window
-    // mainMenu->Update();
-    mainGameScreen->Update();
+    mainMenu->Update();
+    // mainGameScreen->Update();
 }
 
 void Game::Draw() {
@@ -52,8 +52,8 @@ void Game::Draw() {
     win.clear(color);
 
     // Draw your objects here
-    // mainMenu->Draw(win);
-    mainGameScreen->Draw(win);
+    mainMenu->Draw(win);
+    // mainGameScreen->Draw(win);
 
     // Show everything
     win.display();

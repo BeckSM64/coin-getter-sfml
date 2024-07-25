@@ -15,12 +15,14 @@ class MainMenu {
         sf::Text highScoresOption;
         sf::Text controlsOption;
         sf::Text optionsOption;
+        sf::Text quitOption;
         std::vector<sf::Text> menuOptions;
         enum menuOptionsEnum {
             START,
             HIGHSCORES,
             CONTROLS,
-            OPTIONS
+            OPTIONS,
+            QUIT
         };
         int currentMenuOption;
         void ChangeTitleColor();
