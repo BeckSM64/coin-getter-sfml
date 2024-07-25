@@ -5,11 +5,14 @@
 Game::Game() {
     win.create(sf::VideoMode::getDesktopMode(), "SFML Fullscreen Window", sf::Style::Fullscreen);
     mainMenu = new MainMenu();
+    mainGameScreen = new MainGameScreen();
 }
 
 Game::~Game() {
     delete(mainMenu);
     mainMenu = nullptr;
+    delete(mainGameScreen);
+    mainGameScreen = nullptr;
 }
 
 void Game::Run() {
@@ -36,7 +39,8 @@ void Game::Update() {
     }
 
     // Update everything on window
-    mainMenu->Update();
+    // mainMenu->Update();
+    mainGameScreen->Update();
 }
 
 void Game::Draw() {
@@ -48,7 +52,8 @@ void Game::Draw() {
     win.clear(color);
 
     // Draw your objects here
-    mainMenu->Draw(win);
+    // mainMenu->Draw(win);
+    mainGameScreen->Draw(win);
 
     // Show everything
     win.display();

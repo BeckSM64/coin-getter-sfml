@@ -11,23 +11,7 @@ set(SFML_STATIC_LIBRARIES TRUE)
 
 # Pull SFML if on Windows
 if (WIN32)
-    include(FetchContent)
-    message(STATUS "Start fetching SFML...")
-    FetchContent_Declare(
-        SFML
-        GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG 2.6.x
-    )
-    FetchContent_GetProperties(SFML)
-    if(NOT SFML_POPULATED)
-        message(STATUS "Fetching SFML...")
-        FetchContent_Populate(SFML)
-        message(STATUS "SFML populated.")
-    else()
-        message(STATUS "SFML was already populated.")
-    endif()
-    add_subdirectory(${sfml_SOURCE_DIR} ${sfml_BINARY_DIR})
-    message(STATUS "SFML fetched and available.")
+    add_subdirectory(sfml)
 endif (WIN32)
 
 include_directories(includes/)
