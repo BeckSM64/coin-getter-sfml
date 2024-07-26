@@ -143,22 +143,34 @@ void MainMenu::GetUserInput() {
         // Check which option was selected
         switch (currentMenuOption) {
             case menuOptionsEnum::START:
+
                 // Start new game
+                currentGameState = GameState::MAIN_GAME;
                 break;
+
             case menuOptionsEnum::HIGHSCORES:
+
                 // Go to high score screen
                 break;
+
             case menuOptionsEnum::OPTIONS:
+
                 // Go to options screen
                 break;
+
             case menuOptionsEnum::CONTROLS:
+
                 // GO to controls scree
                 break;
+
             case menuOptionsEnum::QUIT:
+
                 // Quit
                 currentGameState = GameState::QUIT_GAME;
                 break;
+
             default:
+            
                 // Shouldn't get here
                 break;
         }
