@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Globals.h"
 #include "MainMenu.h"
+#include "Coin.h"
 
 MainMenu::MainMenu() {
 
@@ -57,10 +58,13 @@ MainMenu::MainMenu() {
 
     currentMenuOption = menuOptionsEnum::START;// Default to START OPTION
     currentGameState = GameState::MAIN_MENU; // TODO: Look for better way to handle this than in every "screen"
+
+    testCoin = new Coin();
 }
 
 MainMenu::~MainMenu() {
-
+    delete(testCoin);
+    testCoin = nullptr;
 }
 
 void MainMenu::Run() {
@@ -71,12 +75,14 @@ void MainMenu::Update() {
 
     ChangeTitleColor();
     GetUserInput();
+    testCoin->Update();
 }
 
 void MainMenu::Draw(sf::RenderWindow &win) {
     win.draw(titleText);
     DrawPlayerImage(win);
     DrawMenuOptions(win);
+    testCoin->Draw(win);
 }
 
 void MainMenu::ChangeTitleColor() {
