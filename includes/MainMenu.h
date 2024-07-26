@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "Globals.h"
 
 class MainMenu {
 
@@ -17,6 +18,7 @@ class MainMenu {
         sf::Text optionsOption;
         sf::Text quitOption;
         std::vector<sf::Text> menuOptions;
+        GameState currentGameState;
         enum menuOptionsEnum {
             START,
             HIGHSCORES,
@@ -36,4 +38,5 @@ class MainMenu {
         void Run();
         void Update();
         void Draw(sf::RenderWindow &win);
+        GameState GetGameState();
 };

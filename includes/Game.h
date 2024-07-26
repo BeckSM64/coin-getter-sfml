@@ -1,18 +1,20 @@
+#pragma once
 #include "MainMenu.h"
 #include "MainGameScreen.h"
+#include "Globals.h"
 
 class Game {
 
+
     private:
         sf::RenderWindow win;
-        MainMenu *mainMenu;
-        MainGameScreen *mainGameScreen;
-
+        MainMenu *mainMenu = nullptr;
+        MainGameScreen *mainGameScreen = nullptr;
 
     public:
         Game();
         ~Game();
         void Run();
         void Update();
-        void Draw();
+        GameState currentGameState;
 };

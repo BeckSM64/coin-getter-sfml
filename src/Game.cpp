@@ -1,29 +1,69 @@
 #include <SFML/Graphics.hpp>
 #include "Game.h"
+#include "Globals.h"
 #include "MainMenu.h"
+#include "MainGameScreen.h"
 
 Game::Game() {
     win.create(sf::VideoMode::getDesktopMode(), "SFML Fullscreen Window", sf::Style::Fullscreen);
-    mainMenu = new MainMenu();
-    mainGameScreen = new MainGameScreen();
+    currentGameState = GameState::MAIN_MENU; // Default to main menu
 }
 
 Game::~Game() {
-    delete(mainMenu);
-    mainMenu = nullptr;
-    delete(mainGameScreen);
-    mainGameScreen = nullptr;
+
+    if (mainMenu != nullptr) {
+        delete(mainMenu);
+        mainMenu = nullptr;
+    }
+
+    if (mainGameScreen != nullptr) {
+        delete(mainGameScreen);
+        mainGameScreen = nullptr;
+    }
 }
 
 void Game::Run() {
 
     while(win.isOpen()) {
 
-        // Update everything on screen
+        // Background color
+        sf::Color color = sf::Color(20, 15, 36, 255);
+
+        // Clear the screen with background color
+        win.clear(color);
+
+        // Check for events
         Update();
 
-        // Draw everything to the window
-        Draw();
+        switch (currentGameState) {
+
+            case GameState::MAIN_MENU:
+                if (mainMenu == nullptr) {
+                    mainMenu = new MainMenu();
+                }
+                mainMenu->Update();
+                mainMenu->Draw(win);
+                currentGameState = mainMenu->GetGameState();
+                break;
+
+            case GameState::MAIN_GAME:
+                if (mainGameScreen == nullptr) {
+                    mainGameScreen = new MainGameScreen();
+                }
+                mainGameScreen->Update();
+                mainGameScreen->Draw(win);
+                break;
+            case GameState::QUIT_GAME:
+                this->~Game();
+                exit(EXIT_SUCCESS);
+                break;
+            default:
+                // Shouldn't get here
+                break;
+        }
+
+        // Show everything
+        win.display();
     }
 }
 
@@ -37,24 +77,4 @@ void Game::Update() {
             win.close();
         }
     }
-
-    // Update everything on window
-    mainMenu->Update();
-    // mainGameScreen->Update();
-}
-
-void Game::Draw() {
-
-    // Background color
-    sf::Color color = sf::Color(20, 15, 36, 255);
-
-    // Clear the screen with background color
-    win.clear(color);
-
-    // Draw your objects here
-    mainMenu->Draw(win);
-    // mainGameScreen->Draw(win);
-
-    // Show everything
-    win.display();
 }

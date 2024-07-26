@@ -56,6 +56,7 @@ MainMenu::MainMenu() {
     menuOptions.push_back(quitOption);
 
     currentMenuOption = menuOptionsEnum::START;// Default to START OPTION
+    currentGameState = GameState::MAIN_MENU; // TODO: Look for better way to handle this than in every "screen"
 }
 
 MainMenu::~MainMenu() {
@@ -155,11 +156,15 @@ void MainMenu::GetUserInput() {
                 break;
             case menuOptionsEnum::QUIT:
                 // Quit
-                exit(EXIT_SUCCESS);
+                currentGameState = GameState::QUIT_GAME;
                 break;
             default:
                 // Shouldn't get here
                 break;
         }
     }
+}
+
+GameState MainMenu::GetGameState() {
+    return currentGameState;
 }
