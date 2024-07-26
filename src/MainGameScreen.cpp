@@ -10,6 +10,19 @@ MainGameScreen::MainGameScreen() {
     coinManager = new CoinManager();
     isPaused = false;
     wasStartPressed = false;
+
+    // Setup font
+    font.loadFromFile("./fonts/RetroComputer.ttf");
+
+    // Create title text
+    pauseText = sf::Text("[PAUSE]", font, 128);
+    pauseText.setFillColor(sf::Color::White);
+
+    // Position pause text
+    pauseText.setPosition(
+        (sf::VideoMode::getDesktopMode().width / 2 - (pauseText.getGlobalBounds().width / 2)),
+        (sf::VideoMode::getDesktopMode().height / 2 - (pauseText.getGlobalBounds().height / 2))
+    );
 }
 
 MainGameScreen::~MainGameScreen() {
@@ -24,6 +37,10 @@ MainGameScreen::~MainGameScreen() {
 void MainGameScreen::Draw(sf::RenderWindow &win) {
     player->Draw(win);
     coinManager->Draw(win);
+
+    if (isPaused) {
+        win.draw(pauseText);
+    }
 }
 
 void MainGameScreen::Update() {
