@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Globals.h"
-#include "Coin.h"
+#include "CoinManager.h"
 
 class MainMenu {
 
@@ -28,7 +28,7 @@ class MainMenu {
             QUIT
         };
         int currentMenuOption;
-        Coin *testCoin = nullptr;
+        CoinManager *coinManager;
         void ChangeTitleColor();
         void DrawPlayerImage(sf::RenderWindow &win);
         void DrawMenuOptions(sf::RenderWindow &win);

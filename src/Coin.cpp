@@ -1,21 +1,22 @@
 #include <SFML/Graphics.hpp>
 #include "Coin.h"
+#include "Globals.h"
 
 Coin::Coin() {
 
     // Load texture for coin sprite
     coinTexture.loadFromFile("sprites/coin.png");
 
-    // Coin position
-    pos.x = 100.0f;
-    pos.y = 100.0f;
-
-    // Coin velocity
-    vel.x = 0.5f;
-    vel.y = 0.5f;
-
     // Create coin sprite
     coinSprite.setTexture(coinTexture);
+
+    // Coin position
+    pos.x = (float) getRandomNumber(0, sf::VideoMode::getDesktopMode().width - coinSprite.getGlobalBounds().width);
+    pos.y = (float) getRandomNumber(0, sf::VideoMode::getDesktopMode().height - coinSprite.getGlobalBounds().height);
+
+    // Coin velocity
+    vel.x = vel.y = (float) getRandomFloat(-0.5f, 0.5f);
+
     coinSprite.setScale(sf::Vector2f(0.5f, 0.5f));
     coinSprite.setPosition(pos.x, pos.y);
 }

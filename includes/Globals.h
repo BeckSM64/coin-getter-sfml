@@ -18,3 +18,10 @@ static int getRandomNumber(int lower, int upper) {
     std::uniform_int_distribution<> distr(lower, upper);
     return distr(gen);
 }
+
+static float getRandomFloat(float lower, float upper) {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_real_distribution<> distr(lower, upper);
+    return distr(gen);
+}
