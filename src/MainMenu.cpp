@@ -60,6 +60,8 @@ MainMenu::MainMenu() {
     currentGameState = GameState::MAIN_MENU; // TODO: Look for better way to handle this than in every "screen"
 
     coinManager = new CoinManager();
+
+    wasStartPressed = false;
 }
 
 MainMenu::~MainMenu() {
@@ -143,8 +145,11 @@ void MainMenu::GetUserInput() {
     }
     navigationTimer -= 1; // Decrement timer
 
-    // Check which option was selected
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+    // Check if the Enter key is released
+    bool isStartCurrentlyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Enter);
+
+    // Check if the start button was pressed and released
+    if (!isStartCurrentlyPressed && wasStartPressed) {
 
         // Check which option was selected
         switch (currentMenuOption) {
@@ -181,6 +186,9 @@ void MainMenu::GetUserInput() {
                 break;
         }
     }
+
+    // Update the previous state
+    wasStartPressed = isStartCurrentlyPressed;
 }
 
 GameState MainMenu::GetGameState() {

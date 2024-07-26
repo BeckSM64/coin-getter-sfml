@@ -29,6 +29,7 @@ class MainMenu {
         };
         int currentMenuOption;
         CoinManager *coinManager;
+        bool wasStartPressed;
         void ChangeTitleColor();
         void DrawPlayerImage(sf::RenderWindow &win);
         void DrawMenuOptions(sf::RenderWindow &win);

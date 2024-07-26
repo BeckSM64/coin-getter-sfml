@@ -8,6 +8,9 @@ class MainGameScreen {
     private:
         Player *player;
         CoinManager *coinManager;
+        bool isPaused;
+        bool wasStartPressed;
+        void GetUserInput();
 
     public:
         MainGameScreen();
