@@ -6,6 +6,7 @@
 
 Game::Game() {
     win.create(sf::VideoMode::getDesktopMode(), "SFML Fullscreen Window", sf::Style::Fullscreen);
+    win.setFramerateLimit(60);
     currentGameState = GameState::MAIN_MENU; // Default to main menu
 }
 

@@ -15,7 +15,7 @@ Coin::Coin() {
     pos.y = (float) getRandomNumber(0, sf::VideoMode::getDesktopMode().height - coinSprite.getGlobalBounds().height);
 
     // Coin velocity
-    vel.x = vel.y = (float) getRandomFloat(-0.5f, 0.5f);
+    vel.x = vel.y = (float) getRandomFloat(-10.0f, 10.0f);
 
     coinSprite.setScale(sf::Vector2f(0.5f, 0.5f));
     coinSprite.setPosition(pos.x, pos.y);

@@ -89,18 +89,14 @@ void MainMenu::Draw(sf::RenderWindow &win) {
 
 void MainMenu::ChangeTitleColor() {
 
-    if ( timer <= 0 ) {
-        // Update title color
-        titleText.setFillColor(
-            sf::Color(
-                getRandomNumber(0, 255),
-                getRandomNumber(0, 255),
-                getRandomNumber(0, 255)
-            )
-        );
-        timer = TIME_TO_DELAY_TITLE_COLOR_CHANGE; // Reset timer
-    }
-    timer -= 1; // Decrement timer
+    // Update title color
+    titleText.setFillColor(
+        sf::Color(
+            getRandomNumber(0, 255),
+            getRandomNumber(0, 255),
+            getRandomNumber(0, 255)
+        )
+    );
 }
 
 void MainMenu::DrawPlayerImage(sf::RenderWindow &win) {
@@ -124,7 +120,7 @@ void MainMenu::DrawMenuOptions(sf::RenderWindow &win) {
 
 void MainMenu::GetUserInput() {
 
-    if ( navigationTimer <= 0 ) {
+    if (keyPressClock.getElapsedTime() >= keyPressCooldown) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 
             if (currentMenuOption == (menuOptions.size() - 1)) {
@@ -132,6 +128,7 @@ void MainMenu::GetUserInput() {
             } else {
                 currentMenuOption += 1;
             }
+            keyPressClock.restart();
 
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 
@@ -140,10 +137,9 @@ void MainMenu::GetUserInput() {
             } else {
                 currentMenuOption -= 1;
             }
+            keyPressClock.restart();
         }
-        navigationTimer = TIME_TO_DELAY_MENU_NAVIGATION; // Reset timer
     }
-    navigationTimer -= 1; // Decrement timer
 
     // Check if the Enter key is released
     bool isStartCurrentlyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Enter);

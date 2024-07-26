@@ -30,6 +30,8 @@ class MainMenu {
         int currentMenuOption;
         CoinManager *coinManager;
         bool wasStartPressed;
+        sf::Clock keyPressClock;
+        const sf::Time keyPressCooldown = sf::milliseconds(200); // 200 ms cooldown
         void ChangeTitleColor();
         void DrawPlayerImage(sf::RenderWindow &win);
         void DrawMenuOptions(sf::RenderWindow &win);
