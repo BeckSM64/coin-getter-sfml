@@ -11,6 +11,9 @@ Game::Game() {
     win.create(sf::VideoMode::getDesktopMode(), "SFML Fullscreen Window", sf::Style::Fullscreen);
     win.setFramerateLimit(60);
 
+    // Background color
+    backgroundColor = sf::Color(20, 15, 36, 255);
+
     // Set taskbar icon
     sf::Image icon;
     icon.loadFromFile("sprites/player.png");
@@ -31,11 +34,8 @@ void Game::Run() {
 
     while(win.isOpen()) {
 
-        // Background color
-        sf::Color color = sf::Color(20, 15, 36, 255);
-
         // Clear the screen with background color
-        win.clear(color);
+        win.clear(backgroundColor);
 
         // Check for events
         Update();
