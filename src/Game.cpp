@@ -37,33 +37,17 @@ void Game::Run() {
         // Clear the screen with background color
         win.clear(backgroundColor);
 
-        // Check for events
+        // Update Game Objects
         Update();
+
+        // Draw everything to the screen
         Draw(win);
+
+        // Poll for events
         HandleEvents();
 
-        // Update screen based on game state
-        switch (currentGameState) {
-            case GameState::MAIN_MENU:
-                if (std::dynamic_pointer_cast<MainMenu>(currentScreen) == nullptr) {
-                    currentScreen = std::make_shared<MainMenu>();
-                }
-                break;
-
-            case GameState::MAIN_GAME:
-                if (std::dynamic_pointer_cast<MainGameScreen>(currentScreen) == nullptr) {
-                    currentScreen = std::make_shared<MainGameScreen>();
-                }
-                break;
-
-            case GameState::QUIT_GAME:
-                win.close(); // Exit
-                break;
-
-            default:
-                // Shouldn't get here
-                break;
-        }
+        // Handle transitioning to different screens
+        ManageGameState();
 
         // Show everything
         win.display();
@@ -88,5 +72,31 @@ void Game::HandleEvents() {
         if(event.type == sf::Event::Closed) {
             win.close();
         }
+    }
+}
+
+void Game::ManageGameState() {
+
+    // Update screen based on game state
+    switch (currentGameState) {
+        case GameState::MAIN_MENU:
+            if (std::dynamic_pointer_cast<MainMenu>(currentScreen) == nullptr) {
+                currentScreen = std::make_shared<MainMenu>();
+            }
+            break;
+
+        case GameState::MAIN_GAME:
+            if (std::dynamic_pointer_cast<MainGameScreen>(currentScreen) == nullptr) {
+                currentScreen = std::make_shared<MainGameScreen>();
+            }
+            break;
+
+        case GameState::QUIT_GAME:
+            win.close(); // Exit
+            break;
+
+        default:
+            // Shouldn't get here
+            break;
     }
 }

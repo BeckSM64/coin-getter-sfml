@@ -19,5 +19,6 @@ class Game {
         void Update();
         void Draw(sf::RenderWindow &win);
         void HandleEvents();
+        void ManageGameState();
         GameState currentGameState;
 };
