@@ -40,6 +40,7 @@ void Game::Run() {
         // Check for events
         Update();
         Draw(win);
+        HandleEvents();
 
         // Update screen based on game state
         switch (currentGameState) {
@@ -72,6 +73,13 @@ void Game::Run() {
 void Game::Update() {
     currentScreen->Update();
     currentGameState = currentScreen->GetGameState();
+}
+
+void Game::Draw(sf::RenderWindow &win) {
+    currentScreen->Draw(win);
+}
+
+void Game::HandleEvents() {
 
     sf::Event event;
     while(win.pollEvent(event)) {
@@ -81,8 +89,4 @@ void Game::Update() {
             win.close();
         }
     }
-}
-
-void Game::Draw(sf::RenderWindow &win) {
-    currentScreen->Draw(win);
 }
