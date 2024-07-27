@@ -6,10 +6,21 @@
 #include "MainGameScreen.h"
 
 Game::Game() {
+
+    // Create window and set fixed frame rate limit
     win.create(sf::VideoMode::getDesktopMode(), "SFML Fullscreen Window", sf::Style::Fullscreen);
     win.setFramerateLimit(60);
-    currentGameState = GameState::MAIN_MENU; // Default to main menu
-    currentScreen = std::make_shared<MainMenu>(); // Default to main menu
+
+    // Set taskbar icon
+    sf::Image icon;
+    icon.loadFromFile("sprites/player.png");
+    win.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+    // Default to main menu
+    currentGameState = GameState::MAIN_MENU;
+
+     // Default to main menu
+    currentScreen = std::make_shared<MainMenu>();
 }
 
 Game::~Game() {
