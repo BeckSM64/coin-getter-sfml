@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 #include "Globals.h"
 #include "CoinManager.h"
@@ -31,6 +32,7 @@ class MainMenu : public CoinGetter::Screen {
         bool wasStartPressed;
         sf::Clock keyPressClock;
         const sf::Time keyPressCooldown = sf::milliseconds(200); // 200 ms cooldown
+        sf::Sound backgroundMusic;
         void ChangeTitleColor();
         void DrawPlayerImage(sf::RenderWindow &win);
         void DrawMenuOptions(sf::RenderWindow &win);

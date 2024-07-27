@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include "MainGameScreen.h"
 #include "Player.h"
@@ -26,6 +27,11 @@ MainGameScreen::MainGameScreen() {
     );
 
     currentGameState = GameState::MAIN_GAME;
+
+    // Play game audio
+    const sf::SoundBuffer &soundBuffer = ResourceManager::GetInstance().GetSoundBuffer("endo");
+    backgroundMusic.setBuffer(soundBuffer);
+    backgroundMusic.play();
 }
 
 MainGameScreen::~MainGameScreen() {

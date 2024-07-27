@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include "Globals.h"
 #include "MainMenu.h"
@@ -56,6 +57,11 @@ MainMenu::MainMenu() {
     coinManager = new CoinManager();
 
     wasStartPressed = false;
+
+    // Play game audio
+    const sf::SoundBuffer &soundBuffer = ResourceManager::GetInstance().GetSoundBuffer("endo");
+    backgroundMusic.setBuffer(soundBuffer);
+    backgroundMusic.play();
 }
 
 MainMenu::~MainMenu() {

@@ -29,24 +29,24 @@ sf::Font& ResourceManager::GetFont(const std::string& name) {
     return *fonts.at(name);
 }
 
-// bool ResourceManager::LoadSoundBuffer(const std::string& name, const std::string& filename) {
-//     auto soundBuffer = std::make_unique<sf::SoundBuffer>();
-//     if (!soundBuffer->loadFromFile(filename)) {
-//         std::cerr << "Failed to load sound buffer: " << filename << std::endl;
-//         return false;
-//     }
-//     soundBuffers[name] = std::move(soundBuffer);
-//     return true;
-// }
+bool ResourceManager::LoadSoundBuffer(const std::string& name, const std::string& filename) {
+    auto soundBuffer = std::make_unique<sf::SoundBuffer>();
+    if (!soundBuffer->loadFromFile(filename)) {
+        std::cerr << "Failed to load sound buffer: " << filename << std::endl;
+        return false;
+    }
+    soundBuffers[name] = std::move(soundBuffer);
+    return true;
+}
 
-// sf::SoundBuffer& ResourceManager::GetSoundBuffer(const std::string& name) {
-//     return *soundBuffers.at(name);
-// }
+sf::SoundBuffer& ResourceManager::GetSoundBuffer(const std::string& name) {
+    return *soundBuffers.at(name);
+}
 
 void ResourceManager::InitializeResources() {
     LoadTexture("player", "sprites/player.png");
     LoadTexture("enemy", "sprites/enemy.png");
     LoadTexture("coin", "sprites/coin.png");
     LoadFont("retroFont", "fonts/RetroComputer.ttf");
-    // LoadSoundBuffer("explosion", "sounds/explosion.wav");
+    LoadSoundBuffer("endo", "sounds/endo.mp3");
 }

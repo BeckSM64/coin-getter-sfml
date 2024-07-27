@@ -21,8 +21,8 @@ public:
     bool LoadFont(const std::string& name, const std::string& filename);
     sf::Font& GetFont(const std::string& name);
 
-    // bool LoadSoundBuffer(const std::string& name, const std::string& filename);
-    // sf::SoundBuffer& GetSoundBuffer(const std::string& name);
+    bool LoadSoundBuffer(const std::string& name, const std::string& filename);
+    sf::SoundBuffer& GetSoundBuffer(const std::string& name);
 
     void InitializeResources();
 
@@ -37,5 +37,5 @@ private:
 
     std::unordered_map<std::string, std::unique_ptr<sf::Texture>> textures;
     std::unordered_map<std::string, std::unique_ptr<sf::Font>> fonts;
-    // std::unordered_map<std::string, std::unique_ptr<sf::SoundBuffer>> soundBuffers;
+    std::unordered_map<std::string, std::unique_ptr<sf::SoundBuffer>> soundBuffers;
 };

@@ -4,10 +4,9 @@ project(coingetter LANGUAGES CXX)
 # Set output directory for executable
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../output/)
 
-# Build static libraries for SFML to link
-set(BUILD_SHARED_LIBS OFF)
+# Build dynamic libraries for SFML to link
+set(BUILD_SHARED_LIBS ON)
 set(CMAKE_BUILD_TYPE DEBUG)
-set(SFML_STATIC_LIBRARIES TRUE)
 
 # Pull SFML if on Windows
 if (WIN32)
@@ -18,8 +17,8 @@ include_directories(includes/)
 file(GLOB SOURCES "src/*.cpp")
 add_executable(coingetter ${SOURCES})
 
-# Link SFML static libs
-target_link_libraries(coingetter PRIVATE sfml-graphics sfml-window sfml-system sfml-main)
+# Link SFML dynamic libraries
+target_link_libraries(coingetter PRIVATE sfml-graphics sfml-window sfml-system sfml-main sfml-audio)
 
 # Ensure the application is treated as a GUI application
 if (WIN32)
@@ -35,5 +34,6 @@ message(STATUS "Project sources: ${SOURCES}")
 # Copy resources into output directory
 file(COPY fonts/ DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/fonts/")
 file(COPY sprites/ DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sprites/")
+file(COPY sounds/ DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sounds/")
 
 install(TARGETS coingetter)

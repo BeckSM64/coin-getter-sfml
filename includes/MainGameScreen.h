@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Player.h"
 #include "CoinManager.h"
 #include "Screen.h"
@@ -13,6 +14,7 @@ class MainGameScreen : public CoinGetter::Screen {
         bool wasStartPressed;
         sf::Text pauseText;
         GameState currentGameState;
+        sf::Sound backgroundMusic;
         void GetUserInput();
 
     public:
