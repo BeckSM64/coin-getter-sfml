@@ -1,16 +1,12 @@
 #include "Player.h"
 #include "Globals.h"
+#include "ResourceManager.h"
 #include <iostream>
 
 Player::Player() {
 
-    // Load texture for player sprite
-    if (!playerTexture.loadFromFile("sprites/player.png"))
-    {
-        std::cout << "DIDNT LOAD PLAYER IMAGE" << std::endl;
-    } else {
-        std::cout << "LOADED PLAYER IMAGE" << std::endl;
-    }
+    // Get player texture from resource manager
+    const sf::Texture &playerTexture = ResourceManager::GetInstance().GetTexture("player");
 
     // Player position
     pos.x = 100.0f;

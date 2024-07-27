@@ -3,13 +3,12 @@
 #include "Globals.h"
 #include "MainMenu.h"
 #include "CoinManager.h"
+#include "ResourceManager.h"
 
 MainMenu::MainMenu() {
 
-    // Load font with path relative to output directory of generated executable
-    if(!this->font.loadFromFile("./fonts/RetroComputer.ttf")) {
-        std::cout << "Error loading font" << std::endl;
-    }
+    // Setup font
+    const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
 
     // Create title text
     titleText = sf::Text("[COIN GETTER]", font, 128);
@@ -24,12 +23,7 @@ MainMenu::MainMenu() {
     timer = TIME_TO_DELAY_TITLE_COLOR_CHANGE;
     navigationTimer = TIME_TO_DELAY_MENU_NAVIGATION;
 
-    if (!playerTexture.loadFromFile("sprites/player.png"))
-    {
-        std::cout << "DIDNT LOAD PLAYER IMAGE" << std::endl;
-    } else {
-        std::cout << "LOADED PLAYER IMAGE" << std::endl;
-    }
+    const sf::Texture &playerTexture = ResourceManager::GetInstance().GetTexture("player");
 
     playerSprite.setTexture(playerTexture);
     playerSprite.setScale(sf::Vector2f(2.5f, 2.5f));

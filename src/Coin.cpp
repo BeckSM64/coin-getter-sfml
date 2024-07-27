@@ -1,11 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include "Coin.h"
 #include "Globals.h"
+#include "ResourceManager.h"
 
 Coin::Coin() {
 
-    // Load texture for coin sprite
-    coinTexture.loadFromFile("sprites/coin.png");
+    // Load texture for coin sprite from resource manager
+    const sf::Texture &coinTexture = ResourceManager::GetInstance().GetTexture("coin");
 
     // Create coin sprite
     coinSprite.setTexture(coinTexture);

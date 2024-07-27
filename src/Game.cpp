@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include "MainMenu.h"
 #include "MainGameScreen.h"
+#include "ResourceManager.h"
 
 Game::Game() {
 
@@ -21,6 +22,9 @@ Game::Game() {
 
     // Default to main menu
     currentGameState = GameState::MAIN_MENU;
+
+    // Initialize resources
+    ResourceManager::GetInstance().InitializeResources();
 
      // Default to main menu
     currentScreen = std::make_shared<MainMenu>();
@@ -41,7 +45,7 @@ void Game::Run() {
         Update();
 
         // Draw everything to the screen
-        Draw(win);
+        Draw();
 
         // Poll for events
         HandleEvents();
@@ -59,7 +63,7 @@ void Game::Update() {
     currentGameState = currentScreen->GetGameState();
 }
 
-void Game::Draw(sf::RenderWindow &win) {
+void Game::Draw() {
     currentScreen->Draw(win);
 }
 

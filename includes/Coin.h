@@ -4,7 +4,6 @@
 class Coin {
 
     private:
-        sf::Texture coinTexture;
         sf::Sprite coinSprite;
         sf::Vector2f pos;
         sf::Vector2f vel;

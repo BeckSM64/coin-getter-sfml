@@ -3,6 +3,7 @@
 #include "MainGameScreen.h"
 #include "Player.h"
 #include "CoinManager.h"
+#include "ResourceManager.h"
 
 MainGameScreen::MainGameScreen() {
 
@@ -12,7 +13,7 @@ MainGameScreen::MainGameScreen() {
     wasStartPressed = false;
 
     // Setup font
-    font.loadFromFile("./fonts/RetroComputer.ttf");
+    const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
 
     // Create title text
     pauseText = sf::Text("[PAUSE]", font, 128);

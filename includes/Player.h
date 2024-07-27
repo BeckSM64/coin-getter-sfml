@@ -4,7 +4,6 @@
 class Player {
 
     private:
-        sf::Texture playerTexture;
         sf::Sprite playerSprite;
         void DrawPlayerImage(sf::RenderWindow &win);
         sf::Vector2f pos;

@@ -11,7 +11,6 @@ class MainGameScreen : public CoinGetter::Screen {
         CoinManager *coinManager;
         bool isPaused;
         bool wasStartPressed;
-        sf::Font font;
         sf::Text pauseText;
         GameState currentGameState;
         void GetUserInput();

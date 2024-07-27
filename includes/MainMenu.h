@@ -8,9 +8,7 @@
 class MainMenu : public CoinGetter::Screen {
 
     private:
-        sf::Font font;
         sf::Text titleText;
-        sf::Texture playerTexture;
         sf::Sprite playerSprite;
         int timer;
         int navigationTimer;
