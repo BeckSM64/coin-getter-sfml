@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <memory>
 #include "Game.h"
 #include "Globals.h"
 #include "MainMenu.h"
@@ -8,19 +9,11 @@ Game::Game() {
     win.create(sf::VideoMode::getDesktopMode(), "SFML Fullscreen Window", sf::Style::Fullscreen);
     win.setFramerateLimit(60);
     currentGameState = GameState::MAIN_MENU; // Default to main menu
+    currentScreen = std::make_shared<MainMenu>(); // Default to main menu
 }
 
 Game::~Game() {
 
-    if (mainMenu != nullptr) {
-        delete(mainMenu);
-        mainMenu = nullptr;
-    }
-
-    if (mainGameScreen != nullptr) {
-        delete(mainGameScreen);
-        mainGameScreen = nullptr;
-    }
 }
 
 void Game::Run() {
@@ -35,29 +28,26 @@ void Game::Run() {
 
         // Check for events
         Update();
+        Draw(win);
 
+        // Update screen based on game state
         switch (currentGameState) {
-
             case GameState::MAIN_MENU:
-                if (mainMenu == nullptr) {
-                    mainMenu = new MainMenu();
+                if (std::dynamic_pointer_cast<MainMenu>(currentScreen) == nullptr) {
+                    currentScreen = std::make_shared<MainMenu>();
                 }
-                mainMenu->Update();
-                mainMenu->Draw(win);
-                currentGameState = mainMenu->GetGameState();
                 break;
 
             case GameState::MAIN_GAME:
-                if (mainGameScreen == nullptr) {
-                    mainGameScreen = new MainGameScreen();
+                if (std::dynamic_pointer_cast<MainGameScreen>(currentScreen) == nullptr) {
+                    currentScreen = std::make_shared<MainGameScreen>();
                 }
-                mainGameScreen->Update();
-                mainGameScreen->Draw(win);
                 break;
+
             case GameState::QUIT_GAME:
-                this->~Game();
-                exit(EXIT_SUCCESS);
+                win.close(); // Exit
                 break;
+
             default:
                 // Shouldn't get here
                 break;
@@ -69,6 +59,8 @@ void Game::Run() {
 }
 
 void Game::Update() {
+    currentScreen->Update();
+    currentGameState = currentScreen->GetGameState();
 
     sf::Event event;
     while(win.pollEvent(event)) {
@@ -78,4 +70,8 @@ void Game::Update() {
             win.close();
         }
     }
+}
+
+void Game::Draw(sf::RenderWindow &win) {
+    currentScreen->Draw(win);
 }

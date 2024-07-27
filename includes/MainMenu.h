@@ -3,8 +3,9 @@
 #include <vector>
 #include "Globals.h"
 #include "CoinManager.h"
+#include "Screen.h"
 
-class MainMenu {
+class MainMenu : public CoinGetter::Screen {
 
     private:
         sf::Font font;

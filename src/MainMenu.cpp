@@ -57,7 +57,7 @@ MainMenu::MainMenu() {
     menuOptions.push_back(quitOption);
 
     currentMenuOption = menuOptionsEnum::START;// Default to START OPTION
-    currentGameState = GameState::MAIN_MENU; // TODO: Look for better way to handle this than in every "screen"
+    currentGameState = GameState::MAIN_MENU;
 
     coinManager = new CoinManager();
 

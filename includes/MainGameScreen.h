@@ -2,8 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "CoinManager.h"
+#include "Screen.h"
 
-class MainGameScreen {
+class MainGameScreen : public CoinGetter::Screen {
 
     private:
         Player *player;
@@ -12,6 +13,7 @@ class MainGameScreen {
         bool wasStartPressed;
         sf::Font font;
         sf::Text pauseText;
+        GameState currentGameState;
         void GetUserInput();
 
     public:
@@ -19,4 +21,5 @@ class MainGameScreen {
         ~MainGameScreen();
         void Draw(sf::RenderWindow &win);
         void Update();
+        GameState GetGameState();
 };

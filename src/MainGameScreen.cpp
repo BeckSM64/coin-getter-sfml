@@ -23,6 +23,8 @@ MainGameScreen::MainGameScreen() {
         (sf::VideoMode::getDesktopMode().width / 2 - (pauseText.getGlobalBounds().width / 2)),
         (sf::VideoMode::getDesktopMode().height / 2 - (pauseText.getGlobalBounds().height / 2))
     );
+
+    currentGameState = GameState::MAIN_GAME;
 }
 
 MainGameScreen::~MainGameScreen() {
@@ -73,4 +75,8 @@ void MainGameScreen::GetUserInput() {
 
     // Update the previous state
     wasStartPressed = isStartCurrentlyPressed;
+}
+
+GameState MainGameScreen::GetGameState() {
+    return currentGameState;
 }
