@@ -17,7 +17,28 @@ endif (WIN32)
 include_directories(includes/)
 link_directories(${CMAKE_SOURCE_DIR}/SFML/extlibs/libs-mingw/x64)
 file(GLOB SOURCES "src/*.cpp")
-add_executable(coingetter ${SOURCES})
+
+if (WIN32)
+    # Ensure output directory for icon.o exists
+    file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/output)
+
+    add_custom_command(
+        OUTPUT ${CMAKE_SOURCE_DIR}/output/icon.o
+        COMMAND windres ${CMAKE_SOURCE_DIR}/resources/resources.rc -o ${CMAKE_SOURCE_DIR}/output/icon.o
+        DEPENDS ${CMAKE_SOURCE_DIR}/resources/resources.rc
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/resources
+        COMMENT "Generating icon.o"
+    )
+
+    add_custom_target(
+        generate_icon ALL
+        DEPENDS ${CMAKE_SOURCE_DIR}/output/icon.o
+    )
+
+    add_executable(coingetter ${SOURCES} ${CMAKE_SOURCE_DIR}/output/icon.o)
+else (WIN32)
+    add_executable(coingetter ${SOURCES})
+endif (WIN32)
 
 # Link SFML static libraries
 target_link_libraries(
@@ -28,12 +49,7 @@ target_link_libraries(
     winmm
     gdi32
     sfml-graphics
-    sfml-system
-    sfml-window
-    opengl32
-    freetype
     sfml-audio
-    sfml-system
     openal32
     flac
     vorbisenc
@@ -41,10 +57,7 @@ target_link_libraries(
     vorbis
     ogg
     sfml-network
-    sfml-system
     ws2_32
-    sfml-system
-    winmm
 )
 
 # Ensure the application is treated as a GUI application
@@ -64,3 +77,10 @@ file(COPY sprites/ DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sprites/")
 file(COPY sounds/ DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sounds/")
 
 install(TARGETS coingetter)
+
+# Cleanup
+add_custom_command(
+    TARGET coingetter POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_SOURCE_DIR}/output/icon.o
+    COMMENT "Removing icon.o after build"
+)
