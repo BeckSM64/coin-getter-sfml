@@ -6,7 +6,7 @@
 #include "CoinManager.h"
 #include "Screen.h"
 
-class MainMenu : public CoinGetter::Screen {
+class MainMenuScreen : public CoinGetter::Screen {
 
     private:
         sf::Text titleText;
@@ -39,8 +39,8 @@ class MainMenu : public CoinGetter::Screen {
         void GetUserInput();
 
     public:
-        MainMenu();
-        ~MainMenu();
+        MainMenuScreen();
+        ~MainMenuScreen();
         void Run();
         void Update();
         void Draw(sf::RenderWindow &win);

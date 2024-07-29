@@ -2,7 +2,7 @@
 #include <memory>
 #include "Game.h"
 #include "Globals.h"
-#include "MainMenu.h"
+#include "MainMenuScreen.h"
 #include "MainGameScreen.h"
 #include "ResourceManager.h"
 
@@ -27,7 +27,7 @@ Game::Game() {
     ResourceManager::GetInstance().InitializeResources();
 
      // Default to main menu
-    currentScreen = std::make_shared<MainMenu>();
+    currentScreen = std::make_shared<MainMenuScreen>();
 }
 
 Game::~Game() {
@@ -84,8 +84,8 @@ void Game::ManageGameState() {
     // Update screen based on game state
     switch (currentGameState) {
         case GameState::MAIN_MENU:
-            if (std::dynamic_pointer_cast<MainMenu>(currentScreen) == nullptr) {
-                currentScreen = std::make_shared<MainMenu>();
+            if (std::dynamic_pointer_cast<MainMenuScreen>(currentScreen) == nullptr) {
+                currentScreen = std::make_shared<MainMenuScreen>();
             }
             break;
 

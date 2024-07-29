@@ -2,11 +2,11 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include "Globals.h"
-#include "MainMenu.h"
+#include "MainMenuScreen.h"
 #include "CoinManager.h"
 #include "ResourceManager.h"
 
-MainMenu::MainMenu() {
+MainMenuScreen::MainMenuScreen() {
 
     // Setup font
     const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
@@ -64,30 +64,30 @@ MainMenu::MainMenu() {
     backgroundMusic.play();
 }
 
-MainMenu::~MainMenu() {
+MainMenuScreen::~MainMenuScreen() {
     delete(coinManager);
     coinManager = nullptr;
 }
 
-void MainMenu::Run() {
+void MainMenuScreen::Run() {
 
 }
 
-void MainMenu::Update() {
+void MainMenuScreen::Update() {
 
     ChangeTitleColor();
     GetUserInput();
     coinManager->Update();
 }
 
-void MainMenu::Draw(sf::RenderWindow &win) {
+void MainMenuScreen::Draw(sf::RenderWindow &win) {
     win.draw(titleText);
     DrawPlayerImage(win);
     DrawMenuOptions(win);
     coinManager->Draw(win);
 }
 
-void MainMenu::ChangeTitleColor() {
+void MainMenuScreen::ChangeTitleColor() {
 
     // Update title color
     titleText.setFillColor(
@@ -99,11 +99,11 @@ void MainMenu::ChangeTitleColor() {
     );
 }
 
-void MainMenu::DrawPlayerImage(sf::RenderWindow &win) {
+void MainMenuScreen::DrawPlayerImage(sf::RenderWindow &win) {
     win.draw(playerSprite);
 }
 
-void MainMenu::DrawMenuOptions(sf::RenderWindow &win) {
+void MainMenuScreen::DrawMenuOptions(sf::RenderWindow &win) {
 
     // Iterate over list of options and draw them
     for ( int i = 0; i < menuOptions.size(); i++ ) {
@@ -118,7 +118,7 @@ void MainMenu::DrawMenuOptions(sf::RenderWindow &win) {
     }
 }
 
-void MainMenu::GetUserInput() {
+void MainMenuScreen::GetUserInput() {
 
     if (keyPressClock.getElapsedTime() >= keyPressCooldown) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
@@ -187,6 +187,6 @@ void MainMenu::GetUserInput() {
     wasStartPressed = isStartCurrentlyPressed;
 }
 
-GameState MainMenu::GetGameState() {
+GameState MainMenuScreen::GetGameState() {
     return currentGameState;
 }

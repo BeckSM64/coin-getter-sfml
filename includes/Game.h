@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "MainMenu.h"
+#include "MainMenuScreen.h"
 #include "MainGameScreen.h"
 #include "Globals.h"
 #include "Screen.h"
