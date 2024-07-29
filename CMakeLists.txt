@@ -14,10 +14,22 @@ if (WIN32)
     add_subdirectory(sfml)
 endif (WIN32)
 
-include_directories(includes/)
-link_directories(${CMAKE_SOURCE_DIR}/SFML/extlibs/libs-mingw/x64)
-file(GLOB SOURCES "src/*.cpp")
+# Include directories
+include_directories(
+    ${CMAKE_SOURCE_DIR}/includes/controllers
+    ${CMAKE_SOURCE_DIR}/includes/core
+    ${CMAKE_SOURCE_DIR}/includes/entities
+    ${CMAKE_SOURCE_DIR}/includes/ui
+    ${CMAKE_SOURCE_DIR}/includes/utils
+)
 
+# Link directory for external library dependencies
+link_directories(${CMAKE_SOURCE_DIR}/SFML/extlibs/libs-mingw/x64)
+
+# Source files to compile
+file(GLOB SOURCES "src/**/*.cpp" "src/*.cpp")
+
+# Handle icon stuff only on Windows
 if (WIN32)
     # Ensure output directory for icon.o exists
     file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/output)
