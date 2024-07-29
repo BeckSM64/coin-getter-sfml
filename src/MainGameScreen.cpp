@@ -11,6 +11,7 @@ MainGameScreen::MainGameScreen() {
 
     player = new Player();
     coinManager = new CoinManager();
+    enemyManager = new EnemyManager();
     isPaused = false;
     wasStartPressed = false;
 
@@ -33,9 +34,6 @@ MainGameScreen::MainGameScreen() {
     const sf::SoundBuffer &soundBuffer = ResourceManager::GetInstance().GetSoundBuffer("endo");
     backgroundMusic.setBuffer(soundBuffer);
     backgroundMusic.play();
-
-    // Test enemy
-    enemy = new Enemy();
 }
 
 MainGameScreen::~MainGameScreen() {
@@ -50,7 +48,7 @@ MainGameScreen::~MainGameScreen() {
 void MainGameScreen::Draw(sf::RenderWindow &win) {
     player->Draw(win);
     coinManager->Draw(win);
-    enemy->Draw(win);
+    enemyManager->Draw(win);
 
     if (isPaused) {
         win.draw(pauseText);
@@ -63,7 +61,7 @@ void MainGameScreen::Update() {
     if (!isPaused) {
         player->Update();
         coinManager->Update();
-        enemy->Update();
+        enemyManager->Update();
     }
     
     GetUserInput();

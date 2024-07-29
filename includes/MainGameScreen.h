@@ -3,6 +3,7 @@
 #include <SFML/Audio.hpp>
 #include "Player.h"
 #include "CoinManager.h"
+#include "EnemyManager.h"
 #include "Screen.h"
 #include "Entity.h"
 
@@ -10,8 +11,8 @@ class MainGameScreen : public CoinGetter::Screen {
 
     private:
         Entity *player;
-        Entity *enemy;
         CoinManager *coinManager;
+        EnemyManager *enemyManager;
         bool isPaused;
         bool wasStartPressed;
         sf::Text pauseText;
