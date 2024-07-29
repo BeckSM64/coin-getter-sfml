@@ -4,11 +4,12 @@
 #include "Player.h"
 #include "CoinManager.h"
 #include "Screen.h"
+#include "Entity.h"
 
 class MainGameScreen : public CoinGetter::Screen {
 
     private:
-        Player *player;
+        Entity *player;
         CoinManager *coinManager;
         bool isPaused;
         bool wasStartPressed;

@@ -1,18 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Entity.h"
 
-class Coin {
-
-    private:
-        sf::Sprite coinSprite;
-        sf::Vector2f pos;
-        sf::Vector2f vel;
-        void DrawCoinImage(sf::RenderWindow &win);
-        void ConstrainToScreen();
+class Coin : public Entity {
 
     public:
         Coin();
-        ~Coin();
-        void Draw(sf::RenderWindow &win);
-        void Update();
+        void Update() override;
 };

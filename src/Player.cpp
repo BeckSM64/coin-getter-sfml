@@ -17,17 +17,9 @@ Player::Player() {
     vel.y = 0.0f;
 
     // Create player sprite
-    playerSprite.setTexture(playerTexture);
-    playerSprite.setScale(sf::Vector2f(0.5f, 0.5f));
-    playerSprite.setPosition(pos.x, pos.y);
-}
-
-Player::~Player() {
-
-}
-
-void Player::Draw(sf::RenderWindow &win) {
-    DrawPlayerImage(win);
+    sprite.setTexture(playerTexture);
+    sprite.setScale(sf::Vector2f(0.5f, 0.5f));
+    sprite.setPosition(pos.x, pos.y);
 }
 
 void Player::Update() {
@@ -52,9 +44,8 @@ void Player::Update() {
     // Update player position
     pos.x += vel.x;
     pos.y += vel.y;
-    playerSprite.setPosition(pos.x, pos.y);
-}
+    sprite.setPosition(pos.x, pos.y);
 
-void Player::DrawPlayerImage(sf::RenderWindow &win) {
-    win.draw(playerSprite);
+    // Keep player on screen
+    ConstrainToScreen();
 }

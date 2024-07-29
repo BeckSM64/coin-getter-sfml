@@ -1,17 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Entity.h"
 
-class Player {
-
-    private:
-        sf::Sprite playerSprite;
-        void DrawPlayerImage(sf::RenderWindow &win);
-        sf::Vector2f pos;
-        sf::Vector2f vel;
+class Player : public Entity {
 
     public:
         Player();
-        ~Player();
-        void Draw(sf::RenderWindow &win);
-        void Update();
+        void Update() override;
 };
