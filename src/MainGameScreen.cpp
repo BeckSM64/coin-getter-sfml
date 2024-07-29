@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "CoinManager.h"
 #include "ResourceManager.h"
+#include "Enemy.h"
 
 MainGameScreen::MainGameScreen() {
 
@@ -32,6 +33,9 @@ MainGameScreen::MainGameScreen() {
     const sf::SoundBuffer &soundBuffer = ResourceManager::GetInstance().GetSoundBuffer("endo");
     backgroundMusic.setBuffer(soundBuffer);
     backgroundMusic.play();
+
+    // Test enemy
+    enemy = new Enemy();
 }
 
 MainGameScreen::~MainGameScreen() {
@@ -46,6 +50,7 @@ MainGameScreen::~MainGameScreen() {
 void MainGameScreen::Draw(sf::RenderWindow &win) {
     player->Draw(win);
     coinManager->Draw(win);
+    enemy->Draw(win);
 
     if (isPaused) {
         win.draw(pauseText);
@@ -58,6 +63,7 @@ void MainGameScreen::Update() {
     if (!isPaused) {
         player->Update();
         coinManager->Update();
+        enemy->Update();
     }
     
     GetUserInput();

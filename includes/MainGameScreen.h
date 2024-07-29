@@ -10,6 +10,7 @@ class MainGameScreen : public CoinGetter::Screen {
 
     private:
         Entity *player;
+        Entity *enemy;
         CoinManager *coinManager;
         bool isPaused;
         bool wasStartPressed;
