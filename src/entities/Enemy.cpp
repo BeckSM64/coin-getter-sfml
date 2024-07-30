@@ -1,30 +1,46 @@
 #include <SFML/Graphics.hpp>
+#include <cmath> // For std::cos, std::sin, and std::sqrt
 #include "Enemy.h"
 #include "Globals.h"
 #include "ResourceManager.h"
 
+// Constructor
 Enemy::Enemy() {
 
-    // Load texture for enemy sprite from resource manager
-    const sf::Texture &enemyTexture = ResourceManager::GetInstance().GetTexture("enemy");
+    // Load texture and set up sprite
+    sprite.setTexture(ResourceManager::GetInstance().GetTexture("enemy"));
 
-    // Create enemy sprite
-    sprite.setTexture(enemyTexture);
+    // Initialize position and velocity
+    const sf::VideoMode& desktopMode = sf::VideoMode::getDesktopMode();
+    sprite.setPosition(
+        getRandomNumber(0, desktopMode.width - sprite.getGlobalBounds().width),
+        getRandomNumber(0, desktopMode.height - sprite.getGlobalBounds().height)
+    );
 
-    // Enemy position
-    pos.x = (float) getRandomNumber(0, sf::VideoMode::getDesktopMode().width - sprite.getGlobalBounds().width);
-    pos.y = (float) getRandomNumber(0, sf::VideoMode::getDesktopMode().height - sprite.getGlobalBounds().height);
+    float speed = getRandomFloat(5.0f, 10.0f);
+    float angle = getRandomFloat(0.0f, 2 * 3.14159f);
 
-    // Enemy velocity
-    vel.x = vel.y = 8.0f;
+    vel.x = speed * std::cos(angle);
+    vel.y = speed * std::sin(angle);
 
-    sprite.setScale(sf::Vector2f(0.5f, 0.5f));
-    sprite.setPosition(pos.x, pos.y);
+    sprite.setScale(0.5f, 0.5f);
 }
 
+// Update method
 void Enemy::Update() {
-    pos.x += vel.x;
-    pos.y += vel.y;
-    sprite.setPosition(pos.x, pos.y);
-    ConstrainToScreen();
+
+    // Move the enemy
+    sprite.move(vel);
+
+    // Handle bouncing off the edges
+    sf::FloatRect bounds = sprite.getGlobalBounds();
+    const sf::VideoMode& desktopMode = sf::VideoMode::getDesktopMode();
+
+    if (bounds.left < 0 || bounds.left + bounds.width > desktopMode.width) {
+        vel.x = -vel.x;
+    }
+
+    if (bounds.top < 0 || bounds.top + bounds.height > desktopMode.height) {
+        vel.y = -vel.y;
+    }
 }
