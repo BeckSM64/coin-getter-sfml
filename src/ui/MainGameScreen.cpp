@@ -69,8 +69,15 @@ void MainGameScreen::Update() {
 
 void MainGameScreen::GetUserInput() {
 
-    // Check if the Enter key is released
-    bool isStartCurrentlyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Enter);
+    bool isStartCurrentlyPressed;
+
+    // Check if joystick 0 is connected
+    if (sf::Joystick::isConnected(0)) {
+        isStartCurrentlyPressed = sf::Joystick::isButtonPressed(0, 9);
+    } else {
+        // Check if the Enter key is released
+        isStartCurrentlyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Enter);
+    }
 
     // Check if the start button was pressed and released
     if (!isStartCurrentlyPressed && wasStartPressed) {

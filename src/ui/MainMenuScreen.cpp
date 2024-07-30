@@ -120,29 +120,63 @@ void MainMenuScreen::DrawMenuOptions(sf::RenderWindow &win) {
 
 void MainMenuScreen::GetUserInput() {
 
+    float joypadY = 0.0f;
+    bool isStartCurrentlyPressed;
+
     if (keyPressClock.getElapsedTime() >= keyPressCooldown) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 
-            if (currentMenuOption == (menuOptions.size() - 1)) {
-                currentMenuOption = 0;
-            } else {
-                currentMenuOption += 1;
+        // Check if joystick 0 is connected
+        if (sf::Joystick::isConnected(0)) {
+        
+            joypadY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+
+            if (joypadY > 10.0f) {
+                if (currentMenuOption == (menuOptions.size() - 1)) {
+                    currentMenuOption = 0;
+                } else {
+                    currentMenuOption += 1;
+                }
+                keyPressClock.restart();
+
+            } else if (joypadY < -10.0f) {
+                
+                if (currentMenuOption == 0) {
+                    currentMenuOption = (menuOptions.size() - 1);
+                } else {
+                    currentMenuOption -= 1;
+                }
+                keyPressClock.restart();
             }
-            keyPressClock.restart();
 
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+            // Check if the Enter key is released
+            isStartCurrentlyPressed = sf::Joystick::isButtonPressed(0, 2); // Check if button 2 is pressed
+            std::cout << isStartCurrentlyPressed << std::endl;
 
-            if (currentMenuOption == 0) {
-                currentMenuOption = (menuOptions.size() - 1);
-            } else {
-                currentMenuOption -= 1;
+        } else {
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+
+                if (currentMenuOption == (menuOptions.size() - 1)) {
+                    currentMenuOption = 0;
+                } else {
+                    currentMenuOption += 1;
+                }
+                keyPressClock.restart();
+
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+
+                if (currentMenuOption == 0) {
+                    currentMenuOption = (menuOptions.size() - 1);
+                } else {
+                    currentMenuOption -= 1;
+                }
+                keyPressClock.restart();
             }
-            keyPressClock.restart();
+
+            // Check if the Enter key is released
+            isStartCurrentlyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Enter);
         }
     }
-
-    // Check if the Enter key is released
-    bool isStartCurrentlyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Enter);
 
     // Check if the start button was pressed and released
     if (!isStartCurrentlyPressed && wasStartPressed) {

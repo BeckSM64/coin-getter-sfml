@@ -4,7 +4,9 @@
 #include "Globals.h"
 #include "MainMenuScreen.h"
 #include "MainGameScreen.h"
+#include "DebugMenuScreen.h"
 #include "ResourceManager.h"
+#include "ControllerManager.h"
 
 Game::Game() {
 
