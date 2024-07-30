@@ -12,10 +12,6 @@ CoinManager::CoinManager() {
 
 CoinManager::~CoinManager() {
 
-    // for (Coin *coin : coinCollection) {
-    //     delete(coin);
-    //     coin = nullptr;
-    // }
 }
 
 void CoinManager::Update() {
@@ -34,4 +30,13 @@ void CoinManager::Draw(sf::RenderWindow &win) {
 
 std::vector<Coin>& CoinManager::GetCollection() {
     return coinCollection;
+}
+
+void CoinManager::RefillCollection() {
+
+    // Add more coins
+    for (int i = 0; i < ResourceManager::GetInstance().GetRandomNumber(5, 20); i++) {
+        Coin coin;
+        coinCollection.push_back(coin);
+    }
 }

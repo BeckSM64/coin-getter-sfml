@@ -64,6 +64,11 @@ void MainGameScreen::Update() {
     
     GetUserInput();
     CollisionDetection();
+
+    // Check if all the coins are gone and refill if they are
+    if (coinManager->GetCollection().size() == 0) {
+        coinManager->RefillCollection();
+    }
 }
 
 void MainGameScreen::GetUserInput() {

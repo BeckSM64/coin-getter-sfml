@@ -13,4 +13,5 @@ class CoinManager {
         void Update();
         void Draw(sf::RenderWindow &win);
         std::vector<Coin>& GetCollection();
+        void RefillCollection();
 };
