@@ -1,5 +1,6 @@
 #include "ResourceManager.h"
 #include <iostream>
+#include <random>
 
 bool ResourceManager::LoadTexture(const std::string& name, const std::string& filename) {
     auto texture = std::make_unique<sf::Texture>();
@@ -49,4 +50,14 @@ void ResourceManager::InitializeResources() {
     LoadTexture("coin", "sprites/coin.png");
     LoadFont("retroFont", "fonts/RetroComputer.ttf");
     LoadSoundBuffer("endo", "sounds/endo.mp3");
+}
+
+int ResourceManager::GetRandomNumber(int lower, int upper) {
+    std::uniform_int_distribution<> distr(lower, upper);
+    return distr(gen);
+}
+
+float ResourceManager::GetRandomFloat(float lower, float upper) {
+    std::uniform_real_distribution<> distr(lower, upper);
+    return distr(gen);
 }

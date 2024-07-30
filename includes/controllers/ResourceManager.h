@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <memory>
+#include <random>
 
 class ResourceManager {
 public:
@@ -26,6 +27,10 @@ public:
 
     void InitializeResources();
 
+    int GetRandomNumber(int lower, int upper);
+
+    float GetRandomFloat(float lower, float upper);
+
     // Optionally: Unload resources to manage memory
     // void UnloadTexture(const std::string& name);
     // void UnloadFont(const std::string& name);
@@ -38,4 +43,7 @@ private:
     std::unordered_map<std::string, std::unique_ptr<sf::Texture>> textures;
     std::unordered_map<std::string, std::unique_ptr<sf::Font>> fonts;
     std::unordered_map<std::string, std::unique_ptr<sf::SoundBuffer>> soundBuffers;
+
+    std::random_device rd;
+    std::mt19937 gen;
 };

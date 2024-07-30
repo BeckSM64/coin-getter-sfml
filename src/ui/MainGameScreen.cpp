@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include <memory>
 #include "MainGameScreen.h"
 #include "Player.h"
 #include "CoinManager.h"
@@ -9,7 +10,7 @@
 
 MainGameScreen::MainGameScreen() {
 
-    player = new Player();
+    player = std::make_unique<Player>();
     coinManager = new CoinManager();
     enemyManager = new EnemyManager();
     isPaused = false;
@@ -38,9 +39,6 @@ MainGameScreen::MainGameScreen() {
 
 MainGameScreen::~MainGameScreen() {
 
-    delete(player);
-    player = nullptr;
-
     delete(coinManager);
     coinManager = nullptr;
 }
@@ -65,6 +63,7 @@ void MainGameScreen::Update() {
     }
     
     GetUserInput();
+    CollisionDetection();
 }
 
 void MainGameScreen::GetUserInput() {
@@ -95,6 +94,32 @@ void MainGameScreen::GetUserInput() {
     wasStartPressed = isStartCurrentlyPressed;
 }
 
+Player * MainGameScreen::GetPlayer() {
+    return dynamic_cast<Player *>(player.get());
+}
+
 GameState MainGameScreen::GetGameState() {
     return currentGameState;
+}
+
+void MainGameScreen::CollisionDetection() {
+
+    // Reference to the coin collection
+    auto& coins = coinManager->GetCollection();
+
+    for (auto it = coins.begin(); it != coins.end(); ) {
+        if (player->GetHitbox().intersects(it->GetHitbox())) {
+
+            // Remove the coin and get the next valid iterator
+            it = coins.erase(it);
+
+            // Collect coin, add to wallet
+            GetPlayer()->AddToWallet(1);
+        } else {
+
+            // Move to the next element
+            ++it;
+        }
+    }
+    std::cout << GetPlayer()->GetWalletValue() << std::endl;
 }

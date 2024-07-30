@@ -5,11 +5,12 @@
 class CoinManager {
 
     private:
-        std::vector<Coin *> coinCollection;
+        std::vector<Coin> coinCollection;
 
     public:
         CoinManager();
         ~CoinManager();
         void Update();
         void Draw(sf::RenderWindow &win);
+        std::vector<Coin>& GetCollection();
 };

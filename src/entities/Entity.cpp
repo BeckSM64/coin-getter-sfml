@@ -29,3 +29,7 @@ void Entity::ConstrainToScreen() {
 void Entity::Draw(sf::RenderWindow &win) {
     DrawEntityImage(win);
 }
+
+sf::FloatRect Entity::GetHitbox() const {
+    return hitBox;
+}

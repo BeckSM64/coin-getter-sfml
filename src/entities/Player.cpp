@@ -20,9 +20,18 @@ Player::Player() {
     sprite.setTexture(playerTexture);
     sprite.setScale(sf::Vector2f(0.5f, 0.5f));
     sprite.setPosition(pos.x, pos.y);
+
+    // Hitbox
+    hitBox = sprite.getGlobalBounds();
+
+    // Initialize wallet
+    wallet = 0;
 }
 
 void Player::Update() {
+
+    // Update hitbox
+    hitBox = sprite.getGlobalBounds();
 
     // Variables to store the current velocity
     sf::Vector2f currentVelocity = {0.0f, 0.0f};
@@ -114,4 +123,12 @@ void Player::Update() {
 
     // Keep player on screen
     ConstrainToScreen();
+}
+
+void Player::AddToWallet(int amount) {
+    wallet += amount;
+}
+
+int Player::GetWalletValue() const {
+    return wallet;
 }

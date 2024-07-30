@@ -10,7 +10,7 @@
 class MainGameScreen : public CoinGetter::Screen {
 
     private:
-        Entity *player;
+        std::unique_ptr<Entity> player;
         CoinManager *coinManager;
         EnemyManager *enemyManager;
         bool isPaused;
@@ -19,6 +19,8 @@ class MainGameScreen : public CoinGetter::Screen {
         GameState currentGameState;
         sf::Sound backgroundMusic;
         void GetUserInput();
+        void CollisionDetection();
+        Player* GetPlayer();
 
     public:
         MainGameScreen();

@@ -92,9 +92,9 @@ void MainMenuScreen::ChangeTitleColor() {
     // Update title color
     titleText.setFillColor(
         sf::Color(
-            getRandomNumber(0, 255),
-            getRandomNumber(0, 255),
-            getRandomNumber(0, 255)
+            ResourceManager::GetInstance().GetRandomNumber(0, 255),
+            ResourceManager::GetInstance().GetRandomNumber(0, 255),
+            ResourceManager::GetInstance().GetRandomNumber(0, 255)
         )
     );
 }
@@ -150,7 +150,6 @@ void MainMenuScreen::GetUserInput() {
 
             // Check if the Enter key is released
             isStartCurrentlyPressed = sf::Joystick::isButtonPressed(0, 2); // Check if button 2 is pressed
-            std::cout << isStartCurrentlyPressed << std::endl;
 
         } else {
 

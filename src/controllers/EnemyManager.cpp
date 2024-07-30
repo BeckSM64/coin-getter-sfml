@@ -1,9 +1,10 @@
 #include "EnemyManager.h"
+#include "ResourceManager.h"
 #include "Globals.h"
 
 EnemyManager::EnemyManager() {
 
-    for (int i = 0; i < getRandomNumber(5, 20); i++) {
+    for (int i = 0; i < ResourceManager::GetInstance().GetRandomNumber(5, 20); i++) {
         enemyCollection.push_back(new Enemy());
     }
 }

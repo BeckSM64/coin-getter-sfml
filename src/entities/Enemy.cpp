@@ -13,12 +13,12 @@ Enemy::Enemy() {
     // Initialize position and velocity
     const sf::VideoMode& desktopMode = sf::VideoMode::getDesktopMode();
     sprite.setPosition(
-        getRandomNumber(0, desktopMode.width - sprite.getGlobalBounds().width),
-        getRandomNumber(0, desktopMode.height - sprite.getGlobalBounds().height)
+        ResourceManager::GetInstance().GetRandomNumber(0, desktopMode.width - sprite.getGlobalBounds().width),
+        ResourceManager::GetInstance().GetRandomNumber(0, desktopMode.height - sprite.getGlobalBounds().height)
     );
 
-    float speed = getRandomFloat(5.0f, 10.0f);
-    float angle = getRandomFloat(0.0f, 2 * 3.14159f);
+    float speed = ResourceManager::GetInstance().GetRandomFloat(5.0f, 10.0f);
+    float angle = ResourceManager::GetInstance().GetRandomFloat(0.0f, 2 * 3.14159f);
 
     vel.x = speed * std::cos(angle);
     vel.y = speed * std::sin(angle);
