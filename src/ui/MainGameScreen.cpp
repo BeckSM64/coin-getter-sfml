@@ -71,6 +71,11 @@ void MainGameScreen::Update() {
     if (coinManager->GetCollection().size() == 0) {
         coinManager->RefillCollection();
     }
+
+    // If player died
+    if (GetPlayer()->GetHealth() == 0) {
+        currentGameState = GameState::MAIN_MENU;
+    }
 }
 
 void MainGameScreen::GetUserInput() {
