@@ -49,3 +49,11 @@ void Entity::SetPosition(sf::Vector2f position) {
 sf::Vector2f Entity::GetPosition() const {
     return pos;
 }
+
+bool Entity::IsDamageable() const {
+    return isDamageable;
+}
+
+void Entity::SetDamageable(bool damageable) {
+    isDamageable = damageable;
+}

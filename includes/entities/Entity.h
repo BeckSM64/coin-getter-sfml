@@ -11,6 +11,8 @@ class Entity {
         sf::Vector2f GetPosition() const;
         void SetVelocity(sf::Vector2f velocity);
         void SetPosition(sf::Vector2f position);
+        bool IsDamageable() const;
+        void SetDamageable(bool damageable);
         ~Entity() = default;
 
     protected:
@@ -18,6 +20,7 @@ class Entity {
         sf::Vector2f pos;
         sf::Vector2f vel;
         sf::FloatRect hitBox;
+        bool isDamageable;
         Entity() = default;
         void DrawEntityImage(sf::RenderWindow &win);
         void ConstrainToScreen();

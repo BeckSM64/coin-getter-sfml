@@ -26,12 +26,24 @@ Player::Player() {
 
     // Initialize wallet
     wallet = 0;
+
+    // Player health
+    health = 10;
+
+    // Player defaults to being dameagable
+    isDamageable = true;
+
+    // Not trasnparent
+    isTransparent = false;
 }
 
 void Player::Update() {
 
     // Update hitbox
     hitBox = sprite.getGlobalBounds();
+
+    // Handle blinking when player is hit
+    UpdateBlink();
 
     // Variables to store the current velocity
     sf::Vector2f currentVelocity = {0.0f, 0.0f};
@@ -134,4 +146,25 @@ void Player::AddToWallet(int amount) {
 
 int Player::GetWalletValue() const {
     return wallet;
+}
+
+int Player::GetHealth() const {
+    return health;
+}
+
+void Player::SetHealth(int newHealth) {
+    health = newHealth;
+}
+
+void Player::UpdateBlink() {
+    if (!isDamageable) {
+        if (blinkClock.getElapsedTime().asSeconds() >= 0.1f) {
+            isTransparent = !isTransparent;
+            blinkClock.restart();
+            sprite.setColor(isTransparent ? sf::Color(255, 255, 255, 128) : sf::Color(255, 255, 255, 255));
+        }
+    } else {
+        sprite.setColor(sf::Color(255, 255, 255, 255));
+        isTransparent = false;
+    }
 }

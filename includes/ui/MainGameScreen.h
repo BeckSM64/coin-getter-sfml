@@ -21,7 +21,9 @@ class MainGameScreen : public CoinGetter::Screen {
         void GetUserInput();
         void CollisionDetection();
         Player* GetPlayer();
-        void HandleEnemyCollision(std::unique_ptr<Entity>& player, std::vector<Enemy>& enemies);
+        void HandleEnemyCollision();
+        sf::Clock invinsibilityClock;
+        const sf::Time invinsibilityCooldown = sf::milliseconds(2000); // 2s cooldown
 
     public:
         MainGameScreen();

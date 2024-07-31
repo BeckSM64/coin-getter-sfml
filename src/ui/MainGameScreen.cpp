@@ -55,8 +55,6 @@ void MainGameScreen::Draw(sf::RenderWindow &win) {
 
 void MainGameScreen::Update() {
 
-    HandleEnemyCollision(player, enemyManager->GetCollection());
-
     // Update the game if it's not paused
     if (!isPaused) {
 
@@ -67,6 +65,7 @@ void MainGameScreen::Update() {
     
     GetUserInput();
     CollisionDetection();
+    HandleEnemyCollision();
 
     // Check if all the coins are gone and refill if they are
     if (coinManager->GetCollection().size() == 0) {
@@ -131,53 +130,18 @@ void MainGameScreen::CollisionDetection() {
     }
 }
 
-void MainGameScreen::HandleEnemyCollision(std::unique_ptr<Entity>& player, std::vector<Enemy>& enemies) {
-    for (Enemy& enemy : enemies) {
-        if (player->GetHitbox().intersects(enemy.GetHitbox())) {
-            // Get positions and velocities
-            auto playerPos = player->GetPosition();
-            auto enemyPos = enemy.GetPosition();
-            auto playerVel = player->GetVelocity();
-            auto enemyVel = enemy.GetVelocity();
+void MainGameScreen::HandleEnemyCollision() {
 
-            // Check if moving towards each other
-            bool movingTowardEachOther =
-                ((playerVel.x > 0 && enemyVel.x < 0 && playerPos.x < enemyPos.x) ||
-                 (playerVel.x < 0 && enemyVel.x > 0 && playerPos.x > enemyPos.x)) ||
-                ((playerVel.y > 0 && enemyVel.y < 0 && playerPos.y < enemyPos.y) ||
-                 (playerVel.y < 0 && enemyVel.y > 0 && playerPos.y > enemyPos.y));
+    for (Enemy& enemy : enemyManager->GetCollection()) {
+        if (player->GetHitbox().intersects(enemy.GetHitbox()) && player->IsDamageable()) {
 
-            if (movingTowardEachOther || (playerVel.x == 0 && playerVel.y == 0)) {
-                // Invert enemy velocity
-                enemy.SetVelocity(-enemyVel);
-            }
-
-            // Calculate overlap amounts
-            sf::FloatRect playerBounds = player->GetHitbox();
-            sf::FloatRect enemyBounds = enemy.GetHitbox();
-
-            float overlapX = std::min(
-                playerBounds.left + playerBounds.width - enemyBounds.left,
-                enemyBounds.left + enemyBounds.width - playerBounds.left
-            );
-
-            float overlapY = std::min(
-                playerBounds.top + playerBounds.height - enemyBounds.top,
-                enemyBounds.top + enemyBounds.height - playerBounds.top
-            );
-
-            // Resolve collision by moving objects apart
-            if (overlapX < overlapY) {
-                // Resolve along X-axis
-                float adjustX = (playerBounds.left < enemyBounds.left) ? -overlapX : overlapX;
-                player->SetPosition(player->GetPosition() + sf::Vector2f(adjustX, 0));
-                enemy.SetPosition(enemy.GetPosition() - sf::Vector2f(adjustX, 0));
-            } else {
-                // Resolve along Y-axis
-                float adjustY = (playerBounds.top < enemyBounds.top) ? -overlapY : overlapY;
-                player->SetPosition(player->GetPosition() + sf::Vector2f(0, adjustY));
-                enemy.SetPosition(enemy.GetPosition() - sf::Vector2f(0, adjustY));
-            }
+            GetPlayer()->SetHealth(GetPlayer()->GetHealth() - 1);
+            player->SetDamageable(false);
+            invinsibilityClock.restart();
         }
+    }
+        
+    if (invinsibilityClock.getElapsedTime() >= invinsibilityCooldown) {
+        player->SetDamageable(true);
     }
 }
