@@ -132,38 +132,30 @@ void MainGameScreen::CollisionDetection() {
 }
 
 void MainGameScreen::HandleEnemyCollision(std::unique_ptr<Entity>& player, std::vector<Enemy>& enemies) {
-
     for (Enemy& enemy : enemies) {
         if (player->GetHitbox().intersects(enemy.GetHitbox())) {
-
-            // Determine collision direction
-            sf::Vector2f playerPos = player->GetPosition();
-            sf::Vector2f enemyPos = enemy.GetPosition();
-            sf::Vector2f playerVel = player->GetVelocity();
-            sf::Vector2f enemyVel = enemy.GetVelocity();
+            // Get positions and velocities
+            auto playerPos = player->GetPosition();
+            auto enemyPos = enemy.GetPosition();
+            auto playerVel = player->GetVelocity();
+            auto enemyVel = enemy.GetVelocity();
 
             // Check if moving towards each other
             bool movingTowardEachOther =
                 ((playerVel.x > 0 && enemyVel.x < 0 && playerPos.x < enemyPos.x) ||
-                (playerVel.x < 0 && enemyVel.x > 0 && playerPos.x > enemyPos.x)) ||
+                 (playerVel.x < 0 && enemyVel.x > 0 && playerPos.x > enemyPos.x)) ||
                 ((playerVel.y > 0 && enemyVel.y < 0 && playerPos.y < enemyPos.y) ||
-                (playerVel.y < 0 && enemyVel.y > 0 && playerPos.y > enemyPos.y));
+                 (playerVel.y < 0 && enemyVel.y > 0 && playerPos.y > enemyPos.y));
 
-            if (movingTowardEachOther || (player->GetVelocity().x == 0 && player->GetVelocity().y == 0)) {
-
+            if (movingTowardEachOther || (playerVel.x == 0 && playerVel.y == 0)) {
                 // Invert enemy velocity
-                enemyVel.x = -enemyVel.x;
-                enemyVel.y = -enemyVel.y;
+                enemy.SetVelocity(-enemyVel);
             }
 
-            // Update enemy velocity
-            enemy.SetVelocity(enemyVel);
-
-            // Calculate the overlap amount and adjust positions
+            // Calculate overlap amounts
             sf::FloatRect playerBounds = player->GetHitbox();
             sf::FloatRect enemyBounds = enemy.GetHitbox();
 
-            // Calculate overlap amounts
             float overlapX = std::min(
                 playerBounds.left + playerBounds.width - enemyBounds.left,
                 enemyBounds.left + enemyBounds.width - playerBounds.left
@@ -176,38 +168,16 @@ void MainGameScreen::HandleEnemyCollision(std::unique_ptr<Entity>& player, std::
 
             // Resolve collision by moving objects apart
             if (overlapX < overlapY) {
-
                 // Resolve along X-axis
-                if (playerBounds.left < enemyBounds.left) {
-
-                    // Player is to the left of the enemy
-                    player->SetPosition(player->GetPosition() - sf::Vector2f(overlapX, 0));
-                    enemy.SetPosition(enemy.GetPosition() + sf::Vector2f(overlapX, 0));
-                } else {
-
-                    // Player is to the right of the enemy
-                    player->SetPosition(player->GetPosition() + sf::Vector2f(overlapX, 0));
-                    enemy.SetPosition(enemy.GetPosition() - sf::Vector2f(overlapX, 0));
-                }
+                float adjustX = (playerBounds.left < enemyBounds.left) ? -overlapX : overlapX;
+                player->SetPosition(player->GetPosition() + sf::Vector2f(adjustX, 0));
+                enemy.SetPosition(enemy.GetPosition() - sf::Vector2f(adjustX, 0));
             } else {
-
                 // Resolve along Y-axis
-                if (playerBounds.top < enemyBounds.top) {
-
-                    // Player is above the enemy
-                    player->SetPosition(player->GetPosition() - sf::Vector2f(0, overlapY));
-                    enemy.SetPosition(enemy.GetPosition() + sf::Vector2f(0, overlapY));
-
-                } else {
-
-                    // Player is below the enemy
-                    player->SetPosition(player->GetPosition() + sf::Vector2f(0, overlapY));
-                    enemy.SetPosition(enemy.GetPosition() - sf::Vector2f(0, overlapY));
-                }
+                float adjustY = (playerBounds.top < enemyBounds.top) ? -overlapY : overlapY;
+                player->SetPosition(player->GetPosition() + sf::Vector2f(0, adjustY));
+                enemy.SetPosition(enemy.GetPosition() - sf::Vector2f(0, adjustY));
             }
-
-            // Update enemy velocity
-            enemy.SetVelocity(enemyVel);
         }
     }
 }
