@@ -21,6 +21,7 @@ class MainGameScreen : public CoinGetter::Screen {
         void GetUserInput();
         void CollisionDetection();
         Player* GetPlayer();
+        void HandleEnemyCollision(std::unique_ptr<Entity>& player, std::vector<Enemy>& enemies);
 
     public:
         MainGameScreen();
