@@ -43,4 +43,7 @@ void Enemy::Update() {
     if (bounds.top < 0 || bounds.top + bounds.height > desktopMode.height) {
         vel.y = -vel.y;
     }
+
+    // Hitbox
+    hitBox = sprite.getGlobalBounds();
 }

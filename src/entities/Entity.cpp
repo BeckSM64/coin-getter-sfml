@@ -33,3 +33,19 @@ void Entity::Draw(sf::RenderWindow &win) {
 sf::FloatRect Entity::GetHitbox() const {
     return hitBox;
 }
+
+sf::Vector2f Entity::GetVelocity() const {
+    return vel;
+}
+
+void Entity::SetVelocity(sf::Vector2f velocity) {
+    vel = velocity;
+}
+
+void Entity::SetPosition(sf::Vector2f position) {
+    pos = position;
+}
+
+sf::Vector2f Entity::GetPosition() const {
+    return pos;
+}

@@ -5,11 +5,12 @@
 class EnemyManager {
 
     private:
-        std::vector<Enemy *> enemyCollection;
+        std::vector<Enemy> enemyCollection;
 
     public:
         EnemyManager();
         ~EnemyManager();
         void Update();
         void Draw(sf::RenderWindow &win);
+        std::vector<Enemy>& GetCollection();
 };

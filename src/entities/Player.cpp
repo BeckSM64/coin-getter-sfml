@@ -123,6 +123,9 @@ void Player::Update() {
 
     // Keep player on screen
     ConstrainToScreen();
+
+    // Hitbox
+    hitBox = sprite.getGlobalBounds();
 }
 
 void Player::AddToWallet(int amount) {

@@ -5,28 +5,29 @@
 EnemyManager::EnemyManager() {
 
     for (int i = 0; i < ResourceManager::GetInstance().GetRandomNumber(5, 20); i++) {
-        enemyCollection.push_back(new Enemy());
+        Enemy enemy;
+        enemyCollection.push_back(enemy);
     }
 }
 
 EnemyManager::~EnemyManager() {
 
-    for (Enemy *enemy : enemyCollection) {
-        delete(enemy);
-        enemy = nullptr;
-    }
 }
 
 void EnemyManager::Update() {
 
-    for (Enemy *enemy : enemyCollection) {
-        enemy->Update();
+    for (Enemy &enemy : enemyCollection) {
+        enemy.Update();
     }
 }
 
 void EnemyManager::Draw(sf::RenderWindow &win) {
 
-    for (Enemy *enemy : enemyCollection) {
-        enemy->Draw(win);
+    for (Enemy &enemy : enemyCollection) {
+        enemy.Draw(win);
     }
+}
+
+std::vector<Enemy>& EnemyManager::GetCollection() {
+    return enemyCollection;
 }

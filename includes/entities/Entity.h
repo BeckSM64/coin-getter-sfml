@@ -7,6 +7,10 @@ class Entity {
         virtual void Update() = 0;
         void Draw(sf::RenderWindow &win);
         sf::FloatRect GetHitbox() const;
+        sf::Vector2f GetVelocity() const;
+        sf::Vector2f GetPosition() const;
+        void SetVelocity(sf::Vector2f velocity);
+        void SetPosition(sf::Vector2f position);
         ~Entity() = default;
 
     protected:
