@@ -144,10 +144,12 @@ void MainGameScreen::HandleEnemyCollision(std::unique_ptr<Entity>& player, std::
 
             // Check if moving towards each other
             bool movingTowardEachOther =
-                (playerVel.x * (enemyPos.x - playerPos.x) + playerVel.y * (enemyPos.y - playerPos.y) < 0) &&
-                (enemyVel.x * (playerPos.x - enemyPos.x) + enemyVel.y * (playerPos.y - enemyPos.y) < 0);
+                ((playerVel.x > 0 && enemyVel.x < 0 && playerPos.x < enemyPos.x) ||
+                (playerVel.x < 0 && enemyVel.x > 0 && playerPos.x > enemyPos.x)) ||
+                ((playerVel.y > 0 && enemyVel.y < 0 && playerPos.y < enemyPos.y) ||
+                (playerVel.y < 0 && enemyVel.y > 0 && playerPos.y > enemyPos.y));
 
-            if (movingTowardEachOther) {
+            if (movingTowardEachOther || (player->GetVelocity().x == 0 && player->GetVelocity().y == 0)) {
 
                 // Invert enemy velocity
                 enemyVel.x = -enemyVel.x;
@@ -203,6 +205,9 @@ void MainGameScreen::HandleEnemyCollision(std::unique_ptr<Entity>& player, std::
                     enemy.SetPosition(enemy.GetPosition() - sf::Vector2f(0, overlapY));
                 }
             }
+
+            // Update enemy velocity
+            enemy.SetVelocity(enemyVel);
         }
     }
 }
