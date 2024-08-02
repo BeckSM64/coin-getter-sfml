@@ -52,6 +52,12 @@ else (WIN32)
     add_executable(coingetter ${SOURCES})
 endif (WIN32)
 
+# Add flags to enforce static linking
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
+
+# Set the path to the static winpthread library
+# set(WINPTHREAD_STATIC_LIB "C:/msys64/mingw64/lib/libwinpthread.a")  # Adjust the path as necessary
+
 # Link SFML static libraries
 target_link_libraries(
     coingetter PRIVATE
@@ -70,6 +76,9 @@ target_link_libraries(
     ogg
     sfml-network
     ws2_32
+    -static-libgcc
+    -static-libstdc++
+    ${WINPTHREAD_STATIC_LIB}
 )
 
 # Ensure the application is treated as a GUI application
