@@ -52,25 +52,47 @@ else (WIN32)
     add_executable(coingetter ${SOURCES})
 endif (WIN32)
 
-# Link SFML static libraries
-target_link_libraries(
-    coingetter PRIVATE
-    sfml-window
-    sfml-system
-    opengl32
-    winmm
-    gdi32
-    sfml-graphics
-    sfml-audio
-    openal32
-    flac
-    vorbisenc
-    vorbisfile
-    vorbis
-    ogg
-    sfml-network
-    ws2_32
-)
+if (WIN32)
+    # Link SFML static libraries
+    target_link_libraries(
+        coingetter PRIVATE
+        sfml-window
+        sfml-system
+        opengl32
+        winmm
+        gdi32
+        sfml-graphics
+        sfml-audio
+        openal32
+        flac
+        vorbisenc
+        vorbisfile
+        vorbis
+        ogg
+        sfml-network
+        ws2_32
+    )
+elseif (UNIX)
+    # find_package(FLAC REQUIRED)
+    target_link_libraries(
+        coingetter PRIVATE
+        # ${FLAC_LIBRARIES}
+        sfml-window
+        sfml-system
+        # opengl32
+        # winmm
+        # gdi32
+        sfml-graphics
+        sfml-audio
+        # openal32
+        # vorbisenc
+        # vorbisfile
+        # vorbis
+        # ogg
+        sfml-network
+        # ws2_32
+    )
+endif()
 
 # Ensure the application is treated as a GUI application
 if (WIN32)
