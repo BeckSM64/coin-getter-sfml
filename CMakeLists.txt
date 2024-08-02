@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.16)
 project(coingetter LANGUAGES CXX)
 
 # Set output directory for executable
@@ -10,9 +10,7 @@ set(CMAKE_BUILD_TYPE DEBUG)
 add_definitions(-DSFML_STATIC)
 
 # Pull SFML if on Windows
-if (WIN32)
-    add_subdirectory(sfml)
-endif (WIN32)
+add_subdirectory(SFML)
 
 # Include directories
 include_directories(
@@ -53,7 +51,8 @@ else (WIN32)
 endif (WIN32)
 
 # Add flags to enforce static linking
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 
 # Set the path to the static winpthread library
 # set(WINPTHREAD_STATIC_LIB "C:/msys64/mingw64/lib/libwinpthread.a")  # Adjust the path as necessary
@@ -77,29 +76,18 @@ if (WIN32)
         ogg
         sfml-network
         ws2_32
-	-static-libgcc
-	-static-libstdc++
+        -static-libgcc
+        -static-libstdc++
 	${WINPTHREAD_STATIC_LIB}
     )
 elseif (UNIX)
-    # find_package(FLAC REQUIRED)
     target_link_libraries(
         coingetter PRIVATE
-        # ${FLAC_LIBRARIES}
         sfml-window
         sfml-system
-        # opengl32
-        # winmm
-        # gdi32
         sfml-graphics
         sfml-audio
-        # openal32
-        # vorbisenc
-        # vorbisfile
-        # vorbis
-        # ogg
         sfml-network
-        # ws2_32
     )
 endif()
 
