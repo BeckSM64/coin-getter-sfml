@@ -121,7 +121,7 @@ void MainMenuScreen::DrawMenuOptions(sf::RenderWindow &win) {
 void MainMenuScreen::GetUserInput() {
 
     float joypadY = 0.0f;
-    bool isStartCurrentlyPressed;
+    bool isStartCurrentlyPressed = false;
 
     if (keyPressClock.getElapsedTime() >= keyPressCooldown) {
 
@@ -174,6 +174,7 @@ void MainMenuScreen::GetUserInput() {
 
             // Check if the Enter key is released
             isStartCurrentlyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Enter);
+            std::cout << isStartCurrentlyPressed << std::endl;
         }
     }
 
@@ -218,6 +219,7 @@ void MainMenuScreen::GetUserInput() {
 
     // Update the previous state
     wasStartPressed = isStartCurrentlyPressed;
+    std::cout << std::to_string(isStartCurrentlyPressed) << std::endl;
 }
 
 GameState MainMenuScreen::GetGameState() {

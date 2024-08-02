@@ -58,28 +58,50 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -st
 # Set the path to the static winpthread library
 # set(WINPTHREAD_STATIC_LIB "C:/msys64/mingw64/lib/libwinpthread.a")  # Adjust the path as necessary
 
-# Link SFML static libraries
-target_link_libraries(
-    coingetter PRIVATE
-    sfml-window
-    sfml-system
-    opengl32
-    winmm
-    gdi32
-    sfml-graphics
-    sfml-audio
-    openal32
-    flac
-    vorbisenc
-    vorbisfile
-    vorbis
-    ogg
-    sfml-network
-    ws2_32
-    -static-libgcc
-    -static-libstdc++
-    ${WINPTHREAD_STATIC_LIB}
-)
+if (WIN32)
+    # Link SFML static libraries
+    target_link_libraries(
+        coingetter PRIVATE
+        sfml-window
+        sfml-system
+        opengl32
+        winmm
+        gdi32
+        sfml-graphics
+        sfml-audio
+        openal32
+        flac
+        vorbisenc
+        vorbisfile
+        vorbis
+        ogg
+        sfml-network
+        ws2_32
+	-static-libgcc
+	-static-libstdc++
+	${WINPTHREAD_STATIC_LIB}
+    )
+elseif (UNIX)
+    # find_package(FLAC REQUIRED)
+    target_link_libraries(
+        coingetter PRIVATE
+        # ${FLAC_LIBRARIES}
+        sfml-window
+        sfml-system
+        # opengl32
+        # winmm
+        # gdi32
+        sfml-graphics
+        sfml-audio
+        # openal32
+        # vorbisenc
+        # vorbisfile
+        # vorbis
+        # ogg
+        sfml-network
+        # ws2_32
+    )
+endif()
 
 # Ensure the application is treated as a GUI application
 if (WIN32)

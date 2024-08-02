@@ -49,7 +49,7 @@ void ResourceManager::InitializeResources() {
     LoadTexture("enemy", "sprites/enemy.png");
     LoadTexture("coin", "sprites/coin.png");
     LoadFont("retroFont", "fonts/RetroComputer.ttf");
-    LoadSoundBuffer("endo", "sounds/endo.mp3");
+    LoadSoundBuffer("endo", "sounds/endo.wav");
 }
 
 int ResourceManager::GetRandomNumber(int lower, int upper) {
