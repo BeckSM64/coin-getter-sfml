@@ -46,16 +46,13 @@ if (WIN32)
     )
 
     add_executable(coingetter ${SOURCES} ${CMAKE_SOURCE_DIR}/output/icon.o)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
 else (WIN32)
     add_executable(coingetter ${SOURCES})
 endif (WIN32)
 
 # Add flags to enforce static linking
-# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
-
-# Set the path to the static winpthread library
-# set(WINPTHREAD_STATIC_LIB "C:/msys64/mingw64/lib/libwinpthread.a")  # Adjust the path as necessary
 
 if (WIN32)
     # Link SFML static libraries
@@ -69,16 +66,16 @@ if (WIN32)
         sfml-graphics
         sfml-audio
         openal32
-        flac
-        vorbisenc
-        vorbisfile
-        vorbis
-        ogg
+        ${CMAKE_SOURCE_DIR}/SFML/extlibs/libs-mingw/x64/libflac.a
+        ${CMAKE_SOURCE_DIR}/SFML/extlibs/libs-mingw/x64/libvorbisenc.a
+        ${CMAKE_SOURCE_DIR}/SFML/extlibs/libs-mingw/x64/libvorbisfile.a
+        ${CMAKE_SOURCE_DIR}/SFML/extlibs/libs-mingw/x64/libvorbis.a
+        ${CMAKE_SOURCE_DIR}/SFML/extlibs/libs-mingw/x64/libogg.a
         sfml-network
         ws2_32
         -static-libgcc
         -static-libstdc++
-	${WINPTHREAD_STATIC_LIB}
+        ${WINPTHREAD_STATIC_LIB}
     )
 elseif (UNIX)
     target_link_libraries(
@@ -115,3 +112,11 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_SOURCE_DIR}/output/icon.o
     COMMENT "Removing icon.o after build"
 )
+
+# Copy dlls
+# Add a custom command to copy the DLL after the build
+add_custom_command(TARGET coingetter POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/lib
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "C:/Windows/system32/openal32.dll"
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/lib)
