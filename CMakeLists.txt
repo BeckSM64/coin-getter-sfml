@@ -106,17 +106,17 @@ file(COPY sounds/ DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sounds/")
 
 install(TARGETS coingetter)
 
+# Copy DLLs
+if (WIN32)
+add_custom_command(TARGET coingetter POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${CMAKE_SOURCE_DIR}/SFML/extlibs/bin/x64/openal32.dll"
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endif (WIN32)
+
 # Cleanup
 add_custom_command(
     TARGET coingetter POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_SOURCE_DIR}/output/icon.o
     COMMENT "Removing icon.o after build"
 )
-
-# Copy dlls
-# Add a custom command to copy the DLL after the build
-add_custom_command(TARGET coingetter POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/lib
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "C:/Windows/system32/openal32.dll"
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/lib)
