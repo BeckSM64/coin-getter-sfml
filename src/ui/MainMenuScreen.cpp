@@ -62,6 +62,7 @@ MainMenuScreen::MainMenuScreen() {
     const sf::SoundBuffer &soundBuffer = ResourceManager::GetInstance().GetSoundBuffer("endo");
     backgroundMusic.setBuffer(soundBuffer);
     backgroundMusic.play();
+    backgroundMusic.setLoop(true);
 }
 
 MainMenuScreen::~MainMenuScreen() {

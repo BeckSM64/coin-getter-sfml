@@ -35,6 +35,7 @@ MainGameScreen::MainGameScreen() {
     const sf::SoundBuffer &soundBuffer = ResourceManager::GetInstance().GetSoundBuffer("endo");
     backgroundMusic.setBuffer(soundBuffer);
     backgroundMusic.play();
+    backgroundMusic.setLoop(true);
 }
 
 MainGameScreen::~MainGameScreen() {
