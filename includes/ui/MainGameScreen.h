@@ -6,6 +6,7 @@
 #include "EnemyManager.h"
 #include "Screen.h"
 #include "Entity.h"
+#include "Hud.h"
 
 class MainGameScreen : public CoinGetter::Screen {
 
@@ -24,6 +25,7 @@ class MainGameScreen : public CoinGetter::Screen {
         void HandleEnemyCollision();
         sf::Clock invinsibilityClock;
         const sf::Time invinsibilityCooldown = sf::milliseconds(2000); // 2s cooldown
+        Hud hud;
 
     public:
         MainGameScreen();

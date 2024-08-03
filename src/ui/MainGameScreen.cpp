@@ -7,6 +7,7 @@
 #include "CoinManager.h"
 #include "ResourceManager.h"
 #include "Enemy.h"
+#include "Hud.h"
 
 MainGameScreen::MainGameScreen() {
 
@@ -52,6 +53,8 @@ void MainGameScreen::Draw(sf::RenderWindow &win) {
     if (isPaused) {
         win.draw(pauseText);
     }
+
+    hud.Draw(win);
 }
 
 void MainGameScreen::Update() {
@@ -77,6 +80,8 @@ void MainGameScreen::Update() {
     if (GetPlayer()->GetHealth() == 0) {
         currentGameState = GameState::MAIN_MENU;
     }
+
+    hud.Update(GetPlayer()->GetHealth());
 }
 
 void MainGameScreen::GetUserInput() {
