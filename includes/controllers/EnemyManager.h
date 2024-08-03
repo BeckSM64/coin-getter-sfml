@@ -6,6 +6,9 @@ class EnemyManager {
 
     private:
         std::vector<Enemy> enemyCollection;
+        sf::Clock enemySpawnClock;
+        sf::Time enemySpawnTimer;
+        int enemyRespawnRateInSeconds;
 
     public:
         EnemyManager();

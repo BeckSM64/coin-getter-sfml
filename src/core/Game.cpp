@@ -11,7 +11,7 @@
 Game::Game() {
 
     // Create window and set fixed frame rate limit
-    win.create(sf::VideoMode::getDesktopMode(), "SFML Fullscreen Window", sf::Style::Fullscreen);
+    win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::Fullscreen);
     win.setFramerateLimit(60);
 
     // Background color
