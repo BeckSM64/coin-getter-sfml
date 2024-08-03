@@ -81,7 +81,8 @@ void MainGameScreen::Update() {
         currentGameState = GameState::MAIN_MENU;
     }
 
-    hud.Update(GetPlayer()->GetHealth());
+    // Update the hud
+    hud.Update(GetPlayer()->GetHealth(), GetPlayer()->GetWalletValue());
 }
 
 void MainGameScreen::GetUserInput() {

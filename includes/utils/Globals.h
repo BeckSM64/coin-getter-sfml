@@ -8,6 +8,7 @@ const float DEADZONE_THRESHOLD = 10.0f;
 const float PLAYER_MOVEMENT_SPEED = 100.0f;
 const float ACCELERATION = 10.0f;
 const float DECELERATION = 15.0f;
+const int FONT_SIZE_72 = 72;
 
 enum GameState {
     MAIN_MENU,
