@@ -1,17 +1,16 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <vector>
+#include <map>
 
 class OptionSelector {
 
     private:
-        sf::Text testOption;
-        sf::Text testOption1;
-        sf::Text testOption2;
-        std::vector<std::string> options;
-        int activeMenuOption;
+        sf::Text optionText;
         sf::Clock optionSelectorClock;
         sf::Time optionSelectorCooldown;
+        int activeMenuOption;
+        std::map<int, std::string> optionsIdToOptionsStringMap;
+        bool updateScreenStyle; // Flag to determine if screen style option was selected
         void GetUserInput();
 
     public:

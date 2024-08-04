@@ -8,25 +8,28 @@ OptionSelector::OptionSelector() {
     const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
 
     // Create title text
-    testOption = sf::Text("< Fullscreen >", font, FONT_SIZE_72);
-    testOption.setFillColor(sf::Color::White);
+    optionText = sf::Text("< Fullscreen >", font, FONT_SIZE_72);
+    optionText.setFillColor(sf::Color::White);
 
     // Position title text
-    testOption.setPosition(
-        (sf::VideoMode::getDesktopMode().width / 2 - (testOption.getGlobalBounds().width / 2)),
-        (sf::VideoMode::getDesktopMode().height / 2 - (testOption.getGlobalBounds().height / 2))
+    optionText.setPosition(
+        (sf::VideoMode::getDesktopMode().width / 2 - (optionText.getGlobalBounds().width / 2)),
+        (sf::VideoMode::getDesktopMode().height / 2 - (optionText.getGlobalBounds().height / 2))
     );
 
     // Active menu option
     activeMenuOption = 0;
 
-    // Initialize vector values
-    options.push_back("Fullscreen");
-    options.push_back("Windowed");
-    options.push_back("Windowed Borderless");
+    // Setup options map
+    optionsIdToOptionsStringMap[0] = "Fullscreen";
+    optionsIdToOptionsStringMap[1] = "Windowed";
+    optionsIdToOptionsStringMap[2] = "Windowed Borderless";
 
     // Initialize cooldown for navigation
     optionSelectorCooldown = sf::milliseconds(200);
+
+    // Don't update screen style
+    updateScreenStyle = false;
 }
 
 OptionSelector::~OptionSelector() {
@@ -34,14 +37,37 @@ OptionSelector::~OptionSelector() {
 }
 
 void OptionSelector::Draw(sf::RenderWindow &win) {
-    win.draw(testOption);
+
+    // Draw active option text
+    win.draw(optionText);
+
+    // Check if option to update screen style was selected
+    if (updateScreenStyle) {
+
+        // Check which option was selected and update screen accordingly
+        // Needs to be done in draw because access to sf::RenderWindow is required
+        if (optionsIdToOptionsStringMap[activeMenuOption] == "Fullscreen") {
+
+            win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::Fullscreen);
+
+        } else if (optionsIdToOptionsStringMap[activeMenuOption] == "Windowed") {
+
+            win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::Default);
+
+        } else if (optionsIdToOptionsStringMap[activeMenuOption] == "Windowed Borderless") {
+
+            win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::None);
+
+        }
+        updateScreenStyle = false; // Reset flag
+    }
 }
 
 void OptionSelector::Update() {
-    testOption.setString("< " + options[activeMenuOption] + " >");
-    testOption.setPosition(
-        (sf::VideoMode::getDesktopMode().width / 2 - (testOption.getGlobalBounds().width / 2)),
-        (sf::VideoMode::getDesktopMode().height / 2 - (testOption.getGlobalBounds().height / 2))
+    optionText.setString("< " + optionsIdToOptionsStringMap[activeMenuOption] + " >");
+    optionText.setPosition(
+        (sf::VideoMode::getDesktopMode().width / 2 - (optionText.getGlobalBounds().width / 2)),
+        (sf::VideoMode::getDesktopMode().height / 2 - (optionText.getGlobalBounds().height / 2))
     );
     GetUserInput();
 }
@@ -58,22 +84,31 @@ void OptionSelector::GetUserInput() {
 
             joypadX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 
+            // Navigate selector options
             if (joypadX > 10.0f) {
-                if (activeMenuOption == (options.size() - 1)) {
+                if (activeMenuOption == (optionsIdToOptionsStringMap.size() - 1)) {
                     activeMenuOption = 0;
                 } else {
                     activeMenuOption += 1;
                 }
+
                 optionSelectorClock.restart();
 
             } else if (joypadX < -10.0f) {
                 
                 if (activeMenuOption == 0) {
-                    activeMenuOption = (options.size() - 1);
+                    activeMenuOption = (optionsIdToOptionsStringMap.size() - 1);
                 } else {
                     activeMenuOption -= 1;
                 }
+
                 optionSelectorClock.restart();
+            }
+
+            // Check if option is selected
+            if (sf::Joystick::isButtonPressed(0, 2)) {
+
+                updateScreenStyle = true; // Set flag to update screen style to true
             }
             
         } else {
@@ -82,10 +117,13 @@ void OptionSelector::GetUserInput() {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 
                 // Navigate options
-                activeMenuOption += 1;
-                if ((options.size() - 1) == activeMenuOption) {
+                if (activeMenuOption == (optionsIdToOptionsStringMap.size() - 1)) {
                     activeMenuOption = 0;
+                } else {
+                    activeMenuOption += 1;
                 }
+
+                optionSelectorClock.restart();
 
                 // Restart clock for navigation cooldown
                 optionSelectorClock.restart();
@@ -93,7 +131,7 @@ void OptionSelector::GetUserInput() {
             } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 
                 if (activeMenuOption == 0) {
-                    activeMenuOption = (options.size() - 1);
+                    activeMenuOption = (optionsIdToOptionsStringMap.size() - 1);
                 } else {
                     activeMenuOption -= 1;
                 }
