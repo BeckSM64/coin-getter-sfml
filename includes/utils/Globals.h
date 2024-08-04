@@ -13,6 +13,7 @@ const int FONT_SIZE_72 = 72;
 enum GameState {
     MAIN_MENU,
     MAIN_GAME,
+    OPTIONS_MENU,
     QUIT_GAME,
     DEBUG_MENU
 };

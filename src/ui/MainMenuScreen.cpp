@@ -198,6 +198,7 @@ void MainMenuScreen::GetUserInput() {
             case menuOptionsEnum::OPTIONS:
 
                 // Go to options screen
+                currentGameState = GameState::OPTIONS_MENU;
                 break;
 
             case menuOptionsEnum::CONTROLS:

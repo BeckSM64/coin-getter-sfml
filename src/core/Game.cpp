@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include "MainMenuScreen.h"
 #include "MainGameScreen.h"
+#include "OptionsScreen.h"
 #include "DebugMenuScreen.h"
 #include "ResourceManager.h"
 #include "ControllerManager.h"
@@ -94,6 +95,12 @@ void Game::ManageGameState() {
         case GameState::MAIN_GAME:
             if (std::dynamic_pointer_cast<MainGameScreen>(currentScreen) == nullptr) {
                 currentScreen = std::make_shared<MainGameScreen>();
+            }
+            break;
+
+        case GameState::OPTIONS_MENU:
+            if (std::dynamic_pointer_cast<OptionsScreen>(currentScreen) == nullptr) {
+                currentScreen = std::make_shared<OptionsScreen>();
             }
             break;
 
