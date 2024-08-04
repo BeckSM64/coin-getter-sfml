@@ -1,14 +1,15 @@
+#include <map>
 #include "OptionSelector.h"
 #include "ResourceManager.h"
 #include "Globals.h"
 
-OptionSelector::OptionSelector() {
+OptionSelector::OptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap) {
 
     // Setup font
     const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
 
     // Create title text
-    optionText = sf::Text("< Fullscreen >", font, FONT_SIZE_72);
+    optionText = sf::Text("< >", font, FONT_SIZE_72);
     optionText.setFillColor(sf::Color::White);
 
     // Position title text
@@ -21,46 +22,13 @@ OptionSelector::OptionSelector() {
     activeMenuOption = 0;
 
     // Setup options map
-    optionsIdToOptionsStringMap[0] = "Fullscreen";
-    optionsIdToOptionsStringMap[1] = "Windowed";
-    optionsIdToOptionsStringMap[2] = "Windowed Borderless";
+    this->optionsIdToOptionsStringMap = optionsIdToOptionsStringMap;
 
     // Initialize cooldown for navigation
     optionSelectorCooldown = sf::milliseconds(200);
 
     // Don't update screen style
-    updateScreenStyle = false;
-}
-
-OptionSelector::~OptionSelector() {
-
-}
-
-void OptionSelector::Draw(sf::RenderWindow &win) {
-
-    // Draw active option text
-    win.draw(optionText);
-
-    // Check if option to update screen style was selected
-    if (updateScreenStyle) {
-
-        // Check which option was selected and update screen accordingly
-        // Needs to be done in draw because access to sf::RenderWindow is required
-        if (optionsIdToOptionsStringMap[activeMenuOption] == "Fullscreen") {
-
-            win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::Fullscreen);
-
-        } else if (optionsIdToOptionsStringMap[activeMenuOption] == "Windowed") {
-
-            win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::Default);
-
-        } else if (optionsIdToOptionsStringMap[activeMenuOption] == "Windowed Borderless") {
-
-            win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::None);
-
-        }
-        updateScreenStyle = false; // Reset flag
-    }
+    optionSelected = false;
 }
 
 void OptionSelector::Update() {
@@ -70,74 +38,4 @@ void OptionSelector::Update() {
         (sf::VideoMode::getDesktopMode().height / 2 - (optionText.getGlobalBounds().height / 2))
     );
     GetUserInput();
-}
-
-void OptionSelector::GetUserInput() {
-
-    // Check if cooldown for navigation has been reached
-    if (optionSelectorClock.getElapsedTime() > optionSelectorCooldown) {
-
-        float joypadX = 0.0f;
-
-        // Check if joystick 0 is connected
-        if (sf::Joystick::isConnected(0)) {
-
-            joypadX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
-
-            // Navigate selector options
-            if (joypadX > 10.0f) {
-                if (activeMenuOption == (optionsIdToOptionsStringMap.size() - 1)) {
-                    activeMenuOption = 0;
-                } else {
-                    activeMenuOption += 1;
-                }
-
-                optionSelectorClock.restart();
-
-            } else if (joypadX < -10.0f) {
-                
-                if (activeMenuOption == 0) {
-                    activeMenuOption = (optionsIdToOptionsStringMap.size() - 1);
-                } else {
-                    activeMenuOption -= 1;
-                }
-
-                optionSelectorClock.restart();
-            }
-
-            // Check if option is selected
-            if (sf::Joystick::isButtonPressed(0, 2)) {
-
-                updateScreenStyle = true; // Set flag to update screen style to true
-            }
-            
-        } else {
-
-            // Check if right or left are pressed on the keyboard
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-
-                // Navigate options
-                if (activeMenuOption == (optionsIdToOptionsStringMap.size() - 1)) {
-                    activeMenuOption = 0;
-                } else {
-                    activeMenuOption += 1;
-                }
-
-                optionSelectorClock.restart();
-
-                // Restart clock for navigation cooldown
-                optionSelectorClock.restart();
-
-            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-
-                if (activeMenuOption == 0) {
-                    activeMenuOption = (optionsIdToOptionsStringMap.size() - 1);
-                } else {
-                    activeMenuOption -= 1;
-                }
-
-                optionSelectorClock.restart();
-            }
-        }
-    }
 }
