@@ -20,14 +20,20 @@ MainGameScreen::MainGameScreen() {
     // Setup font
     const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
 
+    // Scale the font size based on the current screen resolution
+    float scaledFontSize = ResourceManager::GetInstance().ScaleFontSize(FONT_SIZE_128);
+
     // Create title text
-    pauseText = sf::Text("[PAUSE]", font, 128);
+    pauseText = sf::Text("[PAUSE]", font, scaledFontSize);
     pauseText.setFillColor(sf::Color::White);
+
+    // Get screen resolution from ResourceManager
+    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
 
     // Position pause text
     pauseText.setPosition(
-        (sf::VideoMode::getDesktopMode().width / 2 - (pauseText.getGlobalBounds().width / 2)),
-        (sf::VideoMode::getDesktopMode().height / 2 - (pauseText.getGlobalBounds().height / 2))
+        (screenResolution.x / 2 - (pauseText.getGlobalBounds().width / 2)),
+        (screenResolution.y / 2 - (pauseText.getGlobalBounds().height / 2))
     );
 
     currentGameState = GameState::MAIN_GAME;

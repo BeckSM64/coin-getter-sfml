@@ -10,11 +10,13 @@ Coin::Coin() {
     // Load texture and set up sprite
     sprite.setTexture(ResourceManager::GetInstance().GetTexture("coin"));
 
+    // Get screen resolution from ResourceManager
+    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
+
     // Initialize position and velocity
-    const sf::VideoMode& desktopMode = sf::VideoMode::getDesktopMode();
     sprite.setPosition(
-        ResourceManager::GetInstance().GetRandomNumber(0, desktopMode.width - sprite.getGlobalBounds().width),
-        ResourceManager::GetInstance().GetRandomNumber(0, desktopMode.height - sprite.getGlobalBounds().height)
+        ResourceManager::GetInstance().GetRandomNumber(0, screenResolution.x - sprite.getGlobalBounds().width),
+        ResourceManager::GetInstance().GetRandomNumber(0, screenResolution.y - sprite.getGlobalBounds().height)
     );
 
     float speed = ResourceManager::GetInstance().GetRandomFloat(5.0f, 10.0f);
@@ -23,7 +25,9 @@ Coin::Coin() {
     vel.x = speed * std::cos(angle);
     vel.y = speed * std::sin(angle);
 
-    sprite.setScale(0.5f, 0.5f);
+    // Get scale factor from ResourceManager
+    float scaleFactor = ResourceManager::GetInstance().GetScaleFactor();
+    sprite.setScale(scaleFactor / 2, scaleFactor / 2);
 
     // Hitbox
     hitBox = sprite.getGlobalBounds();
@@ -35,13 +39,16 @@ void Coin::Update() {
     // Move the coin
     sprite.move(vel);
 
+    // Get screen resolution from ResourceManager
+    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
+
     // Handle bouncing off the edges
     sf::FloatRect bounds = sprite.getGlobalBounds();
-    if (bounds.left < 0 || bounds.left + bounds.width > sf::VideoMode::getDesktopMode().width) {
+    if (bounds.left < 0 || bounds.left + bounds.width > screenResolution.x) {
         vel.x = -vel.x;
     }
 
-    if (bounds.top < 0 || bounds.top + bounds.height > sf::VideoMode::getDesktopMode().height) {
+    if (bounds.top < 0 || bounds.top + bounds.height > screenResolution.y) {
         vel.y = -vel.y;
     }
 

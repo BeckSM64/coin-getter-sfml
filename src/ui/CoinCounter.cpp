@@ -7,12 +7,17 @@ CoinCounter::CoinCounter() {
     // Setup font
     const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
 
-    coinCountText = sf::Text("COIN COUNT: 0", font, FONT_SIZE_72);
+    // Scale the font size based on the current screen resolution
+    float scaledFontSize = ResourceManager::GetInstance().ScaleFontSize(FONT_SIZE_72);
+    coinCountText = sf::Text("COIN COUNT: 0", font, scaledFontSize);
     coinCountText.setFillColor(sf::Color::White);
+
+    // Get screen resolution from ResourceManager
+    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
 
     // Position title text
     coinCountText.setPosition(
-        (sf::VideoMode::getDesktopMode().width / 2 - (coinCountText.getGlobalBounds().width / 2)),
+        (screenResolution.x / 2 - (coinCountText.getGlobalBounds().width / 2)),
         TOP_OF_SCREEN_PADDING
     );
 }

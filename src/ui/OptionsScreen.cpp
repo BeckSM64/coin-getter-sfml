@@ -9,16 +9,21 @@ OptionsScreen::OptionsScreen() {
     // Setup font
     const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
 
+    // Get screen resolution from ResourceManager
+    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
+
     std::map<int, std::string> videoOptionIdToOptionStringMap;
     videoOptionIdToOptionStringMap[0] = "Fullscreen";
     videoOptionIdToOptionStringMap[1] = "Windowed";
     videoOptionIdToOptionStringMap[2] = "Windowed Borderless";
     videoOptionSelector = std::make_unique<ScreenStyleOptionSelector>(videoOptionIdToOptionStringMap);
 
-    optionsSreenTitleText = sf::Text("[OPTIONS]", font, FONT_SIZE_72);
+    // Scale the font size based on the current screen resolution
+    float scaledFontSize = ResourceManager::GetInstance().ScaleFontSize(FONT_SIZE_72);
+    optionsSreenTitleText = sf::Text("[OPTIONS]", font, scaledFontSize);
     optionsSreenTitleText.setPosition(
         sf::Vector2f(
-            (sf::VideoMode::getDesktopMode().width / 2) - (optionsSreenTitleText.getGlobalBounds().width / 2),
+            (screenResolution.x / 2) - (optionsSreenTitleText.getGlobalBounds().width / 2),
             0
         )
     );

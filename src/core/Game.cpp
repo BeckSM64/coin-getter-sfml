@@ -11,7 +11,7 @@
 
 Game::Game() {
     // Create window and set fixed frame rate limit
-    win.create(sf::VideoMode(1920, 1080), "[COIN GETTER]", sf::Style::None);
+    win.create(sf::VideoMode(1280, 720), "[COIN GETTER]", sf::Style::None);
     win.setFramerateLimit(60);
 
     // Initialize the view to match the window size
@@ -31,6 +31,7 @@ Game::Game() {
 
     // Initialize resources
     ResourceManager::GetInstance().InitializeResources();
+    ResourceManager::GetInstance().SetScreenResolution(win.getSize());
 
     // Default to main menu
     currentScreen = std::make_shared<MainMenuScreen>();

@@ -18,7 +18,10 @@ Player::Player() {
 
     // Create player sprite
     sprite.setTexture(playerTexture);
-    sprite.setScale(sf::Vector2f(0.5f, 0.5f));
+    
+    // Get scale factor from ResourceManager
+    float scaleFactor = ResourceManager::GetInstance().GetScaleFactor();
+    sprite.setScale(scaleFactor / 2, scaleFactor / 2);
     sprite.setPosition(pos.x, pos.y);
 
     // Hitbox

@@ -11,14 +11,19 @@ MainMenuScreen::MainMenuScreen() {
     // Setup font
     const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
 
+    // Get screen resolution from ResourceManager
+    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
+
     // Create title text
-    titleText = sf::Text("[COIN GETTER]", font, 128);
+    // Scale the font size based on the current screen resolution
+    float scaledFontSize = ResourceManager::GetInstance().ScaleFontSize(FONT_SIZE_128);
+    titleText = sf::Text("[COIN GETTER]", font, static_cast<int>(scaledFontSize));
     titleText.setFillColor(sf::Color::White);
 
     // Position title text
     titleText.setPosition(
-        (sf::VideoMode::getDesktopMode().width / 2 - (titleText.getGlobalBounds().width / 2)),
-        (sf::VideoMode::getDesktopMode().height / 2 - (titleText.getGlobalBounds().height / 2))
+        (screenResolution.x / 2 - (titleText.getGlobalBounds().width / 2)),
+        (screenResolution.y / 2 - (titleText.getGlobalBounds().height / 2))
     );
 
     timer = TIME_TO_DELAY_TITLE_COLOR_CHANGE;
@@ -27,23 +32,28 @@ MainMenuScreen::MainMenuScreen() {
     const sf::Texture &playerTexture = ResourceManager::GetInstance().GetTexture("player");
 
     playerSprite.setTexture(playerTexture);
-    playerSprite.setScale(sf::Vector2f(2.5f, 2.5f));
+    
+    // Get scale factor from ResourceManager
+    float scaleFactor = ResourceManager::GetInstance().GetScaleFactor();
+    playerSprite.setScale(scaleFactor * 2.5, scaleFactor * 2.5);
+
     playerSprite.setPosition(
-        sf::VideoMode::getDesktopMode().width - ((playerSprite.getGlobalBounds().width / 4) * 3),
-        sf::VideoMode::getDesktopMode().height - (playerSprite.getGlobalBounds().height / 2)
+        screenResolution.x - ((playerSprite.getGlobalBounds().width / 4) * 3),
+        screenResolution.y - (playerSprite.getGlobalBounds().height / 2)
     );
 
-    startGameOption = sf::Text("START", font, MENU_OPTIONS_FONT_SIZE);
-    highScoresOption = sf::Text("HIGHSCORES", font, MENU_OPTIONS_FONT_SIZE);
-    controlsOption = sf::Text("CONTROLS", font, MENU_OPTIONS_FONT_SIZE);
-    optionsOption = sf::Text("OPTIONS", font, MENU_OPTIONS_FONT_SIZE);
-    quitOption = sf::Text("QUIT", font, MENU_OPTIONS_FONT_SIZE);
+    scaledFontSize = ResourceManager::GetInstance().ScaleFontSize(MENU_OPTIONS_FONT_SIZE);
+    startGameOption = sf::Text("START", font, scaledFontSize);
+    highScoresOption = sf::Text("HIGHSCORES", font, scaledFontSize);
+    controlsOption = sf::Text("CONTROLS", font, scaledFontSize);
+    optionsOption = sf::Text("OPTIONS", font, scaledFontSize);
+    quitOption = sf::Text("QUIT", font, scaledFontSize);
 
     startGameOption.setPosition(0, 0);
-    highScoresOption.setPosition(0, startGameOption.getPosition().y + MENU_OPTIONS_FONT_SIZE);
-    controlsOption.setPosition(0, highScoresOption.getPosition().y + MENU_OPTIONS_FONT_SIZE);
-    optionsOption.setPosition(0, controlsOption.getPosition().y + MENU_OPTIONS_FONT_SIZE);
-    quitOption.setPosition(0, optionsOption.getPosition().y + MENU_OPTIONS_FONT_SIZE);
+    highScoresOption.setPosition(0, startGameOption.getPosition().y + scaledFontSize);
+    controlsOption.setPosition(0, highScoresOption.getPosition().y + scaledFontSize);
+    optionsOption.setPosition(0, controlsOption.getPosition().y + scaledFontSize);
+    quitOption.setPosition(0, optionsOption.getPosition().y + scaledFontSize);
 
     menuOptions.push_back(startGameOption);
     menuOptions.push_back(highScoresOption);
