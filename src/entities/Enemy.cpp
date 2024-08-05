@@ -1,48 +1,51 @@
 #include <SFML/Graphics.hpp>
-#include <cmath> // For std::cos, std::sin, and std::sqrt
+#include <cmath> // For std::cos, std::sin
 #include "Enemy.h"
-#include "Globals.h"
 #include "ResourceManager.h"
 
 // Constructor
 Enemy::Enemy() {
+    // Get ResourceManager instance
+    ResourceManager& resourceManager = ResourceManager::GetInstance();
 
     // Load texture and set up sprite
-    sprite.setTexture(ResourceManager::GetInstance().GetTexture("enemy"));
+    sprite.setTexture(resourceManager.GetTexture("enemy"));
 
     // Get screen resolution from ResourceManager
-    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
+    sf::Vector2u screenResolution = resourceManager.GetScreenResolution();
 
     // Initialize position and velocity
     sprite.setPosition(
-        ResourceManager::GetInstance().GetRandomNumber(0, screenResolution.x - sprite.getGlobalBounds().width),
-        ResourceManager::GetInstance().GetRandomNumber(0, screenResolution.y - sprite.getGlobalBounds().height)
+        resourceManager.GetRandomNumber(0, screenResolution.x - sprite.getGlobalBounds().width),
+        resourceManager.GetRandomNumber(0, screenResolution.y - sprite.getGlobalBounds().height)
     );
 
-    float speed = ResourceManager::GetInstance().GetRandomFloat(5.0f, 10.0f);
-    float angle = ResourceManager::GetInstance().GetRandomFloat(0.0f, 2 * 3.14159f);
+    // Get scale factor from ResourceManager
+    float scaleFactor = resourceManager.GetScaleFactor();
 
-    // Set Velocity 
+    // Initialize speed and angle, applying scale factor to speed
+    float speed = resourceManager.GetRandomFloat(5.0f, 10.0f) * scaleFactor;
+    float angle = resourceManager.GetRandomFloat(0.0f, 2 * 3.14159f);
+
+    // Set velocity with scale factor applied
     vel.x = speed * std::cos(angle);
     vel.y = speed * std::sin(angle);
 
-    // Get scale factor from ResourceManager
-    float scaleFactor = ResourceManager::GetInstance().GetScaleFactor();
+    // Set scale for sprite
     sprite.setScale(scaleFactor / 2, scaleFactor / 2);
 }
 
 // Update method
 void Enemy::Update() {
-
     // Move the enemy
     sprite.move(vel);
 
     // Get screen resolution from ResourceManager
-    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
+    ResourceManager& resourceManager = ResourceManager::GetInstance();
+    sf::Vector2u screenResolution = resourceManager.GetScreenResolution();
 
     // Handle bouncing off the edges
     sf::FloatRect bounds = sprite.getGlobalBounds();
-
     if (bounds.left < 0 || bounds.left + bounds.width > screenResolution.x) {
         vel.x = -vel.x;
     }
@@ -51,6 +54,6 @@ void Enemy::Update() {
         vel.y = -vel.y;
     }
 
-    // Hitbox
+    // Update hitbox
     hitBox = sprite.getGlobalBounds();
 }
