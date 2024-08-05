@@ -9,6 +9,7 @@ class Game {
 
     private:
         sf::RenderWindow win;
+        sf::View view;
         std::shared_ptr<CoinGetter::Screen> currentScreen; // Pointer to the current screen
         sf::Color backgroundColor;
 

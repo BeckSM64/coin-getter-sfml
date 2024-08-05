@@ -10,10 +10,13 @@
 #include "ControllerManager.h"
 
 Game::Game() {
-
     // Create window and set fixed frame rate limit
-    win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::Fullscreen);
+    win.create(sf::VideoMode(1920, 1080), "[COIN GETTER]", sf::Style::None);
     win.setFramerateLimit(60);
+
+    // Initialize the view to match the window size
+    view.setSize(static_cast<float>(win.getSize().x), static_cast<float>(win.getSize().y));
+    view.setCenter(static_cast<float>(win.getSize().x) / 2, static_cast<float>(win.getSize().y) / 2);
 
     // Background color
     backgroundColor = sf::Color(20, 15, 36, 255);
@@ -29,7 +32,7 @@ Game::Game() {
     // Initialize resources
     ResourceManager::GetInstance().InitializeResources();
 
-     // Default to main menu
+    // Default to main menu
     currentScreen = std::make_shared<MainMenuScreen>();
 }
 
@@ -38,8 +41,9 @@ Game::~Game() {
 }
 
 void Game::Run() {
-
-    while(win.isOpen()) {
+    while (win.isOpen()) {
+        // Poll for events
+        HandleEvents();
 
         // Clear the screen with background color
         win.clear(backgroundColor);
@@ -49,9 +53,6 @@ void Game::Run() {
 
         // Draw everything to the screen
         Draw();
-
-        // Poll for events
-        HandleEvents();
 
         // Handle transitioning to different screens
         ManageGameState();
@@ -67,23 +68,27 @@ void Game::Update() {
 }
 
 void Game::Draw() {
+    win.setView(view); // Set the view before drawing
     currentScreen->Draw(win);
 }
 
 void Game::HandleEvents() {
-
     sf::Event event;
-    while(win.pollEvent(event)) {
-
+    while (win.pollEvent(event)) {
         // Check if window is being closed
-        if(event.type == sf::Event::Closed) {
+        if (event.type == sf::Event::Closed) {
             win.close();
+        }
+
+        // Check if the window is resized
+        if (event.type == sf::Event::Resized) {
+            view.setSize(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
+            view.setCenter(static_cast<float>(event.size.width) / 2, static_cast<float>(event.size.height) / 2);
         }
     }
 }
 
 void Game::ManageGameState() {
-
     // Update screen based on game state
     switch (currentGameState) {
         case GameState::MAIN_MENU:

@@ -33,7 +33,6 @@ void ScreenStyleOptionSelector::Draw(sf::RenderWindow &win) {
         } else if (optionsIdToOptionsStringMap[activeMenuOption] == "Windowed Borderless") {
 
             win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::None);
-
         }
         optionSelected = false; // Reset flag
     }
