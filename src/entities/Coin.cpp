@@ -22,6 +22,7 @@ Coin::Coin() {
     float speed = ResourceManager::GetInstance().GetRandomFloat(5.0f, 10.0f);
     float angle = ResourceManager::GetInstance().GetRandomFloat(0.0f, 2 * 3.14159f);
 
+    // Set velocity
     vel.x = speed * std::cos(angle);
     vel.y = speed * std::sin(angle);
 

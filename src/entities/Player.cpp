@@ -86,7 +86,7 @@ void Player::Update() {
         }
 
         // Apply the velocity to the player
-        vel = currentVelocity;
+        SetVelocity(currentVelocity);
     } else {
 
         // Variables to store the current velocity
@@ -128,7 +128,7 @@ void Player::Update() {
         }
 
         // Apply the velocity to the player
-        vel = currentVelocity;
+        SetVelocity(currentVelocity);
     }
 
     // Update player position

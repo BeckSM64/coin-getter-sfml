@@ -51,7 +51,10 @@ sf::Vector2f Entity::GetVelocity() const {
 }
 
 void Entity::SetVelocity(sf::Vector2f velocity) {
-    vel = velocity;
+    
+    // Scale the velocity based on the current scale factor
+    float scaleFactor = ResourceManager::GetInstance().GetScaleFactor();
+    vel = velocity * scaleFactor;
 }
 
 void Entity::SetPosition(sf::Vector2f position) {
