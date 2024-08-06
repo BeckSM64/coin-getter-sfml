@@ -17,6 +17,9 @@ void ScreenStyleOptionSelector::Draw(sf::RenderWindow &win) {
     // Draw active option text
     win.draw(optionText);
 
+    // Get screen resolution from ResourceManager
+    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
+
     // Check if option to update screen style was selected
     if (optionSelected) {
 
@@ -24,15 +27,15 @@ void ScreenStyleOptionSelector::Draw(sf::RenderWindow &win) {
         // Needs to be done in draw because access to sf::RenderWindow is required
         if (optionsIdToOptionsStringMap[activeMenuOption] == "Fullscreen") {
 
-            win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::Fullscreen);
+            win.create(sf::VideoMode(screenResolution.x, screenResolution.y), "[COIN GETTER]", sf::Style::Fullscreen);
 
         } else if (optionsIdToOptionsStringMap[activeMenuOption] == "Windowed") {
 
-            win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::Default);
+            win.create(sf::VideoMode(screenResolution.x, screenResolution.y), "[COIN GETTER]", sf::Style::Default);
 
         } else if (optionsIdToOptionsStringMap[activeMenuOption] == "Windowed Borderless") {
 
-            win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::None);
+            win.create(sf::VideoMode(screenResolution.x, screenResolution.y), "[COIN GETTER]", sf::Style::None);
         }
         optionSelected = false; // Reset flag
     }

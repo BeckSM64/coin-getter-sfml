@@ -45,6 +45,7 @@ sf::SoundBuffer& ResourceManager::GetSoundBuffer(const std::string& name) {
 }
 
 void ResourceManager::InitializeResources() {
+    baseResolution = sf::Vector2u(1920, 1080);
     LoadTexture("player", "sprites/player.png");
     LoadTexture("enemy", "sprites/enemy.png");
     LoadTexture("coin", "sprites/coin.png");
@@ -60,4 +61,21 @@ int ResourceManager::GetRandomNumber(int lower, int upper) {
 float ResourceManager::GetRandomFloat(float lower, float upper) {
     std::uniform_real_distribution<> distr(lower, upper);
     return distr(gen);
+}
+
+void ResourceManager::SetScreenResolution(sf::Vector2u resolution) {
+    screenResolution = resolution;
+    scaleFactor = static_cast<float>(resolution.x) / baseResolution.x;
+}
+
+sf::Vector2u ResourceManager::GetScreenResolution() const {
+    return screenResolution;
+}
+
+float ResourceManager::GetScaleFactor() const {
+    return scaleFactor;
+}
+
+float ResourceManager::ScaleFontSize(float baseFontSize) const {
+    return baseFontSize * scaleFactor;
 }

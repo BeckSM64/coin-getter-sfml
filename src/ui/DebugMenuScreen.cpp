@@ -10,13 +10,19 @@ DebugMenuScreen::DebugMenuScreen() {
     // Setup font
     const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
 
+    // Scale the font size based on the current screen resolution
+    float scaledFontSize = ResourceManager::GetInstance().ScaleFontSize(scaledFontSize);
+
     // Create title text
-    debugText = sf::Text("[DEBUG]", font, 72);
+    debugText = sf::Text("[DEBUG]", font, scaledFontSize);
     debugText.setFillColor(sf::Color::White);
+
+    // Get screen resolution from ResourceManager
+    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
 
     // Position pause text
     debugText.setPosition(
-        (sf::VideoMode::getDesktopMode().width / 2 - (debugText.getGlobalBounds().width / 2)),
+        (screenResolution.x / 2 - (debugText.getGlobalBounds().width / 2)),
         0
     );
 

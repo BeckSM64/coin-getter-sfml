@@ -31,6 +31,14 @@ public:
 
     float GetRandomFloat(float lower, float upper);
 
+    void SetScreenResolution(sf::Vector2u resolution);
+
+    sf::Vector2u GetScreenResolution() const;
+
+    float GetScaleFactor() const;
+
+    float ScaleFontSize(float baseFontSize) const;
+
     // Optionally: Unload resources to manage memory
     // void UnloadTexture(const std::string& name);
     // void UnloadFont(const std::string& name);
@@ -46,4 +54,9 @@ private:
 
     std::random_device rd;
     std::mt19937 gen;
+
+    // Resolution and scale factor
+    sf::Vector2u baseResolution;
+    sf::Vector2u screenResolution;
+    float scaleFactor;
 };

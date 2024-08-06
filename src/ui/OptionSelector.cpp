@@ -9,13 +9,18 @@ OptionSelector::OptionSelector(std::map<int, std::string> &optionsIdToOptionsStr
     const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
 
     // Create title text
-    optionText = sf::Text("< >", font, FONT_SIZE_72);
+    // Scale the font size based on the current screen resolution
+    float scaledFontSize = ResourceManager::GetInstance().ScaleFontSize(FONT_SIZE_72);
+    optionText = sf::Text("< >", font, scaledFontSize);
     optionText.setFillColor(sf::Color::White);
+
+    // Get screen resolution from ResourceManager
+    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
 
     // Position title text
     optionText.setPosition(
-        (sf::VideoMode::getDesktopMode().width / 2 - (optionText.getGlobalBounds().width / 2)),
-        (sf::VideoMode::getDesktopMode().height / 2 - (optionText.getGlobalBounds().height / 2))
+        (screenResolution.x / 2 - (optionText.getGlobalBounds().width / 2)),
+        (screenResolution.y / 2 - (optionText.getGlobalBounds().height / 2))
     );
 
     // Active menu option
@@ -32,10 +37,14 @@ OptionSelector::OptionSelector(std::map<int, std::string> &optionsIdToOptionsStr
 }
 
 void OptionSelector::Update() {
+
+    // Get screen resolution from ResourceManager
+    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
+    
     optionText.setString("< " + optionsIdToOptionsStringMap[activeMenuOption] + " >");
     optionText.setPosition(
-        (sf::VideoMode::getDesktopMode().width / 2 - (optionText.getGlobalBounds().width / 2)),
-        (sf::VideoMode::getDesktopMode().height / 2 - (optionText.getGlobalBounds().height / 2))
+        (screenResolution.x / 2 - (optionText.getGlobalBounds().width / 2)),
+        (screenResolution.y / 2 - (optionText.getGlobalBounds().height / 2))
     );
     GetUserInput();
 }
