@@ -32,14 +32,6 @@ void Entity::ConstrainToScreen() {
 
 void Entity::Draw(sf::RenderWindow &win) {
     DrawEntityImage(win);
-
-    // TODO: TEST REMOVE THIS
-    if (sf::Joystick::isConnected(0)) {
-        if (sf::Joystick::isButtonPressed(0, 3)) {
-            win.create(sf::VideoMode(1920, 1080), "[COIN GETTER]", sf::Style::None);
-            win.setFramerateLimit(60);
-        }
-    }
 }
 
 sf::FloatRect Entity::GetHitbox() const {
