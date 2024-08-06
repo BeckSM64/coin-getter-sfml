@@ -5,7 +5,7 @@
 class OptionSelector {
 
     public:
-        OptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, float positionX, float positionY);
+        OptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position);
         virtual ~OptionSelector() = default;
         virtual void Draw(sf::RenderWindow &win) = 0;
         void Update();

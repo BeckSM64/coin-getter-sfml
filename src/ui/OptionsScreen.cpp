@@ -17,7 +17,7 @@ OptionsScreen::OptionsScreen() {
     videoOptionIdToOptionStringMap[0] = "1920x1080";
     videoOptionIdToOptionStringMap[1] = "1600x900";
     videoOptionIdToOptionStringMap[2] = "1280x720";
-    videoOptionSelector = std::make_unique<ResolutionOptionSelector>(videoOptionIdToOptionStringMap, 0, 0);
+    videoOptionSelector = std::make_unique<ResolutionOptionSelector>(videoOptionIdToOptionStringMap, sf::Vector2f(0, 0));
 
     // Scale the font size based on the current screen resolution
     float scaledFontSize = ResourceManager::GetInstance().ScaleFontSize(FONT_SIZE_72);

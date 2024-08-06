@@ -7,7 +7,7 @@
 class ResolutionOptionSelector : public OptionSelector {
 
     public:
-        ResolutionOptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, float positionX, float positionY);
+        ResolutionOptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position);
         ~ResolutionOptionSelector() override;
         void Draw(sf::RenderWindow &win) override;
 };

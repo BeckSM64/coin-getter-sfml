@@ -7,8 +7,8 @@ ResolutionOptionSelector::~ResolutionOptionSelector() {
 
 }
 
-ResolutionOptionSelector::ResolutionOptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, float positionX, float positionY)
-    : OptionSelector(optionsIdToOptionsStringMap, positionX, positionY) {
+ResolutionOptionSelector::ResolutionOptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position)
+    : OptionSelector(optionsIdToOptionsStringMap, position) {
 
 }
 

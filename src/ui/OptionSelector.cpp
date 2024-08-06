@@ -3,7 +3,7 @@
 #include "ResourceManager.h"
 #include "Globals.h"
 
-OptionSelector::OptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, float positionX, float positionY) {
+OptionSelector::OptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position) {
 
     // Setup font
     const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
