@@ -5,14 +5,14 @@
 class OptionSelector {
 
     public:
-        OptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap);
+        OptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, float positionX, float positionY);
         virtual ~OptionSelector() = default;
         virtual void Draw(sf::RenderWindow &win) = 0;
         void Update();
+        void GetUserInput();
 
     protected:
         OptionSelector() = default;
-        virtual void GetUserInput() = 0;
         sf::Text optionText;
         sf::Clock optionSelectorClock;
         sf::Time optionSelectorCooldown;

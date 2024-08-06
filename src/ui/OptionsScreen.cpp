@@ -2,6 +2,7 @@
 #include "OptionsScreen.h"
 #include "ResourceManager.h"
 #include "ScreenStyleOptionSelector.h"
+#include "ResolutionOptionSelector.h"
 #include "Globals.h"
 
 OptionsScreen::OptionsScreen() {
@@ -13,10 +14,10 @@ OptionsScreen::OptionsScreen() {
     sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
 
     std::map<int, std::string> videoOptionIdToOptionStringMap;
-    videoOptionIdToOptionStringMap[0] = "Fullscreen";
-    videoOptionIdToOptionStringMap[1] = "Windowed";
-    videoOptionIdToOptionStringMap[2] = "Windowed Borderless";
-    videoOptionSelector = std::make_unique<ScreenStyleOptionSelector>(videoOptionIdToOptionStringMap);
+    videoOptionIdToOptionStringMap[0] = "1920x1080";
+    videoOptionIdToOptionStringMap[1] = "1600x900";
+    videoOptionIdToOptionStringMap[2] = "1280x720";
+    videoOptionSelector = std::make_unique<ResolutionOptionSelector>(videoOptionIdToOptionStringMap, 0, 0);
 
     // Scale the font size based on the current screen resolution
     float scaledFontSize = ResourceManager::GetInstance().ScaleFontSize(FONT_SIZE_72);

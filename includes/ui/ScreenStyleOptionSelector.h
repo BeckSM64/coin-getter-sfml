@@ -6,11 +6,8 @@
 
 class ScreenStyleOptionSelector : public OptionSelector {
 
-    private:
-        void GetUserInput() override;
-
     public:
-        ScreenStyleOptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap);
+        ScreenStyleOptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, float positionX, float positionY);
         ~ScreenStyleOptionSelector() override;
         void Draw(sf::RenderWindow &win) override;
 };
