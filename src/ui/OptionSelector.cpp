@@ -49,6 +49,24 @@ void OptionSelector::Update() {
     GetUserInput();
 }
 
+void OptionSelector::Draw(sf::RenderWindow &win) {
+
+    // Draw active option text
+    win.draw(optionText);
+
+    // Set color of text
+    if (isActive) {
+        optionText.setFillColor(sf::Color::Red);
+    } else {
+        optionText.setFillColor(sf::Color::White);
+    }
+
+    // TODO: I hate that this is here, but the render
+    // window is often needed in the apply setting method.
+    // Ideally this would be called in Update()
+    ApplySetting(win);
+}
+
 void OptionSelector::GetUserInput() {
 
     // Check if cooldown for navigation has been reached

@@ -6,14 +6,12 @@
 class OptionSelector : public MenuOption {
 
     public:
-        OptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position);
         virtual ~OptionSelector() = default;
-        virtual void Draw(sf::RenderWindow &win) = 0;
-        void Update() override;
-        void GetUserInput() override;
 
     protected:
+        OptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position);
         OptionSelector() = default;
+        virtual void ApplySetting(sf::RenderWindow &win) = 0;
         sf::Text optionText;
         sf::Clock optionSelectorClock;
         sf::Time optionSelectorCooldown;
@@ -21,4 +19,9 @@ class OptionSelector : public MenuOption {
         std::map<int, std::string> optionsIdToOptionsStringMap;
         bool optionSelected; // Flag to determine if option was selected
         sf::Vector2f position;
+
+    private:
+        void Draw(sf::RenderWindow &win);
+        void Update() override;
+        void GetUserInput() override;
 };

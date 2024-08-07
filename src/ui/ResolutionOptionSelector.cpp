@@ -14,20 +14,7 @@ ResolutionOptionSelector::ResolutionOptionSelector(std::map<int, std::string> &o
     isActive = false;
 }
 
-void ResolutionOptionSelector::Draw(sf::RenderWindow &win) {
-
-    // Draw active option text
-    win.draw(optionText);
-
-    // Set color of text
-    if (isActive) {
-        optionText.setFillColor(sf::Color::Red);
-    } else {
-        optionText.setFillColor(sf::Color::White);
-    }
-
-    // Get screen resolution from ResourceManager
-    sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
+void ResolutionOptionSelector::ApplySetting(sf::RenderWindow &win) {
 
     // Check if option to update screen style was selected
     if (optionSelected) {
