@@ -13,6 +13,9 @@ class OptionsScreen : public CoinGetter::Screen {
         std::unique_ptr<OptionSelector> videoOptionSelector;
         std::unique_ptr<OptionSelector> resolutionOptionSelector;
         std::vector<std::unique_ptr<MenuOption>> menuOptions;
+        sf::Clock menuOptionsClock;
+        sf::Time menuOptionsCooldown;
+        int activeMenuOptionIndex;
 
     public:
         OptionsScreen();

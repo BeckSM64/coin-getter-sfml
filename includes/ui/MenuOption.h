@@ -9,6 +9,7 @@ class MenuOption {
         virtual void Update() = 0;
         virtual void GetUserInput() = 0;
         void SetActive(bool active);
+        bool GetActive() const;
     
     protected:
 

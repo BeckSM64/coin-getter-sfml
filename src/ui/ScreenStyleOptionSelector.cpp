@@ -17,6 +17,13 @@ void ScreenStyleOptionSelector::Draw(sf::RenderWindow &win) {
     // Draw active option text
     win.draw(optionText);
 
+    // Set color of text
+    if (isActive) {
+        optionText.setFillColor(sf::Color::Red);
+    } else {
+        optionText.setFillColor(sf::Color::White);
+    }
+
     // Get screen resolution from ResourceManager
     sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
 

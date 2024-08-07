@@ -47,6 +47,12 @@ OptionsScreen::OptionsScreen() {
 
     // Set first element in vector as active
     menuOptions[0]->SetActive(true);
+
+    // Set the active menu option index
+    activeMenuOptionIndex = 0;
+
+    // Initialize menu options cooldown
+    menuOptionsCooldown = sf::milliseconds(200);
 }
 
 OptionsScreen::~OptionsScreen() {
@@ -62,14 +68,63 @@ void OptionsScreen::Draw(sf::RenderWindow & win) {
 }
 
 void OptionsScreen::Update() {
-    
+
     for (auto &option : menuOptions) {
         option->Update();
     }
+
+    GetUserInput();
 }
 
 void OptionsScreen::GetUserInput() {
 
+    // Check if cooldown for navigation has been reached
+    if (menuOptionsClock.getElapsedTime() > menuOptionsCooldown) {
+
+        float joypadY = 0.0f;
+
+        // Check if joystick 0 is connected
+        if (sf::Joystick::isConnected(0)) {
+
+            joypadY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+
+            if (joypadY > 10.0f) {
+                
+                // Navigate selector options
+                menuOptions[activeMenuOptionIndex]->SetActive(false);
+                if (activeMenuOptionIndex == 0) {
+                    activeMenuOptionIndex = menuOptions.size() - 1;
+                } else {
+                    activeMenuOptionIndex -= 1;
+                }
+                menuOptions[activeMenuOptionIndex]->SetActive(true);
+                menuOptionsClock.restart();
+
+            } else if (joypadY < -10.0f) {
+                
+                menuOptions[activeMenuOptionIndex]->SetActive(false);
+                if (activeMenuOptionIndex == menuOptions.size() - 1) {
+                    activeMenuOptionIndex = 0;
+                } else {
+                    activeMenuOptionIndex += 1;
+                }
+                menuOptions[activeMenuOptionIndex]->SetActive(true);
+                menuOptionsClock.restart();
+            }
+            
+        } else {
+
+            // Check if right or left are pressed on the keyboard
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+
+                menuOptionsClock.restart();
+
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+
+                menuOptionsClock.restart();
+            }
+        }
+    }
 }
 
 GameState OptionsScreen::GetGameState() {

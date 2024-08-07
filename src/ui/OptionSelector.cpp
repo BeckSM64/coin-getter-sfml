@@ -52,7 +52,7 @@ void OptionSelector::Update() {
 void OptionSelector::GetUserInput() {
 
     // Check if cooldown for navigation has been reached
-    if (optionSelectorClock.getElapsedTime() > optionSelectorCooldown) {
+    if (optionSelectorClock.getElapsedTime() > optionSelectorCooldown && isActive) {
 
         float joypadX = 0.0f;
 
