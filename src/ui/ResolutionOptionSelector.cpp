@@ -10,6 +10,8 @@ ResolutionOptionSelector::~ResolutionOptionSelector() {
 ResolutionOptionSelector::ResolutionOptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position)
     : OptionSelector(optionsIdToOptionsStringMap, position) {
 
+    // Set if this option selector is active
+    isActive = false;
 }
 
 void ResolutionOptionSelector::Draw(sf::RenderWindow &win) {

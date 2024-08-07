@@ -3,6 +3,7 @@
 #include <map>
 #include "Screen.h"
 #include "OptionSelector.h"
+#include "MenuOption.h"
 
 class ResolutionOptionSelector : public OptionSelector {
 

@@ -18,10 +18,7 @@ OptionSelector::OptionSelector(std::map<int, std::string> &optionsIdToOptionsStr
     sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
 
     // Position title text
-    optionText.setPosition(
-        (screenResolution.x / 2 - (optionText.getGlobalBounds().width / 2)),
-        (screenResolution.y / 2 - (optionText.getGlobalBounds().height / 2))
-    );
+    optionText.setPosition(position);
 
     // Active menu option
     activeMenuOption = 0;
@@ -34,6 +31,9 @@ OptionSelector::OptionSelector(std::map<int, std::string> &optionsIdToOptionsStr
 
     // Don't update screen style
     optionSelected = false;
+
+    // Set position
+    this->position = position;
 }
 
 void OptionSelector::Update() {
@@ -44,7 +44,7 @@ void OptionSelector::Update() {
     optionText.setString("< " + optionsIdToOptionsStringMap[activeMenuOption] + " >");
     optionText.setPosition(
         (screenResolution.x / 2 - (optionText.getGlobalBounds().width / 2)),
-        (screenResolution.y / 2 - (optionText.getGlobalBounds().height / 2))
+        position.y
     );
     GetUserInput();
 }
