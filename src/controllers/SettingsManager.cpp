@@ -12,7 +12,7 @@ void SettingsManager::InitializeSettings() {
         resolutionSettings["width"] = 1920;
         resolutionSettings["height"] = 1080;
         settings["Resolution"] = resolutionSettings;
-        settings["DisplayMode"] = sf::Style::Default; // 0 for borderless
+        settings["DisplayMode"] = sf::Style::None; // 0 for borderless
         std::ofstream outputFile("settings.json");
         outputFile << settings.dump(4); // Pretty print with 4 spaces
 
