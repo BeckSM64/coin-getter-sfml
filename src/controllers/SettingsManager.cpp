@@ -1,6 +1,5 @@
 #include "SettingsManager.h"
 #include <fstream>
-#include <iostream>
 
 void SettingsManager::InitializeSettings() {
 
@@ -64,7 +63,6 @@ std::string SettingsManager::GetResolutionAsString(sf::Vector2f resolution) cons
 std::string SettingsManager::GetDisplayModeAsString(sf::Uint32 displayMode) const {
 
     std::string displayModeString = "";
-    std::cout << "DISPLAY MODE: " << displayMode << std::endl;
     switch (displayMode) {
         case 0:
             displayModeString = "Borderless";

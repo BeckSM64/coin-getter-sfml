@@ -2,7 +2,6 @@
 #include "OptionSelector.h"
 #include "ResourceManager.h"
 #include "Globals.h"
-#include <iostream>
 
 OptionSelector::OptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position) {
 
@@ -26,9 +25,6 @@ OptionSelector::OptionSelector(std::map<int, std::string> &optionsIdToOptionsStr
 
     // Setup options map
     this->optionsIdToOptionsStringMap = optionsIdToOptionsStringMap;
-    std::cout << optionsIdToOptionsStringMap[0] << std::endl;
-    std::cout << optionsIdToOptionsStringMap[1] << std::endl;
-    std::cout << optionsIdToOptionsStringMap[2] << std::endl;
 
     // Initialize cooldown for navigation
     optionSelectorCooldown = sf::milliseconds(200);

@@ -2,7 +2,6 @@
 #include "ScreenStyleOptionSelector.h"
 #include "ResourceManager.h"
 #include "Globals.h"
-#include <iostream>
 
 ScreenStyleOptionSelector::~ScreenStyleOptionSelector() {
 

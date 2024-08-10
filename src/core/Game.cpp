@@ -8,11 +8,17 @@
 #include "DebugMenuScreen.h"
 #include "ResourceManager.h"
 #include "ControllerManager.h"
+#include <iostream>
 
 Game::Game() {
     // Create window and set fixed frame rate limit
     win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::None);
     win.setFramerateLimit(60);
+
+    std::vector<sf::VideoMode> modes = sf::VideoMode::getFullscreenModes();
+    for (const auto& mode : modes) {
+        std::cout << mode.width << "x" << mode.height << std::endl;
+    }
 
     // Initialize the view to match the window size
     view.setSize(static_cast<float>(win.getSize().x), static_cast<float>(win.getSize().y));

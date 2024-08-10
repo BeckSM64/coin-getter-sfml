@@ -1,5 +1,4 @@
 #include <memory>
-#include <iostream>
 #include "OptionsScreen.h"
 #include "ResourceManager.h"
 #include "ScreenStyleOptionSelector.h"

@@ -1,7 +1,6 @@
 #include "Player.h"
 #include "Globals.h"
 #include "ResourceManager.h"
-#include <iostream>
 
 Player::Player() {
 

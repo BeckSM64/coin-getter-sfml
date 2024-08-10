@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <iostream>
 #include "Globals.h"
 #include "MainMenuScreen.h"
 #include "CoinManager.h"

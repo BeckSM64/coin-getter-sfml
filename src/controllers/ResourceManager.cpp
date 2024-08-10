@@ -1,5 +1,4 @@
 #include "ResourceManager.h"
-#include <iostream>
 #include <random>
 
 bool ResourceManager::LoadTexture(const std::string& name, const std::string& filename) {
