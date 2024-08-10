@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <iostream>
 #include <memory>
 #include "MainGameScreen.h"
 #include "Player.h"
@@ -107,11 +106,8 @@ void MainGameScreen::GetUserInput() {
     if (!isStartCurrentlyPressed && wasStartPressed) {
         if (isPaused) {
             isPaused = false;
-            std::cout << "PAUSING" << std::endl;
         } else {
             isPaused = true;
-            std::cout << "UNPAUSING" << std::endl;
-
         }
     }
 

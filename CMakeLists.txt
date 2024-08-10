@@ -21,6 +21,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/includes/ui/widgets
     ${CMAKE_SOURCE_DIR}/includes/ui/screens
     ${CMAKE_SOURCE_DIR}/includes/utils
+    ${CMAKE_SOURCE_DIR}/third_party/
 )
 
 # Link directory for external library dependencies

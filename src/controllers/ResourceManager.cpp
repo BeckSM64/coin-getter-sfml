@@ -1,6 +1,6 @@
 #include "ResourceManager.h"
-#include <iostream>
 #include <random>
+#include <iostream>
 
 bool ResourceManager::LoadTexture(const std::string& name, const std::string& filename) {
     auto texture = std::make_unique<sf::Texture>();

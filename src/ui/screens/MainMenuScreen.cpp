@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <iostream>
 #include "Globals.h"
 #include "MainMenuScreen.h"
 #include "CoinManager.h"
@@ -185,7 +184,6 @@ void MainMenuScreen::GetUserInput() {
 
             // Check if the Enter key is released
             isStartCurrentlyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Enter);
-            std::cout << isStartCurrentlyPressed << std::endl;
         }
     }
 
@@ -231,7 +229,6 @@ void MainMenuScreen::GetUserInput() {
 
     // Update the previous state
     wasStartPressed = isStartCurrentlyPressed;
-    std::cout << std::to_string(isStartCurrentlyPressed) << std::endl;
 }
 
 GameState MainMenuScreen::GetGameState() {
