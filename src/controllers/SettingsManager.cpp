@@ -32,7 +32,7 @@ void SettingsManager::InitializeSettings() {
     // Valid display modes map
     validDisplayModesMap[0] = GetDisplayModeAsString(sf::Style::None);
     validDisplayModesMap[1] = GetDisplayModeAsString(sf::Style::Fullscreen);
-    validDisplayModesMap[2] = GetDisplayModeAsString(sf::Style::Default);
+    validDisplayModesMap[2] = GetDisplayModeAsString(sf::Style::Titlebar | sf::Style::Close);
 }
 
 sf::Vector2f SettingsManager::GetResolution() const {
@@ -67,7 +67,7 @@ std::string SettingsManager::GetDisplayModeAsString(sf::Uint32 displayMode) cons
         case 0:
             displayModeString = "Borderless";
             break;
-        case 7:
+        case 5:
             displayModeString = "Windowed";
             break;
         case 8:
@@ -99,7 +99,7 @@ sf::Uint32 SettingsManager::GetDisplayModeFromString(std::string displayModeStri
     } else if ("Borderless" == displayModeString) {
         displayMode = sf::Style::None;
     } else {
-        displayMode = sf::Style::Default;
+        displayMode = (sf::Style::Titlebar | sf::Style::Close);
     }
 
     return displayMode;
