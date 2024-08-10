@@ -1,9 +1,11 @@
 #include <memory>
+#include <iostream>
 #include "OptionsScreen.h"
 #include "ResourceManager.h"
 #include "ScreenStyleOptionSelector.h"
 #include "ResolutionOptionSelector.h"
 #include "Globals.h"
+#include "SettingsManager.h"
 
 OptionsScreen::OptionsScreen() {
 
@@ -28,17 +30,14 @@ OptionsScreen::OptionsScreen() {
     // Set the current game state
     currentGameState = GameState::OPTIONS_MENU;
 
+    // Initialize settings
+    SettingsManager::GetInstance().InitializeSettings();
+
     // Setup option menu selectors
-    std::map<int, std::string> videoOptionIdToOptionStringMap;
-    videoOptionIdToOptionStringMap[0] = "Fullscreen";
-    videoOptionIdToOptionStringMap[1] = "Windowed";
-    videoOptionIdToOptionStringMap[2] = "Windowed Borderless";
+    std::map<int, std::string> videoOptionIdToOptionStringMap = SettingsManager::GetInstance().GetValidDisplayModesMap();
     videoOptionSelector = std::make_unique<ScreenStyleOptionSelector>(videoOptionIdToOptionStringMap, sf::Vector2f(0, 100 * scaleFactor));
 
-    std::map<int, std::string> resolutionOptionIdToOptionStringMap;
-    resolutionOptionIdToOptionStringMap[0] = "1920x1080";
-    resolutionOptionIdToOptionStringMap[1] = "1600x900";
-    resolutionOptionIdToOptionStringMap[2] = "1280x720";
+    std::map<int, std::string> resolutionOptionIdToOptionStringMap = SettingsManager::GetInstance().GetValidResolutionMap();
     resolutionOptionSelector = std::make_unique<ResolutionOptionSelector>(resolutionOptionIdToOptionStringMap, sf::Vector2f(0, 200 * scaleFactor));
 
     // Add menu options to vector of menu otpions

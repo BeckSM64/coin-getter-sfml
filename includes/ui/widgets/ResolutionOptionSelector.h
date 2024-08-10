@@ -4,6 +4,7 @@
 #include "Screen.h"
 #include "OptionSelector.h"
 #include "MenuOption.h"
+#include "SettingsManager.h"
 
 class ResolutionOptionSelector : public OptionSelector {
 

@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include "MenuOption.h"
+#include "SettingsManager.h"
 
 class OptionSelector : public MenuOption {
 
@@ -19,6 +20,7 @@ class OptionSelector : public MenuOption {
         std::map<int, std::string> optionsIdToOptionsStringMap;
         bool optionSelected; // Flag to determine if option was selected
         sf::Vector2f position;
+        SettingsManager &settingsManager = SettingsManager::GetInstance();
 
     private:
         void Draw(sf::RenderWindow &win);

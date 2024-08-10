@@ -19,20 +19,23 @@ void ResolutionOptionSelector::ApplySetting(sf::RenderWindow &win) {
     // Check if option to update screen style was selected
     if (optionSelected) {
 
+        // Get display mode from settings file
+        sf::Uint32 displayMode = settingsManager.GetDisplayMode();
+
+        // Get the resolution from the settings manager
+        sf::Vector2f screenResolution = settingsManager.GetResolutionFromString(optionsIdToOptionsStringMap[activeMenuOption]);
+
+        // Overwrite settings file
+        settingsManager.SetResolution(screenResolution);
+
         // Check which option was selected and update screen accordingly
         // Needs to be done in draw because access to sf::RenderWindow is required
-        if (optionsIdToOptionsStringMap[activeMenuOption] == "1920x1080") {
+        win.create(
+            sf::VideoMode(screenResolution.x, screenResolution.y),
+            "[COIN GETTER]",
+            displayMode
+        );
 
-            win.create(sf::VideoMode(1920, 1080), "[COIN GETTER]", sf::Style::None);
-
-        } else if (optionsIdToOptionsStringMap[activeMenuOption] == "1600x900") {
-
-            win.create(sf::VideoMode(1600, 900), "[COIN GETTER]", sf::Style::None);
-
-        } else if (optionsIdToOptionsStringMap[activeMenuOption] == "1280x720") {
-
-            win.create(sf::VideoMode(1280, 720), "[COIN GETTER]", sf::Style::None);
-        }
         optionSelected = false; // Reset flag
     }
 }
