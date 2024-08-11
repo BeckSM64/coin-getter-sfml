@@ -8,11 +8,19 @@
 #include "DebugMenuScreen.h"
 #include "ResourceManager.h"
 #include "ControllerManager.h"
+#include "SettingsManager.h"
 #include <iostream>
 
 Game::Game() {
+
+    // Initialize settings from settings file
+    SettingsManager &settingsManager = SettingsManager::GetInstance();
+    settingsManager.InitializeSettings();
+    sf::Vector2f screenResolution = settingsManager.GetResolution();
+    sf::Uint32 displayMode = settingsManager.GetDisplayMode();
+
     // Create window and set fixed frame rate limit
-    win.create(sf::VideoMode::getDesktopMode(), "[COIN GETTER]", sf::Style::None);
+    win.create(sf::VideoMode(screenResolution.x, screenResolution.y), "[COIN GETTER]", displayMode);
     win.setFramerateLimit(60);
 
     std::vector<sf::VideoMode> modes = sf::VideoMode::getFullscreenModes();
