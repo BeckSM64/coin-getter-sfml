@@ -10,10 +10,13 @@ class MenuOption {
         virtual void GetUserInput() = 0;
         void SetActive(bool active);
         bool GetActive() const;
+        void SetEnabled(bool enabled);
+        bool GetEnabled() const;
     
     protected:
 
         // Make sure it can't be instantiated
         MenuOption() = default;
         bool isActive;
+        bool isEnabled = true; // Set default to true, I don't love this
 };

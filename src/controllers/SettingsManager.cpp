@@ -145,3 +145,39 @@ void SettingsManager::SetDisplayMode(sf::Uint32 displayMode) {
         outputFile << settings.dump(4); // Pretty print with 4 spaces
     }
 }
+
+int SettingsManager::GetIndexOfResolutionMap(sf::Vector2f resolution) const {
+
+    sf::Vector2f screenResolution = GetResolution(); // Gets the resolution from the settings file
+    int index = -1;
+    int i = 0;
+
+    // Iterate through the map
+    for (const auto& pair : validResolutionsMap) {
+        if (pair.second == GetResolutionAsString(screenResolution)) {
+            index = i;
+            break;
+        }
+        i++;
+    }
+
+    return index; // This function fucking sucks
+}
+
+int SettingsManager::GetIndexOfDisplayModeMap(sf::Uint32 displayMode) const {
+
+    sf::Uint32 screenResolution = GetDisplayMode(); // Gets the display mode from the settings file
+    int index = -1;
+    int i = 0;
+
+    // Iterate through the map
+    for (const auto& pair : validDisplayModesMap) {
+        if (pair.second == GetDisplayModeAsString(displayMode)) {
+            index = i;
+            break;
+        }
+        i++;
+    }
+
+    return index; // This function fucking sucks part 2
+}

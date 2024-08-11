@@ -12,6 +12,12 @@ ResolutionOptionSelector::ResolutionOptionSelector(std::map<int, std::string> &o
 
     // Set if this option selector is active
     isActive = false;
+
+    // Set enabled
+    isEnabled = true;
+
+    // Set the active menu option based on settings file
+    activeMenuOption = settingsManager.GetIndexOfResolutionMap(settingsManager.GetResolution());
 }
 
 void ResolutionOptionSelector::ApplySetting(sf::RenderWindow &win) {
@@ -37,5 +43,12 @@ void ResolutionOptionSelector::ApplySetting(sf::RenderWindow &win) {
         );
 
         optionSelected = false; // Reset flag
+
+        // Check if selector should be disabled
+        // In this case, only disable if current
+        // applied display mode is set to full screen
+        // if (displayMode == sf::Style::Fullscreen) {
+        //     SetEnabled(false);
+        // }
     }
 }

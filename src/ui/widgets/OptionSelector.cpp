@@ -61,6 +61,10 @@ void OptionSelector::Draw(sf::RenderWindow &win) {
         optionText.setFillColor(sf::Color::White);
     }
 
+    if (!isEnabled) {
+        optionText.setFillColor(sf::Color::Black);
+    }
+
     // TODO: I hate that this is here, but the render
     // window is often needed in the apply setting method.
     // Ideally this would be called in Update()
@@ -70,7 +74,7 @@ void OptionSelector::Draw(sf::RenderWindow &win) {
 void OptionSelector::GetUserInput() {
 
     // Check if cooldown for navigation has been reached
-    if (optionSelectorClock.getElapsedTime() > optionSelectorCooldown && isActive) {
+    if (optionSelectorClock.getElapsedTime() > optionSelectorCooldown && isActive && isEnabled) {
 
         float joypadX = 0.0f;
 

@@ -27,6 +27,8 @@ public:
     sf::Vector2f GetResolutionFromString(std::string resolutionString) const;
     void SetResolution(sf::Vector2f resolution);
     void SetDisplayMode(sf::Uint32 displayMode);
+    int GetIndexOfResolutionMap(sf::Vector2f resolution) const;
+    int GetIndexOfDisplayModeMap(sf::Uint32 displayMode) const;
 
 private:
     SettingsManager() = default;

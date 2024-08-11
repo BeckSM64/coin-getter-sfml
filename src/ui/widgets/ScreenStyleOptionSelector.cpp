@@ -10,6 +10,8 @@ ScreenStyleOptionSelector::~ScreenStyleOptionSelector() {
 ScreenStyleOptionSelector::ScreenStyleOptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position)
     : OptionSelector(optionsIdToOptionsStringMap, position) {
 
+    // Set the active menu option based on settings file
+    activeMenuOption = settingsManager.GetIndexOfDisplayModeMap(settingsManager.GetDisplayMode());
 }
 
 void ScreenStyleOptionSelector::ApplySetting(sf::RenderWindow &win) {
@@ -38,5 +40,12 @@ void ScreenStyleOptionSelector::ApplySetting(sf::RenderWindow &win) {
         );
 
         optionSelected = false; // Reset flag
+
+        // Check if selector should be disabled
+        // In this case, only disable if current applied resolution
+        // does not match the monitor resolution
+        // if (sf::VideoMode::getDesktopMode().width != screenResolution.x && sf::VideoMode::getDesktopMode().height != screenResolution.y) {
+        //     SetEnabled(false);
+        // }
     }
 }
