@@ -25,9 +25,12 @@ void SettingsManager::InitializeSettings() {
     }
 
     // Valid resolutions map
-    validResolutionsMap[0] = GetResolutionAsString(sf::Vector2f(1920, 1080));
-    validResolutionsMap[1] = GetResolutionAsString(sf::Vector2f(1600, 900));
-    validResolutionsMap[2] = GetResolutionAsString(sf::Vector2f(1280, 720));
+    validResolutionsMap[0] = GetResolutionAsString(sf::Vector2f(640, 360));   // qHD (Low Resolution)
+    validResolutionsMap[1] = GetResolutionAsString(sf::Vector2f(854, 480));   // FWVGA (Wide VGA)
+    validResolutionsMap[2] = GetResolutionAsString(sf::Vector2f(1280, 720));  // HD
+    validResolutionsMap[3] = GetResolutionAsString(sf::Vector2f(1366, 768));  // HD+ (Common in Laptops)
+    validResolutionsMap[4] = GetResolutionAsString(sf::Vector2f(1600, 900));  // HD+
+    validResolutionsMap[5] = GetResolutionAsString(sf::Vector2f(1920, 1080)); // Full HD
 
     // Valid display modes map
     validDisplayModesMap[0] = GetDisplayModeAsString(sf::Style::None);
@@ -107,15 +110,35 @@ sf::Uint32 SettingsManager::GetDisplayModeFromString(std::string displayModeStri
 
 sf::Vector2f SettingsManager::GetResolutionFromString(std::string resolutionString) const {
 
-    sf::Vector2f resolution = sf::Vector2f(1920, 1080);
-    if ("1920x1080" == resolutionString) {
-        resolution = sf::Vector2f(1920, 1080);
-    } else if ("1600x900" == resolutionString) {
-        resolution = sf::Vector2f(1600, 900);
+    // Resolution to return
+    sf::Vector2f resolution = sf::Vector2f(sf::VideoMode().getDesktopMode().width, sf::VideoMode().getDesktopMode().height);
+
+    // Delimeter to check for in string
+    char delimiter = 'x';
+
+    // Find the position of the delimiter
+    size_t pos = resolutionString.find(delimiter);
+
+    // Check if the delimiter was found
+    if (pos != std::string::npos) {
+
+        // Get the resolution width and height from the string
+        std::string width = resolutionString.substr(0, pos);
+        std::string height = resolutionString.substr(pos + 1);
+
+        // Try to convert substrings to ints to pass to resolution vector creation
+        try {
+            resolution = sf::Vector2f(std::stoi(width), std::stoi(height));
+        } catch (const std::invalid_argument& e) {
+            // Do nothing
+        } catch (const std::out_of_range& e) {
+            // Do nothing
+        }
+
     } else {
-        resolution = sf::Vector2f(1280, 720);
+        sf::Vector2f resolution = sf::Vector2f(sf::VideoMode().getDesktopMode().width, sf::VideoMode().getDesktopMode().height);
     }
-    
+
     return resolution;
 }
 
