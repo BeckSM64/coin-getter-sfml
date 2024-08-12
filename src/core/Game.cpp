@@ -23,11 +23,6 @@ Game::Game() {
     win.create(sf::VideoMode(screenResolution.x, screenResolution.y), "[COIN GETTER]", displayMode);
     win.setFramerateLimit(60);
 
-    std::vector<sf::VideoMode> modes = sf::VideoMode::getFullscreenModes();
-    for (const auto& mode : modes) {
-        std::cout << mode.width << "x" << mode.height << std::endl;
-    }
-
     // Initialize the view to match the window size
     view.setSize(static_cast<float>(win.getSize().x), static_cast<float>(win.getSize().y));
     view.setCenter(static_cast<float>(win.getSize().x) / 2, static_cast<float>(win.getSize().y) / 2);

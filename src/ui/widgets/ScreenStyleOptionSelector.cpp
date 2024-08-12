@@ -28,15 +28,18 @@ void ScreenStyleOptionSelector::ApplySetting(sf::RenderWindow &win) {
         // Get display mode
         sf::Uint32 displayMode = settingsManager.GetDisplayModeFromString(optionsIdToOptionsStringMap[activeMenuOption]);
 
+        // Overwrite settings file
+        settingsManager.SetDisplayMode(displayMode);
+
         // Check if display mode was fullscreen
         if (displayMode == sf::Style::Fullscreen) {
 
-            // Force screen resolution to desktop resolution
+            // TODO: This is a workaround for the sf::Style::Fullscreen option being complete shit
+            // Force bordless with the desktop resolution because for whatever reason with varying resolutions
+            // the fullscreen option breaks shit and I hate it
+            displayMode = sf::Style::None;
             screenResolution = sf::Vector2f(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
         }
-
-        // Overwrite settings file
-        settingsManager.SetDisplayMode(displayMode);
 
         // Check which option was selected and update screen accordingly
         // Needs to be done in draw because access to sf::RenderWindow is required
