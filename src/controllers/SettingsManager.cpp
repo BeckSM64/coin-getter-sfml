@@ -45,6 +45,8 @@ sf::Vector2f SettingsManager::GetResolution() const {
         resolution.x = settings["Resolution"]["width"];
         resolution.y = settings["Resolution"]["height"];
     }
+
+    resolution = ForceValidResolution(resolution);
     return resolution;
 }
 
@@ -172,7 +174,7 @@ void SettingsManager::SetDisplayMode(sf::Uint32 displayMode) {
 int SettingsManager::GetIndexOfResolutionMap(sf::Vector2f resolution) const {
 
     sf::Vector2f screenResolution = GetResolution(); // Gets the resolution from the settings file
-    int index = -1;
+    int index = 0; // Just return first index if it doesn't find anything idfk anymore
     int i = 0;
 
     // Iterate through the map
@@ -190,7 +192,7 @@ int SettingsManager::GetIndexOfResolutionMap(sf::Vector2f resolution) const {
 int SettingsManager::GetIndexOfDisplayModeMap(sf::Uint32 displayMode) const {
 
     sf::Uint32 screenResolution = GetDisplayMode(); // Gets the display mode from the settings file
-    int index = -1;
+    int index = 0;
     int i = 0;
 
     // Iterate through the map
@@ -203,4 +205,27 @@ int SettingsManager::GetIndexOfDisplayModeMap(sf::Uint32 displayMode) const {
     }
 
     return index; // This function fucking sucks part 2
+}
+
+sf::Vector2f SettingsManager::ForceValidResolution(sf::Vector2f resolution) const {
+    // Get the current desktop resolution
+    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+    unsigned int desktopWidth = desktopMode.width;
+    unsigned int desktopHeight = desktopMode.height;
+
+    // Aspect ratio for 16:9
+    float aspectRatio = 16.0f / 9.0f;
+
+    // Ensure the width does not exceed the monitor width
+    unsigned int validWidth = static_cast<unsigned int>(std::min(resolution.x, static_cast<float>(desktopWidth)));
+    unsigned int validHeight = static_cast<unsigned int>(validWidth / aspectRatio);
+
+    // If height exceeds the monitor height, adjust accordingly
+    if (validHeight > desktopHeight) {
+        validHeight = desktopHeight;
+        validWidth = static_cast<unsigned int>(validHeight * aspectRatio);
+    }
+
+    // Return the adjusted resolution
+    return sf::Vector2f(static_cast<float>(validWidth), static_cast<float>(validHeight));
 }

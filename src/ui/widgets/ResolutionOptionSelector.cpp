@@ -34,6 +34,9 @@ void ResolutionOptionSelector::ApplySetting(sf::RenderWindow &win) {
         // Overwrite settings file
         settingsManager.SetResolution(screenResolution);
 
+        // Get the resolution after setting it, this is weird, but it's to ensure we're getting a valid resolution
+        screenResolution = settingsManager.GetResolution();
+
         // Check which option was selected and update screen accordingly
         // Needs to be done in draw because access to sf::RenderWindow is required
         win.create(

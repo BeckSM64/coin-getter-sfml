@@ -33,6 +33,7 @@ public:
 private:
     SettingsManager() = default;
     ~SettingsManager() = default;
+    sf::Vector2f ForceValidResolution(sf::Vector2f resolution) const;
     nlohmann::json settings;
     std::map<int, std::string> validResolutionsMap;
     std::map<int, std::string> validDisplayModesMap;
