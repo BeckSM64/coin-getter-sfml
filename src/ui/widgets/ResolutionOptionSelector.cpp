@@ -23,7 +23,7 @@ ResolutionOptionSelector::ResolutionOptionSelector(std::map<int, std::string> &o
 void ResolutionOptionSelector::ApplySetting(sf::RenderWindow &win) {
 
     // Check if option to update screen style was selected
-    if (optionSelected) {
+    if (optionSelected && isEnabled && IsCurrentOptionEnabled()) {
 
         // Get display mode from settings file
         sf::Uint32 displayMode = settingsManager.GetDisplayMode();
@@ -43,12 +43,17 @@ void ResolutionOptionSelector::ApplySetting(sf::RenderWindow &win) {
         );
 
         optionSelected = false; // Reset flag
+    }
+}
 
-        // Check if selector should be disabled
-        // In this case, only disable if current
-        // applied display mode is set to full screen
-        // if (displayMode == sf::Style::Fullscreen) {
-        //     SetEnabled(false);
-        // }
+void ResolutionOptionSelector::UpdateEnabled() {
+
+    // Check if selector should be disabled
+    // In this case, only disable if current
+    // applied display mode is set to full screen
+    if (settingsManager.GetDisplayMode() == sf::Style::Fullscreen) {
+        SetEnabled(false);
+    } else {
+        SetEnabled(true);
     }
 }

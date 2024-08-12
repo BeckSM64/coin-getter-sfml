@@ -20,7 +20,7 @@ void ScreenStyleOptionSelector::ApplySetting(sf::RenderWindow &win) {
     sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
 
     // Check if option to update screen style was selected
-    if (optionSelected) {
+    if (optionSelected && isEnabled && IsCurrentOptionEnabled()) {
 
         // Get resolution from settings file
         sf::Vector2f screenResolution = settingsManager.GetResolution();
@@ -40,12 +40,22 @@ void ScreenStyleOptionSelector::ApplySetting(sf::RenderWindow &win) {
         );
 
         optionSelected = false; // Reset flag
+    }
+}
 
-        // Check if selector should be disabled
-        // In this case, only disable if current applied resolution
-        // does not match the monitor resolution
-        // if (sf::VideoMode::getDesktopMode().width != screenResolution.x && sf::VideoMode::getDesktopMode().height != screenResolution.y) {
-        //     SetEnabled(false);
-        // }
+bool ScreenStyleOptionSelector::IsCurrentOptionEnabled() {
+
+    // Get current screen resolution
+    sf::Vector2f screenResolution = settingsManager.GetResolution();
+
+    // Check if current resolution is not equal to the desktop resolution and current selectable menu option is fullscreen
+    if (screenResolution.x != sf::VideoMode::getDesktopMode().width && screenResolution.y != sf::VideoMode::getDesktopMode().height && settingsManager.GetDisplayModeFromString(optionsIdToOptionsStringMap[activeMenuOption]) == sf::Style::Fullscreen) {
+
+        optionText.setFillColor(sf::Color::Black);
+        // Don't allow fullscreen as an option
+        return false;
+
+    } else {
+        return true;
     }
 }

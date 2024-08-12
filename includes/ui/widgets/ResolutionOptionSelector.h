@@ -10,6 +10,7 @@ class ResolutionOptionSelector : public OptionSelector {
 
     private:
         void ApplySetting(sf::RenderWindow &win) override;
+        void UpdateEnabled() override;
 
     public:
         ResolutionOptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position);

@@ -8,6 +8,7 @@ class ScreenStyleOptionSelector : public OptionSelector {
 
     private:
         void ApplySetting(sf::RenderWindow &win) override;
+        bool IsCurrentOptionEnabled();
 
     public:
         ScreenStyleOptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position);

@@ -13,6 +13,8 @@ class OptionSelector : public MenuOption {
         OptionSelector(std::map<int, std::string> &optionsIdToOptionsStringMap, sf::Vector2f position);
         OptionSelector() = default;
         virtual void ApplySetting(sf::RenderWindow &win) = 0;
+        virtual void UpdateEnabled() {};
+        virtual bool IsCurrentOptionEnabled() { return true; }; // Default to true, override if need a false condition
         sf::Text optionText;
         sf::Clock optionSelectorClock;
         sf::Time optionSelectorCooldown;
