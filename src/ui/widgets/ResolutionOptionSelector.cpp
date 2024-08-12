@@ -23,7 +23,7 @@ ResolutionOptionSelector::ResolutionOptionSelector(std::map<int, std::string> &o
 void ResolutionOptionSelector::ApplySetting(sf::RenderWindow &win) {
 
     // Check if option to update screen style was selected
-    if (optionSelected && isEnabled && IsCurrentOptionEnabled()) {
+    if (optionSelected && isEnabled) {
 
         // Get display mode from settings file
         sf::Uint32 displayMode = settingsManager.GetDisplayMode();

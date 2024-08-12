@@ -48,7 +48,6 @@ void OptionSelector::Update() {
     );
     GetUserInput();
     UpdateEnabled();
-    IsCurrentOptionEnabled(); // This is very stupid and bad, lots of workarounds
 }
 
 void OptionSelector::Draw(sf::RenderWindow &win) {
