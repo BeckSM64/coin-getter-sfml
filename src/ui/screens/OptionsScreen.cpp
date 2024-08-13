@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "ScreenStyleOptionSelector.h"
 #include "ResolutionOptionSelector.h"
+#include "MainMenuButton.h"
 #include "Globals.h"
 #include "SettingsManager.h"
 
@@ -39,9 +40,13 @@ OptionsScreen::OptionsScreen() {
     std::map<int, std::string> resolutionOptionIdToOptionStringMap = SettingsManager::GetInstance().GetValidResolutionMap();
     resolutionOptionSelector = std::make_unique<ResolutionOptionSelector>(resolutionOptionIdToOptionStringMap, sf::Vector2f(0, 200 * scaleFactor));
 
+    // Setup menu buttons
+    mainMenuButton = std::make_unique<MainMenuButton>("MAIN MENU", sf::Vector2f(0, 300 * scaleFactor), currentGameState);
+
     // Add menu options to vector of menu otpions
     menuOptions.push_back(std::move(videoOptionSelector));
     menuOptions.push_back(std::move(resolutionOptionSelector));
+    menuOptions.push_back(std::move(mainMenuButton));
 
     // Set first element in vector as active
     menuOptions[0]->SetActive(true);
@@ -86,7 +91,7 @@ void OptionsScreen::GetUserInput() {
 
             joypadY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
 
-            if (joypadY > 10.0f) {
+            if (joypadY < -10.0f) {
                 
                 // Navigate selector options
                 menuOptions[activeMenuOptionIndex]->SetActive(false);
@@ -98,7 +103,7 @@ void OptionsScreen::GetUserInput() {
                 menuOptions[activeMenuOptionIndex]->SetActive(true);
                 menuOptionsClock.restart();
 
-            } else if (joypadY < -10.0f) {
+            } else if (joypadY > 10.0f) {
                 
                 menuOptions[activeMenuOptionIndex]->SetActive(false);
                 if (activeMenuOptionIndex == menuOptions.size() - 1) {
@@ -113,6 +118,7 @@ void OptionsScreen::GetUserInput() {
         } else {
 
             // Check if right or left are pressed on the keyboard
+            // TODO: Add keyboard input for up and down navigation
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 
                 menuOptionsClock.restart();

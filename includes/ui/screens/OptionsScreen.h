@@ -4,6 +4,7 @@
 #include <memory>
 #include "Screen.h"
 #include "OptionSelector.h"
+#include "MenuButton.h"
 
 class OptionsScreen : public CoinGetter::Screen {
 
@@ -12,6 +13,7 @@ class OptionsScreen : public CoinGetter::Screen {
         GameState currentGameState;
         std::unique_ptr<OptionSelector> videoOptionSelector;
         std::unique_ptr<OptionSelector> resolutionOptionSelector;
+        std::unique_ptr<MenuButton> mainMenuButton;
         std::vector<std::unique_ptr<MenuOption>> menuOptions;
         sf::Clock menuOptionsClock;
         sf::Time menuOptionsCooldown;
