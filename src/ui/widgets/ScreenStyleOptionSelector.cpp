@@ -48,6 +48,7 @@ void ScreenStyleOptionSelector::ApplySetting(sf::RenderWindow &win) {
             "[COIN GETTER]",
             displayMode
         );
+        win.setFramerateLimit(60);
 
         optionSelected = false; // Reset flag
     }

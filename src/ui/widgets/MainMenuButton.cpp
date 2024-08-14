@@ -11,8 +11,10 @@ MainMenuButton::~MainMenuButton() {
 
 }
 
-void MainMenuButton::SelectButton() {
+void MainMenuButton::ApplySetting() {
 
-    // Set the current game state to the main menu
-    currentGameState = GameState::MAIN_MENU;
+    if (optionSelected && isEnabled) {
+        // Set the current game state to the main menu
+        currentGameState = GameState::MAIN_MENU;
+    }
 }

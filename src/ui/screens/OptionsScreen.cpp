@@ -118,13 +118,26 @@ void OptionsScreen::GetUserInput() {
         } else {
 
             // Check if right or left are pressed on the keyboard
-            // TODO: Add keyboard input for up and down navigation
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 
+                menuOptions[activeMenuOptionIndex]->SetActive(false);
+                if (activeMenuOptionIndex == 0) {
+                    activeMenuOptionIndex = menuOptions.size() - 1;
+                } else {
+                    activeMenuOptionIndex -= 1;
+                }
+                menuOptions[activeMenuOptionIndex]->SetActive(true);
                 menuOptionsClock.restart();
 
-            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 
+                menuOptions[activeMenuOptionIndex]->SetActive(false);
+                if (activeMenuOptionIndex == menuOptions.size() - 1) {
+                    activeMenuOptionIndex = 0;
+                } else {
+                    activeMenuOptionIndex += 1;
+                }
+                menuOptions[activeMenuOptionIndex]->SetActive(true);
                 menuOptionsClock.restart();
             }
         }

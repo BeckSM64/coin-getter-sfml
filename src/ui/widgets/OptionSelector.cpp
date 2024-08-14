@@ -138,6 +138,11 @@ void OptionSelector::GetUserInput() {
 
                 optionSelectorClock.restart();
             }
+
+            // Check if option was selected with enter key
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                optionSelected = true;
+            }
         }
     }
 }

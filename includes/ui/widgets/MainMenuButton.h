@@ -9,5 +9,5 @@ class MainMenuButton : public MenuButton {
         ~MainMenuButton();
 
     private:
-        void SelectButton() override;
+        void ApplySetting() override;
 };

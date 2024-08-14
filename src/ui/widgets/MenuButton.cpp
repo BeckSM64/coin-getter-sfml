@@ -20,6 +20,9 @@ MenuButton::MenuButton(std::string buttonTextString, sf::Vector2f position, Game
 
     // Position title text
     buttonText.setPosition(position);
+
+    // Option not selected by default
+    optionSelected = false;
 }
 
 void MenuButton::Draw(sf::RenderWindow &win) {
@@ -46,17 +49,28 @@ void MenuButton::Update() {
         position.y
     );
     GetUserInput();
+    ApplySetting(); // TODO: this is the right place, but should be consistent with OptionSelector's ApplySetting call
 }
 
 void MenuButton::GetUserInput() {
-    
-    // TODO: Add select here to execute SelectButton() call
-    // Check if joystick 0 is connected
-    if (sf::Joystick::isConnected(0)) {
 
-        if (sf::Joystick::isButtonPressed(0, 2)) {
+    // Only get user input if the menu option is being hovered over
+    if (isActive && isEnabled) {
 
-            SelectButton();
+        // Check if joystick 0 is connected
+        if (sf::Joystick::isConnected(0)) {
+
+            if (sf::Joystick::isButtonPressed(0, 2)) {
+
+                optionSelected = true;
+            }
+        } else {
+
+            // Check for keyboard input if controller isn't connected
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+
+                optionSelected = true;
+            }
         }
     }
 }

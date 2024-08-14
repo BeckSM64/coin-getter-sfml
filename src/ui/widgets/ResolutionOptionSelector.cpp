@@ -22,6 +22,7 @@ ResolutionOptionSelector::ResolutionOptionSelector(std::map<int, std::string> &o
 
 void ResolutionOptionSelector::ApplySetting(sf::RenderWindow &win) {
 
+
     // Check if option to update screen style was selected
     if (optionSelected && isEnabled) {
 
@@ -44,6 +45,7 @@ void ResolutionOptionSelector::ApplySetting(sf::RenderWindow &win) {
             "[COIN GETTER]",
             displayMode
         );
+        win.setFramerateLimit(60);
 
         optionSelected = false; // Reset flag
     }

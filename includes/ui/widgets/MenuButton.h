@@ -10,10 +10,11 @@ class MenuButton : public MenuOption {
     protected:
         MenuButton() = default;
         MenuButton(std::string buttonTextString, sf::Vector2f position, GameState &currentGameState);
+        virtual void ApplySetting() = 0;
         sf::Text buttonText;
         sf::Vector2f position;
         GameState &currentGameState; // Need this to be able to modify game state stored in screen class that uses button
-        virtual void SelectButton() = 0;
+        bool optionSelected;
 
     private:
         void Draw(sf::RenderWindow &win) override;
