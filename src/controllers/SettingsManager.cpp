@@ -13,6 +13,7 @@ void SettingsManager::InitializeSettings() {
         resolutionSettings["height"] = 1080;
         settings["Resolution"] = resolutionSettings;
         settings["DisplayMode"] = sf::Style::None; // 0 for borderless
+        settings["Volume"] = 50; // Half volume by default
         std::ofstream outputFile("settings.json");
         outputFile << settings.dump(4); // Pretty print with 4 spaces
 
