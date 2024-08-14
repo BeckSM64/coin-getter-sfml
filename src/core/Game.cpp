@@ -30,17 +30,16 @@ Game::Game() {
     // Background color
     backgroundColor = sf::Color(20, 15, 36, 255);
 
-    // Set taskbar icon
-    sf::Image icon;
-    icon.loadFromFile("sprites/player.png");
+    // Initialize resources
+    ResourceManager::GetInstance().InitializeResources();
+    ResourceManager::GetInstance().SetScreenResolution(win.getSize());
+
+    // Set window and taskbar icon
+    sf::Image &icon = ResourceManager::GetInstance().GetIcon("coinGetterIcon");
     win.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     // Default to main menu
     currentGameState = GameState::MAIN_MENU;
-
-    // Initialize resources
-    ResourceManager::GetInstance().InitializeResources();
-    ResourceManager::GetInstance().SetScreenResolution(win.getSize());
 
     // Default to main menu
     currentScreen = std::make_shared<MainMenuScreen>();

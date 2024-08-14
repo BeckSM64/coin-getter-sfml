@@ -25,6 +25,9 @@ public:
     bool LoadSoundBuffer(const std::string& name, const std::string& filename);
     sf::SoundBuffer& GetSoundBuffer(const std::string& name);
 
+    bool LoadIcon(const std::string &name, const std::string &filename);
+    sf::Image &GetIcon(const std::string &name);
+
     void InitializeResources();
 
     int GetRandomNumber(int lower, int upper);
@@ -51,6 +54,7 @@ private:
     std::unordered_map<std::string, std::unique_ptr<sf::Texture>> textures;
     std::unordered_map<std::string, std::unique_ptr<sf::Font>> fonts;
     std::unordered_map<std::string, std::unique_ptr<sf::SoundBuffer>> soundBuffers;
+    std::unordered_map<std::string, std::unique_ptr<sf::Image>> images;
 
     std::random_device rd;
     std::mt19937 gen;

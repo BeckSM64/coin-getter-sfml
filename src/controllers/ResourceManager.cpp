@@ -44,6 +44,20 @@ sf::SoundBuffer& ResourceManager::GetSoundBuffer(const std::string& name) {
     return *soundBuffers.at(name);
 }
 
+bool ResourceManager::LoadIcon(const std::string &name, const std::string &filename) {
+    auto icon = std::make_unique<sf::Image>();
+    if (!icon->loadFromFile(filename)) {
+        std::cerr << "Failed to load icon: " << filename << std::endl;
+        return false;
+    }
+    images[name] = std::move(icon);
+    return true;
+}
+
+sf::Image &ResourceManager::GetIcon(const std::string &name) {
+    return *images.at(name);
+}
+
 void ResourceManager::InitializeResources() {
     baseResolution = sf::Vector2u(1920, 1080);
     LoadTexture("player", "sprites/player.png");
@@ -51,6 +65,7 @@ void ResourceManager::InitializeResources() {
     LoadTexture("coin", "sprites/coin.png");
     LoadFont("retroFont", "fonts/RetroComputer.ttf");
     LoadSoundBuffer("endo", "sounds/endo.wav");
+    LoadIcon("coinGetterIcon", "sprites/player.png");
 }
 
 int ResourceManager::GetRandomNumber(int lower, int upper) {

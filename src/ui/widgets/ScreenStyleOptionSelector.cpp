@@ -50,6 +50,10 @@ void ScreenStyleOptionSelector::ApplySetting(sf::RenderWindow &win) {
         );
         win.setFramerateLimit(60);
 
+        // Set window and taskbar icon
+        sf::Image &icon = ResourceManager::GetInstance().GetIcon("coinGetterIcon");
+        win.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
         optionSelected = false; // Reset flag
     }
 }
