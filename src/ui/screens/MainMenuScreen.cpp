@@ -4,6 +4,7 @@
 #include "MainMenuScreen.h"
 #include "CoinManager.h"
 #include "ResourceManager.h"
+#include "SettingsManager.h"
 
 MainMenuScreen::MainMenuScreen() {
 
@@ -72,6 +73,8 @@ MainMenuScreen::MainMenuScreen() {
     backgroundMusic.setBuffer(soundBuffer);
     backgroundMusic.play();
     backgroundMusic.setLoop(true);
+    int volume = SettingsManager::GetInstance().GetVolume();
+    backgroundMusic.setVolume(volume);
 }
 
 MainMenuScreen::~MainMenuScreen() {

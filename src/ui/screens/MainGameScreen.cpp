@@ -7,6 +7,7 @@
 #include "ResourceManager.h"
 #include "Enemy.h"
 #include "Hud.h"
+#include "SettingsManager.h"
 
 MainGameScreen::MainGameScreen() {
 
@@ -42,6 +43,8 @@ MainGameScreen::MainGameScreen() {
     backgroundMusic.setBuffer(soundBuffer);
     backgroundMusic.play();
     backgroundMusic.setLoop(true);
+    int volume = SettingsManager::GetInstance().GetVolume();
+    backgroundMusic.setVolume(volume); // TODO: Consider moving into abstract screen class since it seems common among screens
 }
 
 MainGameScreen::~MainGameScreen() {

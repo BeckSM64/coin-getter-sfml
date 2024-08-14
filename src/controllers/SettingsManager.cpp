@@ -230,3 +230,28 @@ sf::Vector2f SettingsManager::ForceValidResolution(sf::Vector2f resolution) cons
     // Return the adjusted resolution
     return sf::Vector2f(static_cast<float>(validWidth), static_cast<float>(validHeight));
 }
+
+void SettingsManager::SetVolume(int volume) {
+
+    // Load settings file
+    std::ifstream inputFile("settings.json");
+    if (inputFile.is_open()) {
+
+        settings["Volume"] = volume;
+        std::ofstream outputFile("settings.json");
+        outputFile << settings.dump(4); // Pretty print with 4 spaces
+    }
+}
+
+int SettingsManager::GetVolume() const{
+
+    int volume = 50; // Return 50 if not in settings file I guess?
+    if (settings.contains("Volume")) {
+        volume = settings["Volume"];
+    }
+
+    // TODO: Set volume if not present in the settings file
+    // This shouldn't be the case unless it's removed manually
+
+    return volume;
+}

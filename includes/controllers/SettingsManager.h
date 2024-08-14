@@ -29,6 +29,8 @@ public:
     void SetDisplayMode(sf::Uint32 displayMode);
     int GetIndexOfResolutionMap(sf::Vector2f resolution) const;
     int GetIndexOfDisplayModeMap(sf::Uint32 displayMode) const;
+    void SetVolume(int volume);
+    int GetVolume() const;
 
 private:
     SettingsManager() = default;
