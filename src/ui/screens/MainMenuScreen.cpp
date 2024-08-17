@@ -89,7 +89,6 @@ void MainMenuScreen::Run() {
 void MainMenuScreen::Update() {
 
     ChangeTitleColor();
-    GetUserInput();
     coinManager->Update();
 }
 

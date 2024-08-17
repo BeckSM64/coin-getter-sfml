@@ -75,7 +75,6 @@ void MainGameScreen::Update() {
         enemyManager->Update();
     }
     
-    GetUserInput();
     CollisionDetection();
     HandleEnemyCollision();
 

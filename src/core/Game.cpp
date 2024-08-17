@@ -43,6 +43,11 @@ Game::Game() {
 
     // Default to main menu
     currentScreen = std::make_shared<MainMenuScreen>();
+
+    // Delay for screen transitions
+    stateTransitionCooldown = sf::milliseconds(1000);
+
+    isScreenTransitioning = false;
 }
 
 Game::~Game() {
@@ -73,6 +78,19 @@ void Game::Run() {
 
 void Game::Update() {
     currentScreen->Update();
+
+    // TODO: Not sure this should be public, but need to
+    // prevent this code from running during screen transitions.
+    // Consider reworking screen interface and derived classes
+    // to call this from the derived classes' Update() method
+    if (isScreenTransitioning) {
+        if (stateTransitionClock.getElapsedTime() > stateTransitionCooldown) {
+            stateTransitionClock.restart();
+            isScreenTransitioning = false;
+        }
+    } else {
+        currentScreen->GetUserInput();
+    }
     currentGameState = currentScreen->GetGameState();
 }
 
@@ -103,18 +121,24 @@ void Game::ManageGameState() {
         case GameState::MAIN_MENU:
             if (std::dynamic_pointer_cast<MainMenuScreen>(currentScreen) == nullptr) {
                 currentScreen = std::make_shared<MainMenuScreen>();
+                stateTransitionClock.restart();
+                isScreenTransitioning = true;
             }
             break;
 
         case GameState::MAIN_GAME:
             if (std::dynamic_pointer_cast<MainGameScreen>(currentScreen) == nullptr) {
                 currentScreen = std::make_shared<MainGameScreen>();
+                stateTransitionClock.restart();
+                isScreenTransitioning = true;
             }
             break;
 
         case GameState::OPTIONS_MENU:
             if (std::dynamic_pointer_cast<OptionsScreen>(currentScreen) == nullptr) {
                 currentScreen = std::make_shared<OptionsScreen>();
+                stateTransitionClock.restart();
+                isScreenTransitioning = true;
             }
             break;
 

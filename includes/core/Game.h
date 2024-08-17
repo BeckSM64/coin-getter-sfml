@@ -12,6 +12,9 @@ class Game {
         sf::View view;
         std::shared_ptr<CoinGetter::Screen> currentScreen; // Pointer to the current screen
         sf::Color backgroundColor;
+        sf::Clock stateTransitionClock;
+        sf::Time stateTransitionCooldown;
+        bool isScreenTransitioning;
 
     public:
         Game();

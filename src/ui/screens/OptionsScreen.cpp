@@ -75,8 +75,6 @@ void OptionsScreen::Update() {
     for (auto &option : menuOptions) {
         option->Update();
     }
-
-    GetUserInput();
 }
 
 void OptionsScreen::GetUserInput() {
