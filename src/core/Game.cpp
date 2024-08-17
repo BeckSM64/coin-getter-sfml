@@ -45,9 +45,10 @@ Game::Game() {
     currentScreen = std::make_shared<MainMenuScreen>();
 
     // Delay for screen transitions
-    stateTransitionCooldown = sf::milliseconds(1000);
+    stateTransitionCooldown = sf::milliseconds(200);
 
     isScreenTransitioning = false;
+    screenStack.push(currentScreen);
 }
 
 Game::~Game() {
@@ -116,6 +117,9 @@ void Game::HandleEvents() {
 }
 
 void Game::ManageGameState() {
+
+    currentScreen = screenStack.top(); // TODO: Seems awfully inefficient
+
     // Update screen based on game state
     switch (currentGameState) {
         case GameState::MAIN_MENU:
@@ -123,6 +127,13 @@ void Game::ManageGameState() {
                 currentScreen = std::make_shared<MainMenuScreen>();
                 stateTransitionClock.restart();
                 isScreenTransitioning = true;
+
+                // Whenever we go back to the main menu, we should remove
+                // all other saved screens from the screen stack
+                while (!screenStack.empty()) {
+                    screenStack.pop();
+                }
+                screenStack.push(currentScreen);
             }
             break;
 
@@ -131,6 +142,13 @@ void Game::ManageGameState() {
                 currentScreen = std::make_shared<MainGameScreen>();
                 stateTransitionClock.restart();
                 isScreenTransitioning = true;
+
+                // Whenever we start a new game, we should remove
+                // all other saved screens from the screen stack
+                while (!screenStack.empty()) {
+                    screenStack.pop();
+                }
+                screenStack.push(currentScreen);
             }
             break;
 
@@ -139,6 +157,7 @@ void Game::ManageGameState() {
                 currentScreen = std::make_shared<OptionsScreen>();
                 stateTransitionClock.restart();
                 isScreenTransitioning = true;
+                screenStack.push(currentScreen);
             }
             break;
 

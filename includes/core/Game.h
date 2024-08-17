@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <stack>
 #include "MainMenuScreen.h"
 #include "MainGameScreen.h"
 #include "Globals.h"
@@ -15,6 +16,7 @@ class Game {
         sf::Clock stateTransitionClock;
         sf::Time stateTransitionCooldown;
         bool isScreenTransitioning;
+        std::stack<std::shared_ptr<CoinGetter::Screen>> screenStack;
 
     public:
         Game();
