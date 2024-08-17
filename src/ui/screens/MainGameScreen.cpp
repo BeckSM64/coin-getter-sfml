@@ -14,8 +14,6 @@ MainGameScreen::MainGameScreen() {
     player = std::make_unique<Player>();
     coinManager = new CoinManager();
     enemyManager = new EnemyManager();
-    isPaused = false;
-    wasStartPressed = false;
 
     // Setup font
     const sf::Font &font = ResourceManager::GetInstance().GetFont("retroFont");
@@ -23,18 +21,8 @@ MainGameScreen::MainGameScreen() {
     // Scale the font size based on the current screen resolution
     float scaledFontSize = ResourceManager::GetInstance().ScaleFontSize(FONT_SIZE_128);
 
-    // Create title text
-    pauseText = sf::Text("[PAUSE]", font, scaledFontSize);
-    pauseText.setFillColor(sf::Color::White);
-
     // Get screen resolution from ResourceManager
     sf::Vector2u screenResolution = ResourceManager::GetInstance().GetScreenResolution();
-
-    // Position pause text
-    pauseText.setPosition(
-        (screenResolution.x / 2 - (pauseText.getGlobalBounds().width / 2)),
-        (screenResolution.y / 2 - (pauseText.getGlobalBounds().height / 2))
-    );
 
     currentGameState = GameState::MAIN_GAME;
 
@@ -57,23 +45,14 @@ void MainGameScreen::Draw(sf::RenderWindow &win) {
     player->Draw(win);
     coinManager->Draw(win);
     enemyManager->Draw(win);
-
-    if (isPaused) {
-        win.draw(pauseText);
-    }
-
     hud.Draw(win);
 }
 
 void MainGameScreen::Update() {
 
-    // Update the game if it's not paused
-    if (!isPaused) {
-
-        player->Update();
-        coinManager->Update();
-        enemyManager->Update();
-    }
+    player->Update();
+    coinManager->Update();
+    enemyManager->Update();
     
     CollisionDetection();
     HandleEnemyCollision();
@@ -94,27 +73,19 @@ void MainGameScreen::Update() {
 
 void MainGameScreen::GetUserInput() {
 
-    bool isStartCurrentlyPressed;
-
     // Check if joystick 0 is connected
     if (sf::Joystick::isConnected(0)) {
-        isStartCurrentlyPressed = sf::Joystick::isButtonPressed(0, 9);
+
+        // Change to the pause menu if start button is pressed
+        if (sf::Joystick::isButtonPressed(0, 9)) {
+            currentGameState = GameState::PAUSE_MENU;
+        }
     } else {
         // Check if the Enter key is released
-        isStartCurrentlyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Enter);
-    }
-
-    // Check if the start button was pressed and released
-    if (!isStartCurrentlyPressed && wasStartPressed) {
-        if (isPaused) {
-            isPaused = false;
-        } else {
-            isPaused = true;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+            currentGameState = PAUSE_MENU;
         }
     }
-
-    // Update the previous state
-    wasStartPressed = isStartCurrentlyPressed;
 }
 
 Player * MainGameScreen::GetPlayer() {

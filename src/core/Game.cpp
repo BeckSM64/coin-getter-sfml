@@ -5,6 +5,7 @@
 #include "MainMenuScreen.h"
 #include "MainGameScreen.h"
 #include "OptionsScreen.h"
+#include "PauseMenuScreen.h"
 #include "DebugMenuScreen.h"
 #include "ResourceManager.h"
 #include "ControllerManager.h"
@@ -155,6 +156,15 @@ void Game::ManageGameState() {
         case GameState::OPTIONS_MENU:
             if (std::dynamic_pointer_cast<OptionsScreen>(currentScreen) == nullptr) {
                 currentScreen = std::make_shared<OptionsScreen>();
+                stateTransitionClock.restart();
+                isScreenTransitioning = true;
+                screenStack.push(currentScreen);
+            }
+            break;
+
+        case GameState::PAUSE_MENU:
+            if (std::dynamic_pointer_cast<PauseMenuScreen>(currentScreen) == nullptr) {
+                currentScreen = std::make_shared<PauseMenuScreen>();
                 stateTransitionClock.restart();
                 isScreenTransitioning = true;
                 screenStack.push(currentScreen);

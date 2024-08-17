@@ -14,9 +14,6 @@ class MainGameScreen : public CoinGetter::Screen {
         std::unique_ptr<Entity> player;
         CoinManager *coinManager;
         EnemyManager *enemyManager;
-        bool isPaused;
-        bool wasStartPressed;
-        sf::Text pauseText;
         GameState currentGameState;
         sf::Sound backgroundMusic;
         void GetUserInput();

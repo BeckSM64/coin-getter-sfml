@@ -16,5 +16,6 @@ enum GameState {
     MAIN_GAME,
     OPTIONS_MENU,
     QUIT_GAME,
+    PAUSE_MENU,
     DEBUG_MENU
 };
