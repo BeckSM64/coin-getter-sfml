@@ -91,7 +91,10 @@ void Game::Update() {
             isScreenTransitioning = false;
         }
     } else {
-        currentScreen->GetUserInput();
+
+        if (currentScreen == screenStack.top()) {
+            currentScreen->GetUserInput();
+        }
     }
     currentGameState = currentScreen->GetGameState();
 }
@@ -140,16 +143,17 @@ void Game::ManageGameState() {
 
         case GameState::MAIN_GAME:
             if (std::dynamic_pointer_cast<MainGameScreen>(currentScreen) == nullptr) {
-                currentScreen = std::make_shared<MainGameScreen>();
+                screenStack.pop();
+                if (screenStack.empty()) {
+                    currentScreen = std::make_shared<MainGameScreen>();
+                    screenStack.push(currentScreen);
+                    std::cout << "WE SHOULD GET HERE EXACTLY ONE TIME" << std::endl;
+                } else {
+                    currentScreen = screenStack.top(); // TODO: Might be redundant?
+                    std::cout << "WE ARE HERE" << std::endl;
+                }
                 stateTransitionClock.restart();
                 isScreenTransitioning = true;
-
-                // Whenever we start a new game, we should remove
-                // all other saved screens from the screen stack
-                while (!screenStack.empty()) {
-                    screenStack.pop();
-                }
-                screenStack.push(currentScreen);
             }
             break;
 
