@@ -96,6 +96,10 @@ GameState MainGameScreen::GetGameState() {
     return currentGameState;
 }
 
+void MainGameScreen::SetGameState(GameState gameState) {
+    currentGameState = gameState;
+}
+
 void MainGameScreen::CollisionDetection() {
 
     // Reference to the coin collection

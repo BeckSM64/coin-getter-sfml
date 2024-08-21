@@ -233,6 +233,11 @@ void MainMenuScreen::GetUserInput() {
     wasStartPressed = isStartCurrentlyPressed;
 }
 
+// TODO: This is the same in every screen, pull into a Screen.cpp
 GameState MainMenuScreen::GetGameState() {
     return currentGameState;
+}
+
+void MainMenuScreen::SetGameState(GameState gameState) {
+    currentGameState = gameState;
 }

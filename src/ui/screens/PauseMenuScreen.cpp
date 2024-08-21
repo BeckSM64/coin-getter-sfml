@@ -149,3 +149,7 @@ void PauseMenuScreen::GetUserInput() {
 GameState PauseMenuScreen::GetGameState() {
     return currentGameState;
 }
+
+void PauseMenuScreen::SetGameState(GameState gameState) {
+    currentGameState = gameState;
+}

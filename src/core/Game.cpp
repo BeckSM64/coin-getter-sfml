@@ -85,15 +85,17 @@ void Game::Update() {
     // prevent this code from running during screen transitions.
     // Consider reworking screen interface and derived classes
     // to call this from the derived classes' Update() method
+    // ^ This is referring to the GetUserInput() method call
     if (isScreenTransitioning) {
         if (stateTransitionClock.getElapsedTime() > stateTransitionCooldown) {
             stateTransitionClock.restart();
             isScreenTransitioning = false;
         }
     } else {
+
         currentScreen->GetUserInput();
+        currentGameState = currentScreen->GetGameState();
     }
-    currentGameState = currentScreen->GetGameState();
 }
 
 void Game::Draw() {
@@ -140,16 +142,16 @@ void Game::ManageGameState() {
 
         case GameState::MAIN_GAME:
             if (std::dynamic_pointer_cast<MainGameScreen>(currentScreen) == nullptr) {
-                currentScreen = std::make_shared<MainGameScreen>();
+                screenStack.pop();
+                if (screenStack.empty()) {
+                    currentScreen = std::make_shared<MainGameScreen>();
+                    screenStack.push(currentScreen);
+                } else {
+                    currentScreen = screenStack.top(); // TODO: Might be redundant?
+                }
                 stateTransitionClock.restart();
                 isScreenTransitioning = true;
-
-                // Whenever we start a new game, we should remove
-                // all other saved screens from the screen stack
-                while (!screenStack.empty()) {
-                    screenStack.pop();
-                }
-                screenStack.push(currentScreen);
+                currentScreen->SetGameState(GameState::MAIN_GAME); // TODO: This sucks
             }
             break;
 
