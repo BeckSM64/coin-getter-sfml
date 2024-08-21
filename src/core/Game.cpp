@@ -142,7 +142,6 @@ void Game::ManageGameState() {
 
         case GameState::MAIN_GAME:
             if (std::dynamic_pointer_cast<MainGameScreen>(currentScreen) == nullptr) {
-                std::cout << "MAIN GAME" << std::endl;
                 screenStack.pop();
                 if (screenStack.empty()) {
                     currentScreen = std::make_shared<MainGameScreen>();
@@ -153,7 +152,6 @@ void Game::ManageGameState() {
                 stateTransitionClock.restart();
                 isScreenTransitioning = true;
                 currentScreen->SetGameState(GameState::MAIN_GAME); // TODO: This sucks
-                std::cout << screenStack.size() << std::endl;
             }
             break;
 
@@ -168,12 +166,10 @@ void Game::ManageGameState() {
 
         case GameState::PAUSE_MENU:
             if (std::dynamic_pointer_cast<PauseMenuScreen>(currentScreen) == nullptr) {
-                std::cout << "PAUSE MENU" << std::endl;
                 currentScreen = std::make_shared<PauseMenuScreen>();
                 stateTransitionClock.restart();
                 isScreenTransitioning = true;
                 screenStack.push(currentScreen);
-                std::cout << screenStack.size() << std::endl;
             }
             break;
 
