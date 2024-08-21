@@ -45,4 +45,5 @@ class MainMenuScreen : public CoinGetter::Screen {
         void Update();
         void Draw(sf::RenderWindow &win);
         GameState GetGameState();
+        void SetGameState(GameState gameState) override;
 };

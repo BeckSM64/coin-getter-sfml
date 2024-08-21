@@ -26,4 +26,5 @@ class OptionsScreen : public CoinGetter::Screen {
         void Update();
         void GetUserInput();
         GameState GetGameState();
+        void SetGameState(GameState gameState);
 };

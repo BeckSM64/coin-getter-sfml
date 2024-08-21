@@ -25,6 +25,9 @@ namespace CoinGetter {
             // Get the current game state
             virtual GameState GetGameState() = 0;
 
+            // TODO: Look into not doing this
+            virtual void SetGameState(GameState gameState) = 0;
+
             // Handle user input
             virtual void GetUserInput() = 0;
 

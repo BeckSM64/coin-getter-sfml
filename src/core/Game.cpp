@@ -85,6 +85,7 @@ void Game::Update() {
     // prevent this code from running during screen transitions.
     // Consider reworking screen interface and derived classes
     // to call this from the derived classes' Update() method
+    // ^ This is referring to the GetUserInput() method call
     if (isScreenTransitioning) {
         if (stateTransitionClock.getElapsedTime() > stateTransitionCooldown) {
             stateTransitionClock.restart();
@@ -92,11 +93,9 @@ void Game::Update() {
         }
     } else {
 
-        if (currentScreen == screenStack.top()) {
-            currentScreen->GetUserInput();
-        }
+        currentScreen->GetUserInput();
+        currentGameState = currentScreen->GetGameState();
     }
-    currentGameState = currentScreen->GetGameState();
 }
 
 void Game::Draw() {
@@ -143,17 +142,18 @@ void Game::ManageGameState() {
 
         case GameState::MAIN_GAME:
             if (std::dynamic_pointer_cast<MainGameScreen>(currentScreen) == nullptr) {
+                std::cout << "MAIN GAME" << std::endl;
                 screenStack.pop();
                 if (screenStack.empty()) {
                     currentScreen = std::make_shared<MainGameScreen>();
                     screenStack.push(currentScreen);
-                    std::cout << "WE SHOULD GET HERE EXACTLY ONE TIME" << std::endl;
                 } else {
                     currentScreen = screenStack.top(); // TODO: Might be redundant?
-                    std::cout << "WE ARE HERE" << std::endl;
                 }
                 stateTransitionClock.restart();
                 isScreenTransitioning = true;
+                currentScreen->SetGameState(GameState::MAIN_GAME); // TODO: This sucks
+                std::cout << screenStack.size() << std::endl;
             }
             break;
 
@@ -168,10 +168,12 @@ void Game::ManageGameState() {
 
         case GameState::PAUSE_MENU:
             if (std::dynamic_pointer_cast<PauseMenuScreen>(currentScreen) == nullptr) {
+                std::cout << "PAUSE MENU" << std::endl;
                 currentScreen = std::make_shared<PauseMenuScreen>();
                 stateTransitionClock.restart();
                 isScreenTransitioning = true;
                 screenStack.push(currentScreen);
+                std::cout << screenStack.size() << std::endl;
             }
             break;
 

@@ -145,3 +145,7 @@ void OptionsScreen::GetUserInput() {
 GameState OptionsScreen::GetGameState() {
     return currentGameState;
 }
+
+void OptionsScreen::SetGameState(GameState gameState) {
+    currentGameState = gameState;
+}
